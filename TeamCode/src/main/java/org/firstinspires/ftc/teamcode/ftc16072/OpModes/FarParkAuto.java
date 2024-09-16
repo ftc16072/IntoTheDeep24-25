@@ -17,7 +17,7 @@ public class FarParkAuto extends QQOpMode{
                 step = 1;
             }
         }else if(step == 1){
-            boolean doneDriving = nav.driveToPositionIN(67,-60,0);
+            boolean doneDriving = nav.driveToPositionIN(62,-60,0);
             if(doneDriving){
                 step = 2;
             }if(step == 2){
