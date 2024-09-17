@@ -8,18 +8,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOTOS;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class OpticalTrackingOdometrySensor extends QQMechanism{
     SparkFunOTOS otos;
+    double MM_PER_INCH = 25.4;
+    double X_POSITION = 4 / MM_PER_INCH;
     @Override
     public void init(HardwareMap hwMap) {
         otos = hwMap.get(SparkFunOTOS.class,"sensor_otos"); //called this for virtual robot
         otos.setAngularUnit(AngleUnit.DEGREES);
         otos.setLinearUnit(DistanceUnit.INCH);
         otos.calibrateImu();
-        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(4,0,0);
+        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(X_POSITION,0,270);
         otos.setOffset(offset);
         otos.resetTracking();
     }
@@ -32,9 +34,5 @@ public class OpticalTrackingOdometrySensor extends QQMechanism{
     }
 
     @Override
-    public List<QQTest> getTests() {
-        return Arrays.asList(
-                new TestOTOS("otos position", otos)
-        );
-    }
-}
+    public List<QQTest> getTests() {return Collections.singletonList(new TestOTOS("otos position", otos));}}
+
