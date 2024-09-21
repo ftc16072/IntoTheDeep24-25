@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
+import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +24,9 @@ public class Claw extends QQMechanism {
 
     @Override
     public List<QQTest> getTests() {
-        return Collections.emptyList();
+        return Arrays.asList(
+                new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo)
+        );
     }
 
     public void open() {
@@ -32,10 +36,4 @@ public class Claw extends QQMechanism {
     public void close() {
         clawServo.setPosition(CLAW_CLOSE_POSITION);}}
 
-        //@Override
-        //public List<QQTest> getTests; (){
-       //     return Arrays.asList(
-                   // new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo);
-      //  )
-      //  }
-   // }
+
