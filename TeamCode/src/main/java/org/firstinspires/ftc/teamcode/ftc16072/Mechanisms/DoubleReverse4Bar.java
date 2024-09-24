@@ -43,10 +43,10 @@ public class DoubleReverse4Bar extends QQMechanism{
         rightMotor = hwMap.get(DcMotor.class, "right_4bar_motor");
     }
 
-    public setPosition(int desiredPos){
+    public void setPosition(int desiredPos){
         this.desiredPos = desiredPos;
     }
-    public manualPositionChange(int changeAmount){
+    public void manualPositionChange(int changeAmount){
         desiredPos += changeAmount;
     }
     @Override
