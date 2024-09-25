@@ -19,7 +19,7 @@ public class Claw extends QQMechanism {
 
     @Override
     public void init(HardwareMap hwMap) {
-        clawServo = hwMap.get(Servo.class, "claw_movement");
+        clawServo = hwMap.get(Servo.class, "claw_servo");
     }
 
     @Override
