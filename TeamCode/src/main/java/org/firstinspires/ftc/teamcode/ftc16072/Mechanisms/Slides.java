@@ -24,6 +24,10 @@ public class Slides extends QQMechanism {
         slideServo = hwMap.get(Servo.class, "slide_movement");
     }
 
+    public void goToPos(double position){
+        slideServo.setPosition(position);
+    }
+
     @Override
     public List<QQTest> getTests() {
         return Arrays.asList(
