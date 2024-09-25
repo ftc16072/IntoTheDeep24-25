@@ -34,13 +34,13 @@ public class DoubleReverse4Bar extends QQMechanism{
 
     @Override
     public void init(HardwareMap hwMap) {
+        leftMotor = hwMap.get(DcMotor.class, "left_4bar_motor");
+        rightMotor = hwMap.get(DcMotor.class, "right_4bar_motor");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftMotor = hwMap.get(DcMotor.class, "left_4bar_motor");
-        rightMotor = hwMap.get(DcMotor.class, "right_4bar_motor");
     }
 
     public void setPosition(int desiredPos){
