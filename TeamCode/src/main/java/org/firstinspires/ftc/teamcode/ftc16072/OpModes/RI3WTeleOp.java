@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 public class RI3WTeleOp extends QQOpMode{
 
     public static final double TRIGGER_THRESHOLD = 0.5;
+    public static final int MANUAL_CHANGE = 15;
+
 
     @Override
     public void loop() {
@@ -28,24 +30,24 @@ public class RI3WTeleOp extends QQOpMode{
         nav.driveFieldRelative(forward, left, rotate);
 
         if (gamepad1.dpad_up) {
-            //dbar up
+            robot.doubleReverse4Bar.manualPositionChange(MANUAL_CHANGE);
         }
         else if (gamepad1.dpad_down){
-            //dbar downn
+            robot.doubleReverse4Bar.manualPositionChange(-MANUAL_CHANGE);
         }
 
         if (gamepad1.dpad_right){
-            //slide extend
+            robot.slides.extend();
         }
         else if (gamepad1.dpad_left){
-            //slides retract
+            robot.slides.retract();
         }
 
         if (gamepad1.left_bumper){
-            //claw open
+            robot.claw.open();
         }
         else if (gamepad1.right_bumper){
-            //claw.close
+            robot.claw.close();
         }
 
 

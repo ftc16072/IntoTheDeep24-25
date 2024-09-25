@@ -26,6 +26,8 @@ public class Slides extends QQMechanism {
     public void goToPos(double position){
         slideServo.setPosition(position);
     }
+    public void extend(){slideServo.setPosition(SLIDE_FRONT_POSITION);}
+    public void retract(){slideServo.setPosition(SLIDE_BACK_POSITION);}
 
     @Override
     public List<QQTest> getTests() {
