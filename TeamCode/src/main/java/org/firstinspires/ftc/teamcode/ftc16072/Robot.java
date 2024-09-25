@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.DoubleReverse4Bar;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.OpticalTrackingOdometrySensor;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Slides;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Robot {
     public OpticalTrackingOdometrySensor otos;
     public Claw claw;
     public DoubleReverse4Bar doubleReverse4Bar;
+    public Slides slides;
     List<QQMechanism> mechanisms;
 
     public Robot() {
@@ -28,12 +30,17 @@ public class Robot {
         claw = new Claw();
         doubleReverse4Bar = new DoubleReverse4Bar();
 
+        slides = new Slides();
+
         mechanisms = Arrays.asList(
                 controlHub,
                 mecanumDrive,
                 otos,
                 claw,
+
                 doubleReverse4Bar);
+                slides);
+
     }
     public void init(HardwareMap hwMap) {
         for (QQMechanism mechanism : mechanisms) {
