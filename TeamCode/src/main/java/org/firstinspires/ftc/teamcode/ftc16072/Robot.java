@@ -36,8 +36,7 @@ public class Robot {
                 mecanumDrive,
                 otos,
                 claw,
-                slides);
-
+                slides
                 claw,
                 doubleReverse4Bar);
     }
