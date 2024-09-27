@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Tests;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+@Config
 public class TestTwoMotors extends QQTest{
+    public static double STOP_POWER = 0;
     DcMotor leftMotor;
     DcMotor rightMotor;
     double speed;
@@ -23,8 +25,8 @@ public class TestTwoMotors extends QQTest{
             rightMotor.setPower(speed);
 
         }else{
-            leftMotor.setPower(0);
-            rightMotor.setPower(0);
+            leftMotor.setPower(STOP_POWER);
+            rightMotor.setPower(STOP_POWER);
 
         }
 

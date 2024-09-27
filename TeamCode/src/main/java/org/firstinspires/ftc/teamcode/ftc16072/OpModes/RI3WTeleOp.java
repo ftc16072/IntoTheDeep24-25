@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 public class RI3WTeleOp extends QQOpMode{
 
     public static final double TRIGGER_THRESHOLD = 0.5;
-    public static final int MANUAL_CHANGE = 15;
+    public static final int MANUAL_CHANGE = 5;
 
 
     @Override
@@ -18,6 +18,9 @@ public class RI3WTeleOp extends QQOpMode{
         double forward = -gamepad1.left_stick_y;
         double left = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
+        telemetry.addData("dr4b desired pos", robot.doubleReverse4Bar.desiredPos);
+        telemetry.addData("dr4b current pos", robot.doubleReverse4Bar.currentPos);
+        telemetry.addData("dr4b power", robot.doubleReverse4Bar.motorPower);
 
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD && gamepad1.right_trigger > TRIGGER_THRESHOLD){
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
@@ -48,6 +51,9 @@ public class RI3WTeleOp extends QQOpMode{
         }
         else if (gamepad1.right_bumper){
             robot.claw.close();
+        }
+        if (gamepad1.b){
+            robot.controlHub.resetGyro();
         }
 
 
