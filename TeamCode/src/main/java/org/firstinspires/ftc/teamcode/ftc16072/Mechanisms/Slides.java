@@ -12,7 +12,7 @@ import java.util.List;
 
 @Config
 public class Slides extends QQMechanism {
-    public static double SLIDE_BACK_POSITION = 0.125;
+    public static double SLIDE_BACK_POSITION = 0.1;
     public static double SLIDE_FRONT_POSITION = 1.0;
     public static double SLIDE_MIDDLE_POSITION = 0.5;
 

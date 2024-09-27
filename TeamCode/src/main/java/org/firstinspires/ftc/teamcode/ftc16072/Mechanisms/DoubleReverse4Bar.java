@@ -12,33 +12,33 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DoubleReverse4Bar extends QQMechanism{
-    public static final double TEST_SPEED = 0.2;
+    public static final double TEST_SPEED = 0.55;
+    public static double TEST_SPEED_OFF = 0.4;
     DcMotor leftMotor;
     DcMotor rightMotor;
-    public static double kP = 0.001;
+    public static double kP = 0.01;
     public static double kI = 0.0;
     public static double kD = 0.0;
-    public static double kF = 0.0;
+    public static double kF = 0.4;
     public static double max =  0.8;
     public static double min = 0.0;
 
-    int currentPos;
-    int desiredPos;
+    public int currentPos;
+    public int desiredPos;
+    public double motorPower;
 
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
-
-    public int INTAKE_POS = 0;//TODO: make real
-
-    public int PLACE_POS = 600; //TODO: make real :)
 
     @Override
     public void init(HardwareMap hwMap) {
         leftMotor = hwMap.get(DcMotor.class, "left_4bar_motor");
         rightMotor = hwMap.get(DcMotor.class, "right_4bar_motor");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
@@ -53,12 +53,16 @@ public class DoubleReverse4Bar extends QQMechanism{
     public void update(){
         currentPos = (leftMotor.getCurrentPosition() + rightMotor.getCurrentPosition())/2;//average left and right speeds
         double motorPower = pidfController.calculate(desiredPos,currentPos);
+        this.motorPower = motorPower;
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
     }
 
     @Override
     public List<QQTest> getTests() {
-        return Arrays.asList(new TestTwoMotors("fourbar", TEST_SPEED,leftMotor,rightMotor));
+        return Arrays.asList(
+                new TestTwoMotors("fourbar up", TEST_SPEED,leftMotor,rightMotor),
+                new TestTwoMotors("four bar stop", TEST_SPEED_OFF,leftMotor,rightMotor)
+        );
     }
 }
