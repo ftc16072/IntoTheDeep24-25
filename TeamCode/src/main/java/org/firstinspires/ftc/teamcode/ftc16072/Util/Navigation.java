@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Util;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Robot;
-
+@Config
 public class Navigation {
     public static final double MAX_TRANSLATE = 1;
     public static final double MIN_TRANSLATE = -MAX_TRANSLATE;
@@ -13,17 +14,17 @@ public class Navigation {
     public static final double MIN_ROTATE = -MAX_ROTATE;
     Robot robot;
 
-    static double TRANSLATIONAL_KP = 0.025;
-    static double TRANSLATIONAL_KI = 0.0;
-    static double TRANSLATIONAL_KD = 0.000;
-    static double TRANSLATIONAL_KF = 0;
-    static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
+    public static double TRANSLATIONAL_KP = 0.03;
+    public static double TRANSLATIONAL_KI = 0.0;
+    public static double TRANSLATIONAL_KD = 0.000;
+    public static double TRANSLATIONAL_KF = 0;
+    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
 
-    static double ROTATIONAL_KP = 0.1;
-    static double ROTATIONAL_KI = 0.000;
-    static double ROTATIONAL_KD = 0.00;
-    static double ROTATIONAL_KF = 0;
-    static double ROTATIONAL_TOLERANCE_THRESHOLD = 1;
+    public static double ROTATIONAL_KP = 0.1;
+    public static double ROTATIONAL_KI = 0.000;
+    public static double ROTATIONAL_KD = 0.00;
+    public static double ROTATIONAL_KF = 0;
+    public static double ROTATIONAL_TOLERANCE_THRESHOLD = 1;
 
     PIDFController PIDx, PIDy, PIDh;
 
@@ -36,6 +37,11 @@ public class Navigation {
         PIDy = new PIDFController(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
         PIDh = new PIDFController(ROTATIONAL_KP,ROTATIONAL_KI,ROTATIONAL_KD,ROTATIONAL_KF, MAX_ROTATE, MIN_ROTATE);
         this.telemetry = telemetry;
+        telemetry.addData("Current X", 0);
+        telemetry.addData("Desired X", 0);
+
+        telemetry.addData("strafe right speed",0);
+        telemetry.addData("foward speed",0);
     }
     public void driveFieldRelative(double forwardSpeed, double strafeRightSpeed, double rotateCWSpeed){
         double robotAngle = robot.controlHub.getYaw(AngleUnit.RADIANS);
@@ -80,7 +86,7 @@ public class Navigation {
         if (notWithinTolerance(desiredHeading, currentPosition.h,ROTATIONAL_TOLERANCE_THRESHOLD)) {
             rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPosition.h);
         }else {rotateCCWSpeed = 0;}
-        /*
+
         telemetry.addData("Current X", currentPosition.x);
         telemetry.addData("Desired X", desiredX);
         telemetry.addData("Desired Y", desiredY);
@@ -91,7 +97,7 @@ public class Navigation {
         telemetry.addData("strafe right speed",-strafeLeftSpeed);
         telemetry.addData("foward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
-         */
+
         driveFieldRelative(forwardSpeed,-strafeLeftSpeed,-rotateCCWSpeed);
         return !(notWithinTolerance(desiredX,currentPosition.x,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredY,currentPosition.y,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
