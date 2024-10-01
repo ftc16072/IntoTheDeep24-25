@@ -9,13 +9,14 @@ import org.firstinspires.ftc.teamcode.ftc16072.Util.Navigation;
 
 public abstract class QQOpMode extends OpMode {
     public Robot robot = new Robot();
-    Navigation nav = new Navigation(robot, telemetry);
+    Navigation nav;
 
     @Override
     public void init() {
-        robot.init(hardwareMap);
-        robot.controlHub.resetGyro();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        nav = new Navigation(robot, telemetry);
+
+        robot.init(hardwareMap);
         robot.controlHub.resetGyro();
     }
 
