@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
-
 @TeleOp
 @SuppressWarnings("unused")
 public class RI3WTeleOp extends QQOpMode{
@@ -14,7 +12,7 @@ public class RI3WTeleOp extends QQOpMode{
 
     @Override
     public void loop() {
-        super.loop();
+       /* super.loop();
         double forward = -gamepad1.left_stick_y;
         double left = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
@@ -56,6 +54,6 @@ public class RI3WTeleOp extends QQOpMode{
             robot.controlHub.resetGyro();
         }
 
-
+*/
     }
 }
