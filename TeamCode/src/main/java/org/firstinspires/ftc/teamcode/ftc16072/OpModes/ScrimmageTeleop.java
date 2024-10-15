@@ -35,9 +35,9 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.arm.manualPositionChange(MANUAL_CHANGE);
         }else if (gamepad1.dpad_down){
             robot.arm.manualPositionChange(-MANUAL_CHANGE);
+        }else if (gamepad1.y){
+            robot.controlHub.resetGyro();
         }
-
-
         if (gamepad1.right_bumper) {
             robot.claw.close();
         }else if (gamepad1.right_trigger > TRIGGER_THRESHOLD){
