@@ -12,6 +12,7 @@ public class PIDFController {
 
     double sumErrors;
     double lastError;
+    double lastDesired;
     ElapsedTime timer = new ElapsedTime();
 
     public PIDFController(double kP,double kI,double kD,double kF, double max, double min){
@@ -28,6 +29,10 @@ public class PIDFController {
         timer.reset();
     }
     public double calculate(double desired, double current){
+        if (lastDesired != desired){
+            reset();
+        }
+
         double error = desired - current;
         double derivative = (error-lastError)/timer.seconds();
         sumErrors += error * timer.seconds();
@@ -36,6 +41,8 @@ public class PIDFController {
 
         timer.reset();
         lastError = error;
+        lastDesired = desired;
+
 
         result = Math.min(max,result);
         result = Math.max(min,result);

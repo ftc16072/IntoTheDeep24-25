@@ -47,7 +47,7 @@ public class MecanumDrive extends QQMechanism{
                 speedMultiplier= 0.5;
                 break;
             case SLOW :
-                speedMultiplier= 0.25;
+                speedMultiplier= 0.1;
                 break;
             case FAST:
                 speedMultiplier= 0.75;

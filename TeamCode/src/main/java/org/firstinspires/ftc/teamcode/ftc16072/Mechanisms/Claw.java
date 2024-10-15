@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+@Config
 public class Claw extends QQMechanism {
-    public static double CLAW_OPEN_POSITION = 1;
-    public static double CLAW_CLOSE_POSITION = 0.7;
+    public static double CLAW_OPEN_POSITION = 0.3;
+    public static double CLAW_CLOSE_POSITION = 0;
 
 
     Servo clawServo;
@@ -24,7 +24,7 @@ public class Claw extends QQMechanism {
 
     @Override
     public List<QQTest> getTests() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo)
         );
     }
