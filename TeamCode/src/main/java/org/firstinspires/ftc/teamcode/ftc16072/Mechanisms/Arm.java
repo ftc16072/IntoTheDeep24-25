@@ -28,6 +28,7 @@ public class Arm extends QQMechanism{
     public double motorPower;
     public static int PLACEMENT_POSITION = 920;
     public static int INTAKE_POSITION = 10;
+    public static int PLACING_POSITION = 1100;
 
     public Telemetry telemetry;
 
@@ -53,6 +54,7 @@ public class Arm extends QQMechanism{
     public void goToPlacement(){
         desiredPos = PLACEMENT_POSITION;
     }
+    public void place(){desiredPos = PLACING_POSITION;}
 
     @Override
     public void update(){
