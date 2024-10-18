@@ -55,6 +55,7 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.claw.open();
             robot.mecanumDrive.move(0,0,0);
             robot.arm.goToIntake();
+            isPlacing = false;
         }
     }
 }
