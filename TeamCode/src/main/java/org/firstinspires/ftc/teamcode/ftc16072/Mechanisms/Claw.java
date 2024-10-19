@@ -11,8 +11,8 @@ import java.util.Collections;
 import java.util.List;
 @Config
 public class Claw extends QQMechanism {
-    public static double CLAW_OPEN_POSITION = 0.3;
-    public static double CLAW_CLOSE_POSITION = 0;
+    public static double CLAW_CLOSE_POSITION = 0.3;
+    public static double CLAW_OPEN_POSITION = 0;
 
 
     Servo clawServo;
