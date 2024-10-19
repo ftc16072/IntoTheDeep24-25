@@ -18,7 +18,7 @@ public abstract class QQOpMode extends OpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot.controlHub.resetGyro();
         robot.claw.close();
-        robot.arm.goToIntake();
+        robot.arm.goToDrive();
     }
 
     @Override

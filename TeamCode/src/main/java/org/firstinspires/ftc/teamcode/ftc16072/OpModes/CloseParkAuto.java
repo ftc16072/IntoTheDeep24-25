@@ -20,7 +20,7 @@ public class CloseParkAuto extends QQOpMode{
             if(doneDriving){
                 step = 2;
             }if(step == 2){
-                telemetry.addData("parked", 0);
+                robot.arm.goToGround();
             }
         }
     }

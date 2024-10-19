@@ -10,7 +10,6 @@ public class FarParkAuto extends QQOpMode{
         robot.otos.setOtosPosition(-31.5,-61.5,0);
     }
     public void loop(){
-        super.loop();
         if(step == 0){
             boolean doneDriving = nav.driveToPositionIN(-31.5,-60,0);
             if(doneDriving){
@@ -21,7 +20,7 @@ public class FarParkAuto extends QQOpMode{
             if(doneDriving){
                 step = 2;
             }if(step == 2){
-                telemetry.addData("parked", 0);
+                robot.arm.goToGround();
             }
         }
     }

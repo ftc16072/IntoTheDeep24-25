@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-@Autonomous
 public class BlueFarParkAuto extends QQOpMode{
     private double step = 0;
     public void init(){
@@ -22,6 +19,7 @@ public class BlueFarParkAuto extends QQOpMode{
                 step = 2;
             }if(step == 2){
                 telemetry.addData("parked", 0);
+                robot.arm.goToGround();
             }
         }
     }
