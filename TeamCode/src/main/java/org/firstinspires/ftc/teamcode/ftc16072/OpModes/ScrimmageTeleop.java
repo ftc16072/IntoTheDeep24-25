@@ -21,8 +21,6 @@ public class ScrimmageTeleop extends QQOpMode{
         double left = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
 
-        nav.driveFieldRelative(forward, left, rotate);
-
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD ){
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
         } else if (gamepad1.left_bumper) {
@@ -30,11 +28,11 @@ public class ScrimmageTeleop extends QQOpMode{
         } else robot.mecanumDrive.setSpeed(MecanumDrive.Speed.NORMAL);
 
         if (gamepad1.a){
-        robot.arm.goToIntake();
-        robot.claw.open();
+            robot.arm.goToIntake();
+            robot.claw.open();
         }else if (gamepad1.b) {
             robot.claw.close();
-        robot.arm.goToPlacement();
+            robot.arm.goToPlacement();
         }
         else if (gamepad1.dpad_up){
             robot.arm.manualPositionChange(MANUAL_CHANGE);
@@ -47,15 +45,18 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.claw.close();
         }else if (gamepad1.right_trigger > TRIGGER_THRESHOLD){
         robot.claw.open();}
+
         if(gamepad1.x){
             robot.arm.place();
             robot.mecanumDrive.move(.6,0,0);
             isPlacing = true;
-        }else if(!gamepad1.x || isPlacing){
+        }else if(!gamepad1.x && isPlacing){
             robot.claw.open();
             robot.mecanumDrive.move(0,0,0);
             robot.arm.goToIntake();
             isPlacing = false;
+        }else{
+            nav.driveFieldRelative(forward, left, rotate);
         }
     }
 }
