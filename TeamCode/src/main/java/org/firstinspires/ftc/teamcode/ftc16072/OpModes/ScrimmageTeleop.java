@@ -27,10 +27,10 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.SLOW);
         } else robot.mecanumDrive.setSpeed(MecanumDrive.Speed.NORMAL);
 
-        if (gamepad1.b){
+        if (gamepad1.a){
             robot.arm.goToIntake();
             robot.claw.open();
-        }else if (gamepad1.a) {
+        }else if (gamepad1.b) {
             robot.claw.close();
             robot.arm.goToPlacement();
         }
@@ -41,9 +41,9 @@ public class ScrimmageTeleop extends QQOpMode{
         }else if (gamepad1.y && gamepad1.dpad_right){
             robot.controlHub.resetGyro();
         }
-        if (gamepad1.right_bumper) {
+        if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
             robot.claw.close();
-        }else if (gamepad1.right_trigger > TRIGGER_THRESHOLD){
+        }else if (gamepad1.right_bumper){
         robot.claw.open();}
 
         if(gamepad1.x){
