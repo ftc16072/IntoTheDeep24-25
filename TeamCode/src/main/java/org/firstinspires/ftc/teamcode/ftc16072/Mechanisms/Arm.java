@@ -26,9 +26,9 @@ public class Arm extends QQMechanism{
     public int currentPos;
     public int desiredPos;
     public double motorPower;
-    public static int PLACEMENT_POSITION = 920;
-    public static int INTAKE_POSITION = 10;
-    public static int PLACING_POSITION = 1100;
+    public static int PLACEMENT_POSITION = 1030;
+    public static int INTAKE_POSITION = 300;
+    public static int PLACING_POSITION = 1300;
     public static int AUTO_DRIVE_POSITION = 120;
     public static int GROUND_POSITION = -10;
 
