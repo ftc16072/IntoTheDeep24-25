@@ -20,7 +20,7 @@ public class Arm extends QQMechanism{
     public static double kI = 0.0;
     public static double kD = 0.0;
     public static double kF = 0;
-    public static double max =  0.4;
+    public static double max =  0.8;
     public static double min = -max;
 
     public int currentPos;

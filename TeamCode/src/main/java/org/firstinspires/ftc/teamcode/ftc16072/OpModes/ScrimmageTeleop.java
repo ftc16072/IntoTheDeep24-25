@@ -50,7 +50,7 @@ public class ScrimmageTeleop extends QQOpMode{
         }else if (gamepad1.right_bumper){
         robot.claw.open();}
 
-        if (robot.arm.isAboveWristThreshold()){
+       if (robot.arm.isAboveWristThreshold()){
             robot.claw.wristEnd();
         }else {robot.claw.wristStart();}
 
