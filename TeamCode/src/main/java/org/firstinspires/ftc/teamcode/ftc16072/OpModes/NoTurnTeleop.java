@@ -3,8 +3,9 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+
 @TeleOp
-public class ScrimmageTeleop extends QQOpMode{
+public class NoTurnTeleop extends QQOpMode{
 
     public static final double TRIGGER_THRESHOLD = 0.5;
     public static final int MANUAL_CHANGE = 5;
@@ -32,7 +33,7 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.claw.open();
         }else if (gamepad1.b) {
             robot.claw.close();
-            robot.arm.goToPlacement();
+            robot.arm.goToUnderPlacement();
         }else if (gamepad1.dpad_right){
             robot.claw.wristStart();
         }else if (gamepad1.dpad_left) {
@@ -50,17 +51,14 @@ public class ScrimmageTeleop extends QQOpMode{
         }else if (gamepad1.right_bumper){
         robot.claw.open();}
 
-       if (robot.arm.isAboveWristThreshold()){
-            robot.claw.wristEnd();
-        }else {robot.claw.wristStart();}
 
         if(gamepad1.x){
-            robot.arm.place();
-            robot.mecanumDrive.move(-.6,0,0);
+            robot.arm.placeUnder();
             isPlacing = true;
         }else if(!gamepad1.x && isPlacing){
             robot.claw.open();
-            robot.mecanumDrive.move(0,0,0);
+            robot.arm.goToIntake();
+
 
 
 

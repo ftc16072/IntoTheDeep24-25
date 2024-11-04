@@ -20,15 +20,17 @@ public class Arm extends QQMechanism{
     public static double kI = 0.0;
     public static double kD = 0.0;
     public static double kF = 0;
-    public static double max =  0.4;
+    public static double max =  0.8;
     public static double min = -max;
 
     public int currentPos;
     public int desiredPos;
     public double motorPower;
     public static int PLACEMENT_POSITION = 1030;
+    public static int UNDER_PLACEMENT_POSITION = 940;
     public static int INTAKE_POSITION = 315;
     public static int PLACING_POSITION = 1300;
+    public static int UNDER_PLACING_POSITION = 640;
     public static int AUTO_DRIVE_POSITION = 120;
     public static int GROUND_POSITION = -10;
     static final int WRIST_THRESHOLD = 500;
@@ -57,7 +59,11 @@ public class Arm extends QQMechanism{
     public void goToPlacement(){
         desiredPos = PLACEMENT_POSITION;
     }
+    public void goToUnderPlacement(){
+        desiredPos = UNDER_PLACEMENT_POSITION;
+    }
     public void place(){desiredPos = PLACING_POSITION;}
+    public void placeUnder(){desiredPos = UNDER_PLACING_POSITION;}
     public void goToDrive(){desiredPos = AUTO_DRIVE_POSITION;}
     public void goToGround(){desiredPos = GROUND_POSITION;}
 
