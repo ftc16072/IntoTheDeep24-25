@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 
 
@@ -13,19 +15,20 @@ import org.firstinspires.ftc.teamcode.ftc16072.Util.PIDFController;
 
 import java.util.Arrays;
 import java.util.List;
+
+
 @Config
 public class IntakeSlides extends QQMechanism {
     //HAVE TO CHANGE ALL VALUES LATER
     public static final double TEST_SPEED = 0.55;
-    public static double TEST_SPEED_OFF = 0.0;
-    public static final int SLIDES_EXTENSION_BOUNDARY = 800;
     private static final int SlIDES_POSITION_SAFETY_BACK = -50;
-    private static final int FULL_EXTENSION_POSITION = 2000;
-    private static final int HALF_EXTENSION_POSITION = 1000;
+    private static final int FULL_EXTENSION_POSITION = 1480;
+    public static final int SLIDES_EXTENSION_BOUNDARY = FULL_EXTENSION_POSITION+10;
+    private static final int HALF_EXTENSION_POSITION = 740;
     private static final int START_POSITION = 0;
 
-    private DcMotorEx rightIntakeSlideMotor;
-    private DcMotorEx leftIntakeSlideMotor;
+    private DcMotor rightIntakeSlideMotor;
+    private DcMotor leftIntakeSlideMotor;
 
 
     public int currentPos;
@@ -37,7 +40,8 @@ public class IntakeSlides extends QQMechanism {
     public static double kD = 0.0;
     public static double kF = 0.4;
     public static double max =  0.8;
-    public static double min = 0.0;
+    public static double min = -max;
+    public Telemetry telemetry;
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
@@ -45,14 +49,13 @@ public class IntakeSlides extends QQMechanism {
     @Override
     public void init(HardwareMap hwMap) {
 
-        rightIntakeSlideMotor = hwMap.get(DcMotorEx.class, "right_intake_slide_motor");
+        rightIntakeSlideMotor = hwMap.get(DcMotor.class, "right_intake_slide_motor");
         rightIntakeSlideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightIntakeSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightIntakeSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightIntakeSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        leftIntakeSlideMotor = hwMap.get(DcMotorEx.class, "left_intake_slide_motor");
-        leftIntakeSlideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftIntakeSlideMotor = hwMap.get(DcMotor.class, "left_intake_slide_motor");
         leftIntakeSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftIntakeSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftIntakeSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -70,9 +73,12 @@ public class IntakeSlides extends QQMechanism {
         this.motorPower = motorPower;
         leftIntakeSlideMotor.setPower(motorPower);
         rightIntakeSlideMotor.setPower(motorPower);
+        telemetry.addData("Current", currentPos);
+        telemetry.addData("Desired", desiredPos);
+        telemetry.addData("Motor Power", motorPower);
 
         if(currentPos <= SlIDES_POSITION_SAFETY_BACK){
-            setPosition(START_POSITION);
+            setPosition(SlIDES_POSITION_SAFETY_BACK);
         }
 
         if(currentPos > SLIDES_EXTENSION_BOUNDARY){
@@ -86,7 +92,7 @@ public class IntakeSlides extends QQMechanism {
     public List<QQTest> getTests() {
         return Arrays.asList(
                 new TestTwoMotors("slides out", TEST_SPEED,leftIntakeSlideMotor,rightIntakeSlideMotor),
-                new TestTwoMotors("slides stop", TEST_SPEED_OFF,leftIntakeSlideMotor,rightIntakeSlideMotor)
+                new TestTwoMotors("slides in", -TEST_SPEED,leftIntakeSlideMotor,rightIntakeSlideMotor)
         );
     }
     public void fullExtension(){
