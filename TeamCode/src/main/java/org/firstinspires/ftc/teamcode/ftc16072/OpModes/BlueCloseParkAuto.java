@@ -19,7 +19,8 @@ public class BlueCloseParkAuto extends QQOpMode{
                 step = 2;
             }if(step == 2){
                 telemetry.addData("parked", 0);
-                robot.arm.goToGround();
+                robot.scoreArm.goToIntake();
+
             }
         }
     }
