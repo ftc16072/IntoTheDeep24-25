@@ -22,8 +22,12 @@ public class Robot {
     public Claw claw;
     //public DoubleReverse4Bar doubleReverse4Bar;
    // public Slides slides;
-    public ScoreArm scoreArm;
+
+  
     public IntakeSlides intakeSlides;
+
+    public ScoreArm scoreArm;
+
     List<QQMechanism> mechanisms;
 
     public Robot() {
@@ -43,8 +47,11 @@ public class Robot {
                 claw,
                // slides,
                 claw,
-                scoreArm,
-                intakeSlides);
+
+                //doubleReverse4Bar,
+                intakeSlides,
+                scoreArm);
+
     }
     public void init(HardwareMap hwMap) {
         for (QQMechanism mechanism : mechanisms) {
