@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeClaw;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.OpticalTrackingOdometrySensor;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
@@ -21,6 +22,7 @@ public class Robot {
     //public DoubleReverse4Bar doubleReverse4Bar;
    // public Slides slides;
     public Arm arm;
+    public IntakeClaw intakeClaw;
     List<QQMechanism> mechanisms;
 
     public Robot() {
@@ -31,16 +33,18 @@ public class Robot {
         //doubleReverse4Bar = new DoubleReverse4Bar();
         //slides = new Slides();
         arm = new Arm();
+        intakeClaw = new IntakeClaw();
 
         mechanisms = Arrays.asList(
                 controlHub,
-                mecanumDrive,
-                otos,
-                claw,
+                //mecanumDrive,
+                //otos,
+                //claw,
                // slides,
-                claw,
+
                 //doubleReverse4Bar,
-                arm);
+                //arm
+                intakeClaw);
     }
     public void init(HardwareMap hwMap) {
         for (QQMechanism mechanism : mechanisms) {
