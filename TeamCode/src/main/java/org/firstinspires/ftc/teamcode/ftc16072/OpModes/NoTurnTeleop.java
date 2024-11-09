@@ -48,8 +48,6 @@ public class NoTurnTeleop extends QQOpMode{
 
             robot.controlHub.resetGyro();
         }
-        robot.arm.manualPositionChange(-MANUAL_CHANGE);
-    }
         
         if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
             robot.claw.close();
