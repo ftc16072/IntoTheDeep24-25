@@ -34,8 +34,8 @@ public class ScoreArm extends QQMechanism{
     public double motorPower;
 
     static int INTAKE_POSITION = 0;
-    static int SCORING_POSITION = 940;
-    static int PLACING_POSITION = 1300;
+    static int SCORING_POSITION = 350;
+    static int PLACING_POSITION = 750;
 
     public Telemetry telemetry;
 
@@ -83,12 +83,14 @@ public class ScoreArm extends QQMechanism{
                 desiredPos = 0;
             }
         }
-
         currentPos = (leftMotor.getCurrentPosition() + rightMotor.getCurrentPosition())/2;//average left and right speeds
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         this.motorPower = motorPower;
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
+        telemetry.addData("curerent pos",currentPos);
+        telemetry.addData("desired pos",desiredPos);
+        telemetry.addData("motor power",motorPower);
 
     }
 
