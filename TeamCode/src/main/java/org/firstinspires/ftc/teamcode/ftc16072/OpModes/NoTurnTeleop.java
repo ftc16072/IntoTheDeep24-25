@@ -55,7 +55,7 @@ public class NoTurnTeleop extends QQOpMode{
 
 
         if(gamepad1.x){
-            robot.scoreArm.goToPlace();
+            robot.scoreArm.goToScoring();
             isPlacing = true;
         }else if(!gamepad1.x && isPlacing){
             robot.claw.open();
