@@ -14,9 +14,9 @@ public class NoTurnTeleop extends QQOpMode{
     public void init(){
         isPlacing = false;
         super.init();
+        intake_slides_code
         robot.intakeSlides.telemetry = telemetry;
         robot.scoreArm.telemetry = telemetry;
-        robot.intakeSlides.telemetry = telemetry;
     }
     public void loop(){
         super.loop();
@@ -40,17 +40,18 @@ public class NoTurnTeleop extends QQOpMode{
             robot.claw.wristStart();
         }else if (gamepad1.dpad_left) {
             robot.claw.wristEnd();
-        }else if (gamepad1.dpad_up){
         }else if (gamepad1.dpad_down){
             robot.scoreArm.manualPositionChange(MANUAL_CHANGE);
         }else if (gamepad1.dpad_down){
             robot.scoreArm.manualPositionChange(-MANUAL_CHANGE);
         }
         if (gamepad1.y && gamepad1.dpad_right){
+
             robot.controlHub.resetGyro();
         }
-
-
+        robot.arm.manualPositionChange(-MANUAL_CHANGE);
+    }
+        
         if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
             robot.claw.close();
         }else if (gamepad1.right_bumper){
