@@ -49,7 +49,7 @@ public class Robot {
 
                 //doubleReverse4Bar,
                 intakeSlides,
-                arm
+                arm,
                 scoreArm);
 
     }
