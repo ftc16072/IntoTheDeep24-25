@@ -31,7 +31,7 @@ public class FarParkAuto extends QQOpMode{
             if(doneDriving){
                 step = 3;
             }if(step == 3){
-                robot.arm.goToGround();
+                robot.scoreArm.goToIntake();
             }
         }
     }

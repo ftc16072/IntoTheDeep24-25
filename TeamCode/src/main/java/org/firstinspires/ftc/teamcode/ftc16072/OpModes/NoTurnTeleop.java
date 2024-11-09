@@ -14,7 +14,7 @@ public class NoTurnTeleop extends QQOpMode{
     public void init(){
         isPlacing = false;
         super.init();
-        robot.arm.telemetry = telemetry;
+        robot.scoreArm.telemetry = telemetry;
         robot.intakeSlides.telemetry = telemetry;
     }
     public void loop(){
@@ -30,23 +30,24 @@ public class NoTurnTeleop extends QQOpMode{
         } else robot.mecanumDrive.setSpeed(MecanumDrive.Speed.NORMAL);
 
         if (gamepad1.a){
-            robot.arm.goToIntake();
+            robot.scoreArm.goToIntake();
             robot.claw.open();
         }else if (gamepad1.b) {
             robot.claw.close();
-            robot.arm.goToUnderPlacement();
+            robot.scoreArm.goToPlace();
         }else if (gamepad1.dpad_right){
             robot.claw.wristStart();
         }else if (gamepad1.dpad_left) {
             robot.claw.wristEnd();
         }else if (gamepad1.dpad_up){
-            robot.arm.manualPositionChange(MANUAL_CHANGE);
-        }else if (gamepad1.dpad_down){{
+            robot.scoreArm.manualPositionChange(MANUAL_CHANGE);
+        }else if (gamepad1.dpad_down){
+            robot.scoreArm.manualPositionChange(-MANUAL_CHANGE);
+        }
+        if (gamepad1.y && gamepad1.dpad_right){
             robot.controlHub.resetGyro();
         }
-        robot.arm.manualPositionChange(-MANUAL_CHANGE);
-    }
-        
+
         if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
             robot.claw.close();
         }else if (gamepad1.right_bumper){
@@ -54,19 +55,11 @@ public class NoTurnTeleop extends QQOpMode{
 
 
         if(gamepad1.x){
-            robot.arm.placeUnder();
+            robot.scoreArm.goToPlace();
             isPlacing = true;
         }else if(!gamepad1.x && isPlacing){
             robot.claw.open();
-            robot.arm.goToIntake();
-
-
-
-
-
-
-
-
+            robot.scoreArm.goToIntake();
 
             isPlacing = false;
         }else{
