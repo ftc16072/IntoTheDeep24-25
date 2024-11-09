@@ -14,7 +14,6 @@ public class NoTurnTeleop extends QQOpMode{
     public void init(){
         isPlacing = false;
         super.init();
-        intake_slides_code
         robot.intakeSlides.telemetry = telemetry;
         robot.scoreArm.telemetry = telemetry;
     }
