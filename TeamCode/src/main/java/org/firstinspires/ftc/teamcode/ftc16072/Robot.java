@@ -45,11 +45,8 @@ public class Robot {
                 // otos,
                 claw,
                // slides,
-                claw,
-
                 //doubleReverse4Bar,
                 intakeSlides,
-                arm,
                 scoreArm);
 
     }
