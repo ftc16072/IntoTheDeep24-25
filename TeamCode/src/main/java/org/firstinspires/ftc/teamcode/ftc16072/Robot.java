@@ -4,9 +4,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
-
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeArm;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeClaw;
-
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeSlides;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.OpticalTrackingOdometrySensor;
@@ -22,6 +21,7 @@ public class Robot {
     public MecanumDrive mecanumDrive;
     public OpticalTrackingOdometrySensor otos;
     public Claw claw;
+    public IntakeArm intakeArm;
     //public DoubleReverse4Bar doubleReverse4Bar;
    // public Slides slides;
     public IntakeClaw intakeClaw;
@@ -41,6 +41,7 @@ public class Robot {
         otos = new OpticalTrackingOdometrySensor();
         claw = new Claw();
         intakeSlides = new IntakeSlides();
+        intakeArm = new IntakeArm();
         //doubleReverse4Bar = new DoubleReverse4Bar();
         //slides = new Slides();
 
@@ -51,6 +52,7 @@ public class Robot {
                 mecanumDrive,
                 // otos,
                 claw,
+                intakeArm,
                // slides,
                 //doubleReverse4Bar,
                 intakeSlides,
