@@ -18,34 +18,58 @@ import java.util.Locale;
 @Autonomous
 @SuppressWarnings("unused")
 public class ColorLocator extends OpMode {
+
+    public static final int CAMERA_WIDTH = 640;
+    public static final int CAMERA_HEIGHT = 480;
+    int CENTER_X = CAMERA_WIDTH/2;
+    int CENTER_Y = CAMERA_HEIGHT/2;
+
     ColorBlobLocatorProcessor colorLocator;
     public void init(){
         colorLocator = new ColorBlobLocatorProcessor.Builder()
-                .setTargetColorRange(ColorRange.BLUE)         // use a predefined color match
+                .setTargetColorRange(ColorRange.RED)         // use a predefined color match
                 .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
-                .setRoi(ImageRegion.asUnityCenterCoordinates(-0.5, 0.5, 0.5, -0.5))  // search central 1/4 of camera view
+                .setRoi(ImageRegion.asUnityCenterCoordinates(-1, 1, 1, -1))  // search central 1/4 of camera view
                 .setDrawContours(true)                        // Show contours on the Stream Preview
                 .setBlurSize(5)                               // Smooth the transitions between different colors in image
                 .build();
         @SuppressWarnings("unused")
         VisionPortal portal = new VisionPortal.Builder()
                 .addProcessor(colorLocator)
-                .setCameraResolution(new Size(320, 240))
+                .setCameraResolution(new Size(CAMERA_WIDTH, CAMERA_HEIGHT))
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .build();
     }
 
     public void loop (){
-        List<ColorBlobLocatorProcessor.Blob> blobs = colorLocator.getBlobs();
-        ColorBlobLocatorProcessor.Util.filterByArea(50, 2000, blobs);  // filter out very small blobs.
-        telemetry.addLine(" Area Density Aspect  Center");
-        for(ColorBlobLocatorProcessor.Blob b : blobs)
-        {
-            RotatedRect boxFit = b.getBoxFit();
-            telemetry.addLine(String.format(Locale.US, "%5d  %4.2f   %5.2f  (%3d,%3d)",
-                    b.getContourArea(), b.getDensity(), b.getAspectRatio(), (int) boxFit.center.x, (int) boxFit.center.y));
+        ColorBlobLocatorProcessor.Blob blob = blobClosestToCenter();
+        if(blob == null){
+            telemetry.addData("Closest", "none");
         }
+        else{
+            double angle = blob.getBoxFit().angle;
+            if (blob.getBoxFit().size.height > blob.getBoxFit().size.width){
+                angle = 90 + angle;
+            }
+            telemetry.addData("Closest angle", angle);
+        }
+    }
 
+    public ColorBlobLocatorProcessor.Blob blobClosestToCenter(){
+        double closest = 100000000;
+        ColorBlobLocatorProcessor.Blob returnBlob = null;
 
+        List<ColorBlobLocatorProcessor.Blob> blobs = colorLocator.getBlobs();
+        for(ColorBlobLocatorProcessor.Blob blob : blobs) {
+            double distance = getDistanceFromCenter(blob.getBoxFit());
+            if (distance < closest){
+                closest = distance;
+                returnBlob = blob;
+            }
+        }
+        return returnBlob;
+    }
+    private double getDistanceFromCenter(RotatedRect boxFit){
+        return  Math.abs(boxFit.center.x - CENTER_X) + Math.abs(boxFit.center.y - CENTER_Y);
     }
 }
