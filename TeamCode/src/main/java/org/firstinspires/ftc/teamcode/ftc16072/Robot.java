@@ -2,13 +2,16 @@ package org.firstinspires.ftc.teamcode.ftc16072;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
+
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeClaw;
+
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeSlides;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.OpticalTrackingOdometrySensor;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ScoreArm;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +24,15 @@ public class Robot {
     public Claw claw;
     //public DoubleReverse4Bar doubleReverse4Bar;
    // public Slides slides;
-    public Arm arm;
     public IntakeClaw intakeClaw;
+
+
+  
+    public IntakeSlides intakeSlides;
+
+    public ScoreArm scoreArm;
+
+
     List<QQMechanism> mechanisms;
 
     public Robot() {
@@ -30,21 +40,22 @@ public class Robot {
         controlHub = new ControlHub();
         otos = new OpticalTrackingOdometrySensor();
         claw = new Claw();
+        intakeSlides = new IntakeSlides();
         //doubleReverse4Bar = new DoubleReverse4Bar();
         //slides = new Slides();
-        arm = new Arm();
-        intakeClaw = new IntakeClaw();
+
+        scoreArm = new ScoreArm();
 
         mechanisms = Arrays.asList(
                 controlHub,
-                //mecanumDrive,
-                //otos,
-                //claw,
+                mecanumDrive,
+                // otos,
+                claw,
                // slides,
-
                 //doubleReverse4Bar,
-                //arm
-                intakeClaw);
+                intakeSlides,
+                scoreArm);
+
     }
     public void init(HardwareMap hwMap) {
         for (QQMechanism mechanism : mechanisms) {
