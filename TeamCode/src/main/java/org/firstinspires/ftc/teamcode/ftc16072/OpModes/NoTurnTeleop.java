@@ -82,10 +82,10 @@ public class NoTurnTeleop extends QQOpMode{
             robot.intakeSlides.manualPositionChange(-5);
         }
         if(gamepad2.left_bumper){
-            robot.intakeArm.intake();
+            robot.intakeArm.goToIntake();
         }
         if(gamepad2.right_bumper){
-            robot.intakeArm.start();
+            robot.intakeArm.goToDropPos();
         }
         if(gamepad2.dpad_right){
             robot.intakeArm.searching();

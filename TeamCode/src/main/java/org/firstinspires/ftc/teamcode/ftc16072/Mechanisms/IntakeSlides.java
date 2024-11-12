@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
@@ -29,6 +30,7 @@ public class IntakeSlides extends QQMechanism {
 
     private DcMotor rightIntakeSlideMotor;
     private DcMotor leftIntakeSlideMotor;
+    private TouchSensor limitSwitch;
 
 
     public int currentPos;
@@ -59,6 +61,8 @@ public class IntakeSlides extends QQMechanism {
         leftIntakeSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftIntakeSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftIntakeSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        limitSwitch = hwMap.get(TouchSensor.class, "Slides_switch");
     }
     public void setPosition(int desiredPos){
         this.desiredPos = desiredPos;
@@ -85,6 +89,9 @@ public class IntakeSlides extends QQMechanism {
             setPosition(SLIDES_EXTENSION_BOUNDARY);
         }
     }
+
+    public boolean isSwitchPressed = limitSwitch.isPressed();
+
 
 
 
