@@ -46,6 +46,7 @@ public class Robot {
         //slides = new Slides();
 
         scoreArm = new ScoreArm();
+        intakeClaw = new IntakeClaw();
 
         mechanisms = Arrays.asList(
                 controlHub,
@@ -56,7 +57,8 @@ public class Robot {
                // slides,
                 //doubleReverse4Bar,
                 intakeSlides,
-                scoreArm);
+                scoreArm,
+                intakeClaw);
 
     }
     public void init(HardwareMap hwMap) {

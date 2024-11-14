@@ -23,20 +23,17 @@ import java.util.List;
 
 @Config
 public class IntakeClaw extends QQMechanism {
-    public static double CLAW_CLOSE_POSITION = 0.3;
-    public static double CLAW_OPEN_POSITION = 0;
-    public static double WRIST_START_POSITION = 0;
-    public static double WRIST_END_POSITION = 0.67;
+    public static double CLAW_CLOSE_POSITION = 1;
+    public static double CLAW_OPEN_POSITION = 0.8;
+    public static double WRIST_FLAT_POSITION = 0.5;
+    public static double WRIST_START_POSITION = 0.15;
+    public static double WRIST_END_POSITION = 0.85;
 
     Servo clawServo;
     Servo wristServo;
-    WebcamName webcamName;
     public Telemetry telemetry;
+    double wristServoPos;
 
-    public static final int CAMERA_WIDTH = 640;
-    public static final int CAMERA_HEIGHT = 480;
-    int CENTER_X = CAMERA_WIDTH / 2;
-    int CENTER_Y = CAMERA_HEIGHT / 2;
 
     ColorBlobLocatorProcessor colorLocator;
 
@@ -44,62 +41,16 @@ public class IntakeClaw extends QQMechanism {
     public void init(HardwareMap hwMap) {
         clawServo = hwMap.get(Servo.class, "intake_claw_servo");
         wristServo = hwMap.get(Servo.class, "intake_wrist_servo");
-        webcamName = hwMap.get(WebcamName.class, "Webcam 1");
-
-        colorLocator = new ColorBlobLocatorProcessor.Builder()
-                .setTargetColorRange(ColorRange.RED)         // use a predefined color match
-                .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
-                .setRoi(ImageRegion.asUnityCenterCoordinates(-1, 1, 1, -1))  // search central 1/4 of camera view
-                .setDrawContours(true)                        // Show contours on the Stream Preview
-                .setBlurSize(5)                               // Smooth the transitions between different colors in image
-                .build();
-        @SuppressWarnings("unused")
-        VisionPortal portal = new VisionPortal.Builder()
-                .addProcessor(colorLocator)
-                .setCameraResolution(new Size(CAMERA_WIDTH, CAMERA_HEIGHT))
-                .setCamera(webcamName)
-                .build();
     }
 
     @Override
     public List<QQTest> getTests() {
         return Arrays.asList(
                 new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo),
-                new TestServo("wrist_movement", WRIST_START_POSITION, WRIST_END_POSITION, wristServo),
-                new TestWebcam("Webcam", webcamName)
+                new TestServo("wrist_movement", WRIST_START_POSITION, WRIST_END_POSITION, wristServo)
         );
     }
 
-    @Override
-    public void update() {
-        ColorBlobLocatorProcessor.Blob blob = blobClosestToCenter();
-        if (blob != null) {
-            double angle = blob.getBoxFit().angle;
-            if (blob.getBoxFit().size.height > blob.getBoxFit().size.width) {
-                angle = 90 + angle;
-            }
-            setWristAngle(angle);
-        }
-    }
-
-    public ColorBlobLocatorProcessor.Blob blobClosestToCenter() {
-        double closest = 100000000;
-        ColorBlobLocatorProcessor.Blob returnBlob = null;
-
-        List<ColorBlobLocatorProcessor.Blob> blobs = colorLocator.getBlobs();
-        for (ColorBlobLocatorProcessor.Blob blob : blobs) {
-            double distance = getDistanceFromCenter(blob.getBoxFit());
-            if ((blob.getContourArea() > 50) && (distance < closest)) {
-                closest = distance;
-                returnBlob = blob;
-            }
-        }
-        return returnBlob;
-    }
-
-    private double getDistanceFromCenter(RotatedRect boxFit) {
-        return Math.abs(boxFit.center.x - CENTER_X) + Math.abs(boxFit.center.y - CENTER_Y);
-    }
 
     public void open() {
         clawServo.setPosition(CLAW_OPEN_POSITION);
@@ -108,13 +59,20 @@ public class IntakeClaw extends QQMechanism {
     public void close() {
         clawServo.setPosition(CLAW_CLOSE_POSITION);
     }
-    public void setWristAngle(double angle){
-        double servoAngle = WRIST_START_POSITION + (WRIST_END_POSITION - WRIST_START_POSITION) * (angle/180);
-        if(telemetry != null){
-            telemetry.addData("angle", angle);
-            telemetry.addData("ServoAngle", servoAngle);
-        }
-        wristServo.setPosition(servoAngle);
+
+    public void wristFlat(){
+        wristServoPos = WRIST_FLAT_POSITION;
     }
+    public void adjustWrist(double manualChangeAmount){
+        wristServoPos += manualChangeAmount;
+        wristServoPos = Math.min(WRIST_END_POSITION,wristServoPos);
+        wristServoPos = Math.max(WRIST_START_POSITION,wristServoPos);
+    }
+
+    @Override
+    public void update(){
+        wristServo.setPosition(wristServoPos);
+    }
+
 }
 
