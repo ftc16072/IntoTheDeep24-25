@@ -30,7 +30,9 @@ public class IntakeSlides extends QQMechanism {
 
     private DcMotor rightIntakeSlideMotor;
     private DcMotor leftIntakeSlideMotor;
+/*
     private TouchSensor limitSwitch;
+*/
 
 
     public int currentPos;
@@ -62,7 +64,7 @@ public class IntakeSlides extends QQMechanism {
         leftIntakeSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftIntakeSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        limitSwitch = hwMap.get(TouchSensor.class, "Slides_switch");
+/*        limitSwitch = hwMap.get(TouchSensor.class, "Slides_switch");*/
     }
     public void setPosition(int desiredPos){
         this.desiredPos = desiredPos;
@@ -90,7 +92,7 @@ public class IntakeSlides extends QQMechanism {
         }
     }
 
-    public boolean isSwitchPressed = limitSwitch.isPressed();
+  /*  public boolean isSwitchPressed = limitSwitch.isPressed();*/
 
 
 

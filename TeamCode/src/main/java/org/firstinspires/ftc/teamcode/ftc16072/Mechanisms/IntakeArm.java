@@ -14,7 +14,7 @@ import java.util.List;
 public class IntakeArm extends QQMechanism {
     //change values later
     public static double ARM_DROP_POSITION = 0.7;
-    public static double ARM_INTAKE_POSITION = 0.9;
+    public static double ARM_INTAKE_POSITION = 0.1;
     public static double SEARCHING_POSITION = 0.85;
     public static double TRANSFER_POSITION = 0.8;
     Servo leftArmServo;
@@ -48,13 +48,9 @@ public class IntakeArm extends QQMechanism {
         rightArmServo.setPosition(TRANSFER_POSITION);
     }
 
-
-
     @Override
     public List<QQTest> getTests() {
         return Arrays.asList(
                 new TestTwoServos("arm_pos", ARM_DROP_POSITION, ARM_INTAKE_POSITION, leftArmServo, rightArmServo));
-
     }
 }
-
