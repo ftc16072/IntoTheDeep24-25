@@ -13,8 +13,6 @@ import java.util.List;
 
 @Config
 public class IntakeArm extends QQMechanism {
-    public static final double TIME_FOR_ARM_TO_MOVE = 0.5;
-    //change values later
     public static double ARM_DROP_POSITION = 0.7;
     public static double ARM_INTAKE_POSITION = 0.1;
     public static double SEARCHING_POSITION = 0.15;

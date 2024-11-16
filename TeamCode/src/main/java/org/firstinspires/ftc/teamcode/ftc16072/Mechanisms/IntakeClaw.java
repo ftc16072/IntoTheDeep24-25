@@ -1,24 +1,15 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
-import android.util.Size;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
-import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestWebcam;
-import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
-import org.firstinspires.ftc.vision.opencv.ColorRange;
-import org.firstinspires.ftc.vision.opencv.ImageRegion;
-import org.opencv.core.RotatedRect;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Config

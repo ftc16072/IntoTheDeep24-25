@@ -14,6 +14,8 @@ public class NoTurnTeleop extends QQOpMode{
     private boolean isSearching = false;
     private boolean isIntaking = false;
     boolean manipulatorXWasPressed;
+    boolean chamberContactWasPressed;
+    int contactLostPos;
 
     public void init(){
         isPlacing = false;
@@ -27,6 +29,8 @@ public class NoTurnTeleop extends QQOpMode{
         double forward = -gamepad1.left_stick_y;
         double left = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
+
+        nav.driveFieldRelative(forward, left, rotate);
 
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD ){
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
@@ -58,15 +62,17 @@ public class NoTurnTeleop extends QQOpMode{
         robot.claw.open();}
 
 
-        if(gamepad1.x){
+        if(robot.scoreArm.isChamberContacted()){
             robot.scoreArm.goToScoring();
             isPlacing = true;
-        }else if(!gamepad1.x && isPlacing){
+        }else if(!robot.scoreArm.isChamberContacted() && isPlacing && chamberContactWasPressed){
+            contactLostPos = robot.scoreArm.getCurrentPos();
+        }else if(isPlacing && robot.scoreArm.isTimeToReleaseClaw(contactLostPos)){
             robot.claw.open();
             isPlacing = false;
-        }else{
-            nav.driveFieldRelative(forward, left, rotate);
         }
+
+
         if(gamepad2.y){
             robot.intakeSlides.fullExtension();
             robot.intakeClaw.close();
@@ -113,6 +119,7 @@ public class NoTurnTeleop extends QQOpMode{
         }
 
         manipulatorXWasPressed = gamepad2.x;
+        chamberContactWasPressed = robot.scoreArm.isChamberContacted();
 
     }
 }

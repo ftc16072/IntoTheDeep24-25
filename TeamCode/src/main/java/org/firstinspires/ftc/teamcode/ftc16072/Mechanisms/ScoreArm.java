@@ -2,13 +2,11 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
-import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestSwitch;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestTwoMotors;
 import org.firstinspires.ftc.teamcode.ftc16072.Util.PIDFController;
@@ -18,10 +16,13 @@ import java.util.List;
 
 public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
+    public static final int CLAW_RELEASE_OFFSET = 50;
     public static double TEST_SPEED_OFF = 0.4;
     DcMotor leftMotor;
     DcMotor rightMotor;
     TouchSensor limitSwitch;
+    TouchSensor leftChamberContact;
+    TouchSensor rightChamberContact;
     public static double kP = 0.01;
     public static double kI = 0.0;
     public static double kD = 0.0;
@@ -29,7 +30,8 @@ public class ScoreArm extends QQMechanism{
     public static double max =  0.8;
     public static double min = -0.8;
 
-    public int currentPos;
+    boolean chamberContacted;
+    protected int currentPos;
     public int desiredPos;
     public double motorPower;
 
@@ -47,6 +49,8 @@ public class ScoreArm extends QQMechanism{
         leftMotor = hwMap.get(DcMotor.class, "left_score_arm_motor");
         rightMotor = hwMap.get(DcMotor.class, "right_score_arm_motor");
         limitSwitch = hwMap.get(TouchSensor.class, "score_arm_switch");
+        leftChamberContact = hwMap.get(TouchSensor.class, "left_chamber_contact_switch");
+        rightChamberContact = hwMap.get(TouchSensor.class,"right_chamber_contact_switch");
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -88,10 +92,22 @@ public class ScoreArm extends QQMechanism{
         this.motorPower = motorPower;
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
+        chamberContacted = leftChamberContact.isPressed();
         telemetry.addData("curerent pos",currentPos);
         telemetry.addData("desired pos",desiredPos);
         telemetry.addData("motor power",motorPower);
 
+
+    }
+    public boolean isChamberContacted(){
+        return chamberContacted;
+    }
+
+    public int getCurrentPos() {
+        return currentPos;
+    }
+    public boolean isTimeToReleaseClaw(int lostContactPosition){
+        return (currentPos < lostContactPosition - CLAW_RELEASE_OFFSET);
     }
 
     @Override
@@ -99,7 +115,8 @@ public class ScoreArm extends QQMechanism{
         return Arrays.asList(
                 new TestTwoMotors("score arm up", TEST_SPEED,leftMotor,rightMotor),
                 new TestTwoMotors("score arm down", -TEST_SPEED, leftMotor,rightMotor),
-                new TestSwitch("Arm limit switch", limitSwitch)
+                new TestSwitch("Arm limit switch", limitSwitch),
+                new TestSwitch("chamber contact", leftChamberContact)
         );
     }
 }
