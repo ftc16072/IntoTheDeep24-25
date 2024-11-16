@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
-import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 
 import java.util.Arrays;
 import java.util.List;
