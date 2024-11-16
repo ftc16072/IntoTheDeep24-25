@@ -17,7 +17,6 @@ import java.util.List;
 public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
     public static final int CLAW_RELEASE_OFFSET = 50;
-    public static double TEST_SPEED_OFF = 0.4;
     DcMotor leftMotor;
     DcMotor rightMotor;
     TouchSensor limitSwitch;
@@ -69,7 +68,7 @@ public class ScoreArm extends QQMechanism{
     public void goToPlace(){
         desiredPos = PLACING_POSITION;
     }
-    public void manualPositionChange(double changeAmount){
+    public void manualPositionChange(int changeAmount){
         desiredPos += changeAmount;
     }
 

@@ -25,9 +25,6 @@ public class IntakeClaw extends QQMechanism {
     public Telemetry telemetry;
     double wristServoPos;
 
-
-    ColorBlobLocatorProcessor colorLocator;
-
     @Override
     public void init(HardwareMap hwMap) {
         clawServo = hwMap.get(Servo.class, "intake_claw_servo");
