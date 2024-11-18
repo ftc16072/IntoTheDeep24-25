@@ -12,11 +12,10 @@ import java.util.List;
 
 @Config
 public class IntakeArm extends QQMechanism {
-    //change values later
     public static double ARM_DROP_POSITION = 0.7;
-    public static double ARM_INTAKE_POSITION = 0.9;
-    public static double SEARCHING_POSITION = 0.85;
-    public static double TRANSFER_POSITION = 0.8;
+    public static double ARM_INTAKE_POSITION = 0.1;
+    public static double SEARCHING_POSITION = 0.15;
+    public static double TRANSFER_POSITION = 0.6;
     Servo leftArmServo;
     Servo rightArmServo;
 
@@ -26,26 +25,21 @@ public class IntakeArm extends QQMechanism {
         rightArmServo = hwMap.get(Servo.class, "right_arm_servo");
         rightArmServo.setDirection(Servo.Direction.REVERSE);
     }
-    public void goToPos(double position){
+    protected void goToPos(double position){
         leftArmServo.setPosition(position);
         rightArmServo.setPosition(position);
-
     }
     public void goToDropPos(){
-        leftArmServo.setPosition(ARM_DROP_POSITION);
-        rightArmServo.setPosition(ARM_DROP_POSITION);
+        goToPos(ARM_DROP_POSITION);
     }
     public void goToIntake(){
-        leftArmServo.setPosition(ARM_INTAKE_POSITION);
-        rightArmServo.setPosition(ARM_INTAKE_POSITION);
+        goToPos(ARM_INTAKE_POSITION);
     }
     public void searching(){
-        leftArmServo.setPosition(SEARCHING_POSITION);
-        rightArmServo.setPosition(SEARCHING_POSITION);
+        goToPos(SEARCHING_POSITION);
     }
     public void transfer(){
-        leftArmServo.setPosition(TRANSFER_POSITION);
-        rightArmServo.setPosition(TRANSFER_POSITION);
+        goToPos(TRANSFER_POSITION);
     }
 
 
@@ -54,7 +48,5 @@ public class IntakeArm extends QQMechanism {
     public List<QQTest> getTests() {
         return Arrays.asList(
                 new TestTwoServos("arm_pos", ARM_DROP_POSITION, ARM_INTAKE_POSITION, leftArmServo, rightArmServo));
-
     }
 }
-
