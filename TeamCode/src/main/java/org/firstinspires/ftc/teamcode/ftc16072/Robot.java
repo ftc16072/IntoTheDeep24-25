@@ -51,7 +51,7 @@ public class Robot {
         mechanisms = Arrays.asList(
                 controlHub,
                 mecanumDrive,
-                // otos,
+                otos,
                 claw,
                 intakeArm,
                // slides,
