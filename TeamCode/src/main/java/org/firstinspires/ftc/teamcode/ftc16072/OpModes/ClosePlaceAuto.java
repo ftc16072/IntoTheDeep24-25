@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+@Autonomous
 public class ClosePlaceAuto extends QQOpMode {
     private double step = 0;
-
     public void init() {
         super.init();
-        robot.otos.setOtosPosition(31.48, -63.02, 0);
+        robot.otos.setOtosPosition(16.52, -63.02, 0);
         robot.claw.close();
     }
 
@@ -45,20 +46,32 @@ public class ClosePlaceAuto extends QQOpMode {
         else if(step == 4){
             boolean donedriving = nav.driveToPositionIN(49,-55.48,0);
             robot.scoreArm.goToIntake();
-
-            if (donedriving) {
-                step = 5;
+            if (donedriving){
+            step = 5;
             }
         }
 
         else if(step==5) {
-            //Fully extend intake arm and pick up sample then bring it
-            robot.scoreArm.goToIntake();
+            robot.scoreArm.goToPlace();
+            robot.intakeArm.goToIntake();
+            robot.intakeClaw.open();
+            robot.intakeSlides.fullExtension();
+            robot.intakeClaw.close();
+            robot.intakeArm.goToDropPos();
+            robot.intakeSlides.startPosition();
+            robot.intakeClaw.open();
             step = 6;
         }
 
         else if(step == 6) {
-
+            robot.scoreArm.goToIntake();
+            robot.claw.open();
+            boolean donedriving = nav.driveToPositionIN(48,-63.02,0);
+            robot.intakeClaw.open();
+            robot.claw.close();
+            if (donedriving){
+                step = 7;
+            }
         }
 
     }
