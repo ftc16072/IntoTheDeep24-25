@@ -44,7 +44,6 @@ public class IntakeSlides extends QQMechanism {
     public static double kF = 0.4;
     public static double max =  0.8;
     public static double min = -max;
-    public Telemetry telemetry;
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
@@ -72,15 +71,15 @@ public class IntakeSlides extends QQMechanism {
         desiredPos += changeAmount;
     }
     @Override
-    public void update(){
+    public void update(Telemetry telemetry){
         currentPos = (leftIntakeSlideMotor.getCurrentPosition() + rightIntakeSlideMotor.getCurrentPosition())/2;//average left and right speeds
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         this.motorPower = motorPower;
         leftIntakeSlideMotor.setPower(motorPower);
         rightIntakeSlideMotor.setPower(motorPower);
-        telemetry.addData("Current", currentPos);
-        telemetry.addData("Desired", desiredPos);
-        telemetry.addData("Motor Power", motorPower);
+        //telemetry.addData("Current", currentPos);
+        //telemetry.addData("Desired", desiredPos);
+        //telemetry.addData("Motor Power", motorPower);
 
         if(currentPos <= SlIDES_POSITION_SAFETY_BACK){
             setPosition(SlIDES_POSITION_SAFETY_BACK);

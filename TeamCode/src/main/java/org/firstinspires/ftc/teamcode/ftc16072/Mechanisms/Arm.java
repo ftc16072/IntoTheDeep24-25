@@ -72,7 +72,7 @@ public class Arm extends QQMechanism{
     }
 
     @Override
-    public void update(){
+    public void update(Telemetry telemetry){
         currentPos = (armMotor.getCurrentPosition());
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         telemetry.addData("Current", currentPos);

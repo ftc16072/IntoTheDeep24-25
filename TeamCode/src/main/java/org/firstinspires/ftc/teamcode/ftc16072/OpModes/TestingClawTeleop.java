@@ -9,9 +9,9 @@ public class TestingClawTeleop extends QQOpMode{
         super.loop();
 
         if (gamepad1.triangle) {
-            robot.claw.close();
+            robot.scoringClaw.close();
         } else {
-            robot.claw.open();
+            robot.scoringClaw.open();
         }
     }
 

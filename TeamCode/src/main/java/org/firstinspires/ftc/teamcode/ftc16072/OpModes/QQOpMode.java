@@ -24,7 +24,7 @@ public abstract class QQOpMode extends OpMode {
 
     @Override
     public void loop(){
-        robot.update();
+        robot.update(telemetry);
     }
 
 }
