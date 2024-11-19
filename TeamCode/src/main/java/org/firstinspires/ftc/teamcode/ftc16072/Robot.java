@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode.ftc16072;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Claw;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ScoringClaw;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeArm;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeClaw;
@@ -20,7 +21,7 @@ public class Robot {
     public ControlHub controlHub;
     public MecanumDrive mecanumDrive;
     public OpticalTrackingOdometrySensor otos;
-    public Claw claw;
+    public ScoringClaw scoringClaw;
     public IntakeArm intakeArm;
     //public DoubleReverse4Bar doubleReverse4Bar;
    // public Slides slides;
@@ -39,7 +40,7 @@ public class Robot {
         mecanumDrive = new MecanumDrive();
         controlHub = new ControlHub();
         otos = new OpticalTrackingOdometrySensor();
-        claw = new Claw();
+        scoringClaw = new ScoringClaw();
         intakeSlides = new IntakeSlides();
         intakeArm = new IntakeArm();
         //doubleReverse4Bar = new DoubleReverse4Bar();
@@ -52,7 +53,7 @@ public class Robot {
                 controlHub,
                 mecanumDrive,
                 // otos,
-                claw,
+                scoringClaw,
                 intakeArm,
                // slides,
                 //doubleReverse4Bar,
@@ -66,9 +67,9 @@ public class Robot {
             mechanism.init(hwMap);
         }
     }
-    public void update(){
+    public void update(Telemetry telemetry){
         for(QQMechanism mechanism: mechanisms){
-            mechanism.update();
+            mechanism.update(telemetry);
         }
     }
 

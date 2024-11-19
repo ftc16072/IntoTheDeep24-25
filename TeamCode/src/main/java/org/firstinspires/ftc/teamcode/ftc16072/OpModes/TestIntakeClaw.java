@@ -7,6 +7,5 @@ public class TestIntakeClaw extends QQOpMode{
     @Override
     public void init(){
         super.init();
-        robot.intakeClaw.telemetry = telemetry;
     }
 }

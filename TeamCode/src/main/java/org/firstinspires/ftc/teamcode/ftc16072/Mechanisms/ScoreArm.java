@@ -38,9 +38,6 @@ public class ScoreArm extends QQMechanism{
     static int SCORING_POSITION = 350;
     static int PLACING_POSITION = 750;
 
-    public Telemetry telemetry;
-
-
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
     @Override
@@ -76,7 +73,7 @@ public class ScoreArm extends QQMechanism{
 
 
     @Override
-    public void update(){
+    public void update(Telemetry telemetry){
         if(limitSwitch.isPressed()) {
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

@@ -20,8 +20,6 @@ public class NoTurnTeleop extends QQOpMode{
     public void init(){
         isPlacing = false;
         super.init();
-        robot.intakeSlides.telemetry = telemetry;
-        robot.scoreArm.telemetry = telemetry;
         robot.intakeClaw.wristFlat();
     }
     public void loop(){
@@ -40,10 +38,10 @@ public class NoTurnTeleop extends QQOpMode{
 
         if (gamepad1.a){
             robot.scoreArm.goToIntake();
-            robot.claw.open();
+            robot.scoringClaw.open();
             robot.intakeArm.goToDropPos();
         }else if (gamepad1.b) {
-            robot.claw.close();
+            robot.scoringClaw.close();
             robot.scoreArm.goToPlace();
             robot.intakeArm.transfer();
         }else if (gamepad1.dpad_up){
@@ -57,9 +55,9 @@ public class NoTurnTeleop extends QQOpMode{
         
         if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
             robot.intakeClaw.open();
-            robot.claw.close();
+            robot.scoringClaw.close();
         }else if (gamepad1.right_bumper){
-        robot.claw.open();}
+        robot.scoringClaw.open();}
 
 
         if(robot.scoreArm.isChamberContacted()){
@@ -68,7 +66,7 @@ public class NoTurnTeleop extends QQOpMode{
         }else if(!robot.scoreArm.isChamberContacted() && isPlacing && chamberContactWasPressed){
             contactLostPos = robot.scoreArm.getCurrentPos();
         }else if(isPlacing && robot.scoreArm.isTimeToReleaseClaw(contactLostPos)){
-            robot.claw.open();
+            robot.scoringClaw.open();
             isPlacing = false;
         }
 

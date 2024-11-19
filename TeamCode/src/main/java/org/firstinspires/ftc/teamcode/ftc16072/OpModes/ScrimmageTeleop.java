@@ -13,7 +13,6 @@ public class ScrimmageTeleop extends QQOpMode{
     public void init(){
         isPlacing = false;
         super.init();
-        robot.scoreArm.telemetry = telemetry;
     }
     public void loop(){
         super.loop();
@@ -29,14 +28,14 @@ public class ScrimmageTeleop extends QQOpMode{
 
         if (gamepad1.a){
             robot.scoreArm.goToIntake();
-            robot.claw.open();
+            robot.scoringClaw.open();
         }else if (gamepad1.b) {
-            robot.claw.close();
+            robot.scoringClaw.close();
             robot.scoreArm.goToPlace();
         }else if (gamepad1.dpad_right){
-            robot.claw.wristStart();
+            robot.scoringClaw.wristStart();
         }else if (gamepad1.dpad_left) {
-            robot.claw.wristEnd();
+            robot.scoringClaw.wristEnd();
         }else if (gamepad1.dpad_up){
             robot.scoreArm.manualPositionChange(MANUAL_CHANGE);
         }else if (gamepad1.dpad_down){
@@ -46,9 +45,9 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.controlHub.resetGyro();
         }
         if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
-            robot.claw.close();
+            robot.scoringClaw.close();
         }else if (gamepad1.right_bumper){
-        robot.claw.open();}
+        robot.scoringClaw.open();}
 /*
        if (robot.scoreArm.isAboveWristThreshold()){
             robot.claw.wristEnd();
@@ -59,7 +58,7 @@ public class ScrimmageTeleop extends QQOpMode{
             robot.mecanumDrive.move(-.6,0,0);
             isPlacing = true;
         }else if(!gamepad1.x && isPlacing){
-            robot.claw.open();
+            robot.scoringClaw.open();
             robot.mecanumDrive.move(0,0,0);
 
 
