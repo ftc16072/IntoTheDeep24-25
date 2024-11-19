@@ -70,7 +70,7 @@ public class IntakeClawVision extends QQMechanism {
     }
 
     @Override
-    public void update() {
+    public void update(Telemetry telemetry) {
         ColorBlobLocatorProcessor.Blob blob = blobClosestToCenter();
         if (blob != null) {
             double angle = blob.getBoxFit().angle;

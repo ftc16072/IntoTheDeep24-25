@@ -21,7 +21,6 @@ public class IntakeClaw extends QQMechanism {
 
     Servo clawServo;
     Servo wristServo;
-    public Telemetry telemetry;
     double wristServoPos;
 
     @Override
@@ -57,7 +56,7 @@ public class IntakeClaw extends QQMechanism {
     }
 
     @Override
-    public void update(){
+    public void update(Telemetry telemetry){
         wristServo.setPosition(wristServoPos);
     }
 
