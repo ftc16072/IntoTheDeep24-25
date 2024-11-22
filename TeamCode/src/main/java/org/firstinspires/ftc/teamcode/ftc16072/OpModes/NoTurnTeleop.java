@@ -15,6 +15,7 @@ public class NoTurnTeleop extends QQOpMode{
     private boolean isIntaking = false;
     boolean manipulatorXWasPressed;
     boolean chamberContactWasPressed;
+    boolean clawWasClosed;
     int contactLostPos;
 
     public void init(){
@@ -40,8 +41,8 @@ public class NoTurnTeleop extends QQOpMode{
             robot.scoreArm.goToIntake();
             robot.scoringClaw.open();
             robot.intakeArm.goToDropPos();
-        }else if (gamepad1.b) {
-            robot.scoringClaw.close();
+        }else if (robot.scoringClaw.isClawClosed() && !clawWasClosed) {
+            robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
             robot.intakeArm.transfer();
         }else if (gamepad1.dpad_up){
@@ -118,6 +119,7 @@ public class NoTurnTeleop extends QQOpMode{
 
         manipulatorXWasPressed = gamepad2.x;
         chamberContactWasPressed = robot.scoreArm.isChamberContacted();
+        clawWasClosed = robot.scoringClaw.isClawClosed();
 
     }
 }

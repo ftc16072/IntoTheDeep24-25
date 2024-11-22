@@ -18,6 +18,8 @@ import java.util.List;
 @Config
 public class ScoringClaw extends QQMechanism {
     public static final int GRABBABLE_DISTANCE_CM = 3;
+    public static final double OPEN_TIME = 0.5;
+    public static final double CLOSED_TIME = 0.25;
     public static double CLAW_CLOSE_POSITION = 0.3;
     public static double CLAW_OPEN_POSITION = 0;
     public static double WRIST_START_POSITION = 0;
@@ -25,6 +27,7 @@ public class ScoringClaw extends QQMechanism {
 
 
     ElapsedTime openTimer = new ElapsedTime();
+    ElapsedTime closedTimer = new ElapsedTime();
     Servo clawServo;
     Servo wristServo;
     ColorRangeSensor colorSensor;
@@ -50,7 +53,14 @@ public class ScoringClaw extends QQMechanism {
 
     public boolean isClawOpen() {
         if ((clawServo.getPosition() == CLAW_OPEN_POSITION) &&
-                (openTimer.seconds()>0.5))
+                (openTimer.seconds()> OPEN_TIME))
+            return true;
+
+        return false;
+    }
+    public boolean isClawClosed() {
+        if ((clawServo.getPosition() == CLAW_CLOSE_POSITION) &&
+                (closedTimer.seconds()> CLOSED_TIME))
             return true;
 
         return false;
@@ -80,6 +90,7 @@ public class ScoringClaw extends QQMechanism {
 
     public void close() {
         clawServo.setPosition(CLAW_CLOSE_POSITION);
+        closedTimer.reset();
     }
 
     @Override
