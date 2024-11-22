@@ -50,7 +50,7 @@ public class NoTurnTeleop extends QQOpMode{
         }else if (gamepad1.dpad_down){
             robot.scoreArm.manualPositionChange(-MANUAL_CHANGE);
         }
-        if (gamepad1.y && gamepad1.dpad_right){
+        if (gamepad1.left_stick_button){
             robot.controlHub.resetGyro();
         }
         
