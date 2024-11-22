@@ -33,6 +33,8 @@ public class Robot {
 
     public ScoreArm scoreArm;
 
+    boolean driveOnly;
+
 
     List<QQMechanism> mechanisms;
 
@@ -69,6 +71,12 @@ public class Robot {
         for(QQMechanism mechanism: mechanisms){
             mechanism.update(telemetry);
         }
+    }
+
+    public void makeDriveOnly(){
+        mechanisms = Arrays.asList(
+                controlHub,
+                mecanumDrive);
     }
 
     public List<QQMechanism> getMechanisms() {
