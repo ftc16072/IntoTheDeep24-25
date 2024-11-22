@@ -56,6 +56,7 @@ public class ScoringClaw extends QQMechanism {
         return false;
     }
 
+
     public boolean isBlockGrabbable() {
         if (colorSensor.getDistance(DistanceUnit.CM) < GRABBABLE_DISTANCE_CM) {
             return true;
