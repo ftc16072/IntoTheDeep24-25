@@ -32,9 +32,6 @@ public class IntakeSlides extends QQMechanism {
     private DcMotor rightIntakeSlideMotor;
     private DcMotor leftIntakeSlideMotor;
     private TouchSensor limitSwitch;
-/*
-    private TouchSensor limitSwitch;
-*/
 
 
     public int currentPos;
@@ -44,7 +41,7 @@ public class IntakeSlides extends QQMechanism {
     public static double kP = 0.01;
     public static double kI = 0.0;
     public static double kD = 0.0;
-    public static double kF = 0.4;
+    public static double kF = 0.0;
     public static double max =  0.8;
     public static double min = -max;
 
@@ -76,8 +73,20 @@ public class IntakeSlides extends QQMechanism {
     }
     @Override
     public void update(Telemetry telemetry){
+        if(limitSwitch.isPressed()) {
+            leftIntakeSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftIntakeSlideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightIntakeSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightIntakeSlideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            if (desiredPos < 0) {
+                desiredPos = 0;
+            }
+        }
         currentPos = (leftIntakeSlideMotor.getCurrentPosition() + rightIntakeSlideMotor.getCurrentPosition())/2;//average left and right speeds
         double motorPower = pidfController.calculate(desiredPos,currentPos);
+        if (desiredPos == 0 && !limitSwitch.isPressed()){
+            motorPower = -0.8;
+        }
         this.motorPower = motorPower;
         leftIntakeSlideMotor.setPower(motorPower);
         rightIntakeSlideMotor.setPower(motorPower);
