@@ -13,9 +13,10 @@ public class NoTurnTeleop extends QQOpMode{
     private boolean isPlacing = false;
     private boolean isSearching = false;
     private boolean isIntaking = false;
-    boolean manipulatorXWasPressed;
+    boolean XWasPressed;
     boolean chamberContactWasPressed;
     boolean clawWasClosed;
+    boolean slidesSwitchWasPressed;
     int contactLostPos;
 
     public void init(){
@@ -38,28 +39,30 @@ public class NoTurnTeleop extends QQOpMode{
         } else robot.mecanumDrive.setSpeed(MecanumDrive.Speed.NORMAL);
 
         if (gamepad1.a){
+            if (robot.intakeSlides.isSwitchPressed()){
+                robot.scoreArm.goToIntake();
+                robot.scoringClaw.open();
+                robot.intakeArm.goToDropPos();
+            }else {
+                robot.intakeSlides.startPosition();
+            }
+        if (robot.intakeSlides.isSwitchPressed() && !slidesSwitchWasPressed){
             robot.scoreArm.goToIntake();
             robot.scoringClaw.open();
             robot.intakeArm.goToDropPos();
+        }
         }else if (robot.scoringClaw.isClawClosed() && !clawWasClosed) {
             robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
             robot.intakeArm.transfer();
         }else if (gamepad1.dpad_up){
-            robot.scoreArm.manualPositionChange(MANUAL_CHANGE);
+            robot.intakeSlides.manualPositionChange(MANUAL_CHANGE);
         }else if (gamepad1.dpad_down){
-            robot.scoreArm.manualPositionChange(-MANUAL_CHANGE);
+            robot.intakeSlides.manualPositionChange(-MANUAL_CHANGE);
         }
         if (gamepad1.left_stick_button){
             robot.controlHub.resetGyro();
         }
-        
-        if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
-            robot.intakeClaw.open();
-            robot.scoringClaw.close();
-        }else if (gamepad1.right_bumper){
-        robot.scoringClaw.open();}
-
 
         if(robot.scoreArm.isChamberContacted()){
             robot.scoreArm.goToScoring();
@@ -72,26 +75,17 @@ public class NoTurnTeleop extends QQOpMode{
         }
 
 
-        if(gamepad2.y){
+        if(gamepad1.y){
+            robot.intakeClaw.close();
             robot.intakeSlides.fullExtension();
-            robot.intakeClaw.close();
         }
-        if(gamepad2.b){
+        if(gamepad1.b){
+            robot.intakeClaw.close();
             robot.intakeSlides.halfExtension();
-            robot.intakeClaw.close();
         }
-        if(gamepad2.a){
-            robot.intakeSlides.startPosition();
-        }
-        if(gamepad2.dpad_up){
-            robot.intakeSlides.manualPositionChange(5);
-        }
-        if(gamepad2.dpad_down){
-            robot.intakeSlides.manualPositionChange(-5);
-        }
-        if (gamepad2.x && !manipulatorXWasPressed){
+        if (gamepad1.x && !XWasPressed){
             if(isSearching){
-                robot.intakeClaw.open();
+                robot.intakeClaw.close();
                 robot.intakeArm.goToIntake();
                 isIntaking = true;
                 isSearching = false;
@@ -99,27 +93,28 @@ public class NoTurnTeleop extends QQOpMode{
                 robot.intakeArm.searching();
                 isSearching = true;
             }
-        }if (isIntaking && !gamepad2.x){
+        }if (isIntaking && !gamepad1.x){
             robot.intakeClaw.close();
             robot.intakeClaw.wristFlat();
             robot.intakeArm.transfer();
             isIntaking = false;
         }
-        if (gamepad2.right_bumper){
+        if (gamepad1.right_bumper){
             robot.intakeClaw.open();
-        }else if(gamepad2.right_trigger>TRIGGER_THRESHOLD){
+        }else if(gamepad1.right_trigger>TRIGGER_THRESHOLD){
             robot.intakeClaw.close();
         }
 
-        if (gamepad2.dpad_right){
+        if (gamepad1.dpad_right){
             robot.intakeClaw.adjustWrist(MANUAL_CHANGE_AMOUNT_WRIST);
-        }else if(gamepad2.dpad_left){
+        }else if(gamepad1.dpad_left){
             robot.intakeClaw.adjustWrist(-MANUAL_CHANGE_AMOUNT_WRIST);
         }
 
-        manipulatorXWasPressed = gamepad2.x;
+        XWasPressed = gamepad1.x;
         chamberContactWasPressed = robot.scoreArm.isChamberContacted();
         clawWasClosed = robot.scoringClaw.isClawClosed();
+        slidesSwitchWasPressed = robot.intakeSlides.isSwitchPressed();
 
     }
 }
