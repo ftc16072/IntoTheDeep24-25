@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
 public class CloseParkAuto extends QQOpMode{
-    private final int autodelay = 23;
+    private final int autodelay = 0;
 
     ElapsedTime elapsedTime = new ElapsedTime();
     private double step = 0;
