@@ -13,7 +13,7 @@ public class NoTurnTeleop extends QQOpMode{
     private boolean isPlacing = false;
     private boolean isSearching = false;
     private boolean isIntaking = false;
-    boolean manipulatorXWasPressed;
+    boolean XWasPressed;
     boolean chamberContactWasPressed;
     boolean clawWasClosed;
     boolean slidesSwitchWasPressed;
@@ -83,9 +83,9 @@ public class NoTurnTeleop extends QQOpMode{
             robot.intakeClaw.close();
             robot.intakeSlides.halfExtension();
         }
-        if (gamepad1.x && !manipulatorXWasPressed){
+        if (gamepad1.x && !XWasPressed){
             if(isSearching){
-                robot.intakeClaw.open();
+                robot.intakeClaw.close();
                 robot.intakeArm.goToIntake();
                 isIntaking = true;
                 isSearching = false;
@@ -111,7 +111,7 @@ public class NoTurnTeleop extends QQOpMode{
             robot.intakeClaw.adjustWrist(-MANUAL_CHANGE_AMOUNT_WRIST);
         }
 
-        manipulatorXWasPressed = gamepad2.x;
+        XWasPressed = gamepad1.x;
         chamberContactWasPressed = robot.scoreArm.isChamberContacted();
         clawWasClosed = robot.scoringClaw.isClawClosed();
         slidesSwitchWasPressed = robot.intakeSlides.isSwitchPressed();
