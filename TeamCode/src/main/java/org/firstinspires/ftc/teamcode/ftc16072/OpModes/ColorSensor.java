@@ -13,7 +13,7 @@ import org.firstinspires.ftc.vision.opencv.PredominantColorProcessor;
 
 import java.util.Locale;
 
-@Autonomous
+//@Autonomous
 @SuppressWarnings("unused")
 public class ColorSensor extends OpMode {
     PredominantColorProcessor colorSensor;

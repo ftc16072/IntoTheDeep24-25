@@ -37,6 +37,7 @@ public class ScoreArm extends QQMechanism{
     static int INTAKE_POSITION = 0;
     static int SCORING_POSITION = 350;
     static int PLACING_POSITION = 850;
+    static int MOVING_POSITION = 600;
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
@@ -62,9 +63,9 @@ public class ScoreArm extends QQMechanism{
     public void goToScoring(){
         desiredPos = SCORING_POSITION;
     }
-    public void goToPlace(){
-        desiredPos = PLACING_POSITION;
-    }
+    public void goToPlace(){desiredPos = PLACING_POSITION;}
+    public void goToMove(){desiredPos = MOVING_POSITION;}
+
     public void manualPositionChange(int changeAmount){
         desiredPos += changeAmount;
     }

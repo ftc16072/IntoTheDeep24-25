@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp
+//@TeleOp
 @SuppressWarnings("unused")
 public class RI3WTeleOp extends QQOpMode{
 

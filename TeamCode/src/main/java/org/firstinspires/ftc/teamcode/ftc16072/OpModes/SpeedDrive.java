@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 
-@TeleOp()
+//@TeleOp()
 public class SpeedDrive extends QQOpMode{
 
     @Override

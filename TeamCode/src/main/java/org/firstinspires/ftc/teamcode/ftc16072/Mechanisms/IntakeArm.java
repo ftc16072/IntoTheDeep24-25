@@ -13,8 +13,8 @@ import java.util.List;
 @Config
 public class IntakeArm extends QQMechanism {
     public static double ARM_DROP_POSITION = 0.7;
-    public static double ARM_INTAKE_POSITION = 0.1;
-    public static double SEARCHING_POSITION = 0.15;
+    public static double ARM_INTAKE_POSITION = 0.0;
+    public static double SEARCHING_POSITION = 0.12;
     public static double TRANSFER_POSITION = 0.6;
     Servo leftArmServo;
     Servo rightArmServo;

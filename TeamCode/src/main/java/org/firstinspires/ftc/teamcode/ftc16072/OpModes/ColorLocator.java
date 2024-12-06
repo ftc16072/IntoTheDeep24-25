@@ -15,7 +15,7 @@ import org.opencv.core.RotatedRect;
 import java.util.List;
 import java.util.Locale;
 
-@Autonomous
+//@Autonomous
 @SuppressWarnings("unused")
 public class ColorLocator extends OpMode {
 
