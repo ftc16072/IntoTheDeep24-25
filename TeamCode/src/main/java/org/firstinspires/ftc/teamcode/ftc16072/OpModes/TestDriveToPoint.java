@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous
+//@Autonomous
 public class TestDriveToPoint extends QQOpMode {
     public void loop(){
         super.loop();

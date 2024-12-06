@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp
+//@TeleOp
 public class TestingClawTeleop extends QQOpMode{
     @Override
     public void loop() {

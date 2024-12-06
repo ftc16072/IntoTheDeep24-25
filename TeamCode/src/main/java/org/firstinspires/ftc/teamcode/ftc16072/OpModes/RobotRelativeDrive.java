@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 
-@TeleOp()
+//@TeleOp()
 public class RobotRelativeDrive extends QQOpMode{
 
     @Override

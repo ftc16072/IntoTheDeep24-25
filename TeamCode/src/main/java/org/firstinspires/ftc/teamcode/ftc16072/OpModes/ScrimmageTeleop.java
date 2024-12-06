@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
-@TeleOp
+//@TeleOp
 public class ScrimmageTeleop extends QQOpMode{
 
     public static final double TRIGGER_THRESHOLD = 0.5;
