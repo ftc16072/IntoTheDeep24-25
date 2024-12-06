@@ -9,7 +9,7 @@ public class NoTurnTeleop extends QQOpMode{
 
     public static final double TRIGGER_THRESHOLD = 0.5;
     public static final int MANUAL_CHANGE = 15;
-    public static final double MANUAL_CHANGE_AMOUNT_WRIST = 0.05;
+    public static final double MANUAL_CHANGE_AMOUNT_WRIST = 0.03;
     private boolean isPlacing = false;
     private boolean isSearching = false;
     private boolean isIntaking = false;
@@ -107,9 +107,9 @@ public class NoTurnTeleop extends QQOpMode{
         }
 
         if (gamepad1.dpad_right){
-            robot.intakeClaw.adjustWrist(MANUAL_CHANGE_AMOUNT_WRIST);
-        }else if(gamepad1.dpad_left){
             robot.intakeClaw.adjustWrist(-MANUAL_CHANGE_AMOUNT_WRIST);
+        }else if(gamepad1.dpad_left){
+            robot.intakeClaw.adjustWrist(MANUAL_CHANGE_AMOUNT_WRIST);
         }
 
         if (gamepad2.b){
@@ -120,6 +120,8 @@ public class NoTurnTeleop extends QQOpMode{
             robot.intakeArm.transfer();
         }else if(manipulatorXWasPressed){
             robot.scoringClaw.open();
+        } else if (gamepad2.y) {
+            robot.scoreArm.goToMove();
         }
         if (gamepad2.dpad_up){
             robot.intakeSlides.manualPositionChange(MANUAL_CHANGE);
