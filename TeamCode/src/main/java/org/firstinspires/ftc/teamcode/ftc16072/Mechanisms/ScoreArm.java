@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
-    public static final int CLAW_RELEASE_OFFSET = 150;
+    public static final int CLAW_RELEASE_OFFSET = 250;
     DcMotor leftMotor;
     DcMotor rightMotor;
     TouchSensor limitSwitch;
@@ -36,7 +36,7 @@ public class ScoreArm extends QQMechanism{
 
     static int INTAKE_POSITION = 0;
     static int SCORING_POSITION = 350;
-    static int PLACING_POSITION = 750;
+    static int PLACING_POSITION = 850;
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 

@@ -7,9 +7,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Robot;
 
 public class Navigation {
-    public static final double MAX_TRANSLATE = 1;
+    public static final double MAX_TRANSLATE = 0.3;
     public static final double MIN_TRANSLATE = -MAX_TRANSLATE;
-    public static final double MAX_ROTATE = 1;
+    public static final double MAX_ROTATE = 0.3;
     public static final double MIN_ROTATE = -MAX_ROTATE;
     Robot robot;
 
@@ -19,11 +19,11 @@ public class Navigation {
     static double TRANSLATIONAL_KF = 0;
     static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
 
-    static double ROTATIONAL_KP = 0.1;
+    static double ROTATIONAL_KP = 0.01;
     static double ROTATIONAL_KI = 0.000;
     static double ROTATIONAL_KD = 0.00;
     static double ROTATIONAL_KF = 0;
-    static double ROTATIONAL_TOLERANCE_THRESHOLD = 1;
+    static double ROTATIONAL_TOLERANCE_THRESHOLD = 3;
 
     PIDFController PIDx, PIDy, PIDh;
 
