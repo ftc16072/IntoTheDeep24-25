@@ -37,7 +37,6 @@ public class ScoringClaw extends QQMechanism {
         clawServo = hwMap.get(Servo.class, "claw_servo");
         wristServo = hwMap.get(Servo.class, "wrist_servo");
         colorSensor = hwMap.get(ColorRangeSensor.class, "scoreclaw_color");
-        open();
     }
 
 
