@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
-    public static final int CLAW_RELEASE_OFFSET = 275;
+    public static final int CLAW_RELEASE_OFFSET = 250;
     DcMotor leftMotor;
     DcMotor rightMotor;
     TouchSensor limitSwitch;

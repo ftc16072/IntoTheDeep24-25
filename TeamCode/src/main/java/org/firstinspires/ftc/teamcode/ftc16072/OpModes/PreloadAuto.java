@@ -50,6 +50,8 @@ public class PreloadAuto extends QQOpMode{
             if (isDoneDriving){
                 step = 3;
             }
+        }else if (step == 3){
+            robot.scoreArm.goToIntake();
         }
         chamberContactWasPressed = robot.scoreArm.isChamberContacted();
         clawWasClosed = robot.scoringClaw.isClawClosed();

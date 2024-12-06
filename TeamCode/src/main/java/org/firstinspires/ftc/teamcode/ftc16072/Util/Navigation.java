@@ -19,7 +19,7 @@ public class Navigation {
     static double TRANSLATIONAL_KF = 0;
     static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
 
-    static double ROTATIONAL_KP = 0.1;
+    static double ROTATIONAL_KP = 0.01;
     static double ROTATIONAL_KI = 0.000;
     static double ROTATIONAL_KD = 0.00;
     static double ROTATIONAL_KF = 0;
