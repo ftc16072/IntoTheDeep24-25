@@ -65,16 +65,9 @@ public class NoTurnTeleop extends QQOpMode{
             robot.controlHub.resetGyro();
         }
 
-        if(robot.scoreArm.isChamberContacted()){
+        if(robot.scoreArm.isChamberContacted()) {
             robot.scoreArm.goToScoring();
-            isPlacing = true;
-        }else if(!robot.scoreArm.isChamberContacted() && isPlacing && chamberContactWasPressed){
-            contactLostPos = robot.scoreArm.getCurrentPos();
-        }else if(isPlacing && robot.scoreArm.isTimeToReleaseClaw(contactLostPos)){
-            robot.scoringClaw.open();
-            isPlacing = false;
         }
-
 
         if(gamepad1.y){
             robot.intakeClaw.close();
@@ -142,3 +135,4 @@ public class NoTurnTeleop extends QQOpMode{
 
     }
 }
+
