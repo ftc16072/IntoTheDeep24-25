@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Util.PIDFController;
 import java.util.Arrays;
 import java.util.List;
 
+@Config
 public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
     public static final int CLAW_RELEASE_OFFSET = 250;
@@ -22,9 +24,9 @@ public class ScoreArm extends QQMechanism{
     TouchSensor limitSwitch;
     TouchSensor rightChamberContact;
     TouchSensor leftChamberContact;
-    public static double kP = 0.01;
+    public static double kP = 0.00159;
     public static double kI = 0.0;
-    public static double kD = 0.0;
+    public static double kD = 0;
     public static double kF = 0;
     public static double max =  0.8;
     public static double min = -0.8;
@@ -34,10 +36,10 @@ public class ScoreArm extends QQMechanism{
     public int desiredPos;
     public double motorPower;
 
-    static int INTAKE_POSITION = 0;
-    static int SCORING_POSITION = 350;
-    static int PLACING_POSITION = 910;
-    static int MOVING_POSITION = 600;
+    public static int INTAKE_POSITION = 0;
+    public static int SCORING_POSITION = 350;
+    public static int PLACING_POSITION = 740;
+    public static int MOVING_POSITION = 600;
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
@@ -90,6 +92,7 @@ public class ScoreArm extends QQMechanism{
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
         chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
+        //pidfController.updateConstants(kP,kI,kD,kF,max,min);
         telemetry.addData("curerent pos",currentPos);
         telemetry.addData("desired pos",desiredPos);
         telemetry.addData("motor power",motorPower);

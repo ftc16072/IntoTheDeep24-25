@@ -23,6 +23,17 @@ public class PIDFController {
         this.max = max;
         this.min = min;
     }
+
+
+    public void updateConstants(double kP,double kI,double kD,double kF, double max, double min){
+        this.kP = kP;
+        this.kD = kD;
+        this.kI = kI;
+        this.kF = kF;
+        this.max = max;
+        this.min = min;
+    }
+
     public void reset(){
         sumErrors = 0;
         lastError = 0;
