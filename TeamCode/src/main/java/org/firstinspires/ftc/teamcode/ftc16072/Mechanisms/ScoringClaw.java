@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -11,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestColorRangeSensor;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
+import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestSwitch;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +23,7 @@ public class ScoringClaw extends QQMechanism {
     public static final int GRABBABLE_DISTANCE_CM = 3;
     public static final double OPEN_TIME = 0.5;
     public static final double CLOSED_TIME = 0.25;
-    public static double CLAW_CLOSE_POSITION = 0.3;
+    public static double CLAW_CLOSE_POSITION = 0.5;
     public static double CLAW_OPEN_POSITION = 0;
     public static double WRIST_START_POSITION = 0;
     public static double WRIST_END_POSITION = 0.67;
@@ -31,12 +34,15 @@ public class ScoringClaw extends QQMechanism {
     Servo clawServo;
     Servo wristServo;
     ColorRangeSensor colorSensor;
+    TouchSensor scoreSwitch;
 
     @Override
     public void init(HardwareMap hwMap) {
         clawServo = hwMap.get(Servo.class, "claw_servo");
         wristServo = hwMap.get(Servo.class, "wrist_servo");
         colorSensor = hwMap.get(ColorRangeSensor.class, "scoreclaw_color");
+        scoreSwitch = hwMap.get(TouchSensor.class,"score_switch");
+
     }
 
 
@@ -45,7 +51,8 @@ public class ScoringClaw extends QQMechanism {
         return Arrays.asList(
                 new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo),
                 new TestServo("wrist_movement", WRIST_START_POSITION, WRIST_END_POSITION, wristServo),
-                new TestColorRangeSensor("scoreclaw_color", colorSensor)
+                new TestColorRangeSensor("scoreclaw_color", colorSensor),
+                new TestSwitch("score_switch", scoreSwitch)
         );
 
     }
@@ -100,7 +107,9 @@ public class ScoringClaw extends QQMechanism {
             close();
         }else{
             telemetry.addData("Auto Close", false);
-
+        }
+        if(!scoreSwitch.isPressed()){
+            open();
         }
     }
 }
