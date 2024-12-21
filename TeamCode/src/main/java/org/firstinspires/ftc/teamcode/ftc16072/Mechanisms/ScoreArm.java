@@ -19,6 +19,7 @@ import java.util.List;
 public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
     public static final int CLAW_RELEASE_OFFSET = 250;
+    public static final double SCORE_POWER = -0.8;
     DcMotor leftMotor;
     DcMotor rightMotor;
     TouchSensor limitSwitch;
@@ -28,13 +29,13 @@ public class ScoreArm extends QQMechanism{
     public static double kI = 0.0;
     public static double kD = 0;
     public static double kF = 0;
-    public static double max =  0.8;
-    public static double min = -0.8;
-
+    public static double max =  1.0;
+    public static double min = -1.0;
     boolean chamberContacted;
     protected int currentPos;
     public int desiredPos;
     public double motorPower;
+    boolean isScoring;
 
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 200;
@@ -86,9 +87,19 @@ public class ScoreArm extends QQMechanism{
                 desiredPos = 0;
             }
         }
+        if (limitSwitch.isPressed()){
+            isScoring = false;
+        }else if (chamberContacted){
+            isScoring = true;
+            goToScoring();
+        }
         currentPos = (leftMotor.getCurrentPosition() + rightMotor.getCurrentPosition())/2;//average left and right speeds
+
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         this.motorPower = motorPower;
+        if (isScoring){
+            motorPower = SCORE_POWER;
+        }
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
         chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
@@ -108,6 +119,10 @@ public class ScoreArm extends QQMechanism{
     }
     public boolean isTimeToReleaseClaw(int lostContactPosition){
         return (currentPos < lostContactPosition - CLAW_RELEASE_OFFSET);
+    }
+
+    public void setNotScoring(){
+        isScoring = false;
     }
 
     @Override
