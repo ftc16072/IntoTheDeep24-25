@@ -16,9 +16,16 @@ public class PreloadAutoBehaviorTree extends QQOpMode{
     @Override
     public void init(){
         super.init();
+        robot.scoreArm.goToScoring();
         robot.scoringClaw.close();
         robot.otos.setOtosPosition(7,-61.5,0);
     }
+
+    @Override
+    public void init_loop() {
+        robot.scoreArm.update(telemetry);
+    }
+
     public void loop() {
         super.loop();
         if (robot.scoringClaw.isClawClosed() && !clawWasClosed) {

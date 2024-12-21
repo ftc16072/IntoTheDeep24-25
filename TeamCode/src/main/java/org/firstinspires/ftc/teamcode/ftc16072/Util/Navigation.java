@@ -87,11 +87,11 @@ public class Navigation {
         telemetry.addData("Current Y", currentPosition.y);
         telemetry.addData("Desired Heading", desiredHeading);
         telemetry.addData("Current Heading", currentPosition.h);
-
+       */
         telemetry.addData("strafe right speed",-strafeLeftSpeed);
         telemetry.addData("foward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
-         */
+
         driveFieldRelative(forwardSpeed,-strafeLeftSpeed,-rotateCCWSpeed);
         return !(notWithinTolerance(desiredX,currentPosition.x,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredY,currentPosition.y,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
