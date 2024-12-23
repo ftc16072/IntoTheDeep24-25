@@ -72,7 +72,7 @@ public class ScoringClaw extends QQMechanism {
         return false;
     }
     public boolean isScoreSwitchPressed(){
-        return scoreSwitch.isPressed();
+        return !scoreSwitch.isPressed();
     }
 
 

@@ -14,6 +14,7 @@ public class WaitForScore extends QQTimeoutNode {
     public State tick(DebugTree debug, QQOpMode opMode) {
         if (hasTimedOut()){
             opMode.robot.scoreArm.setNotScoring();
+            opMode.robot.scoringClaw.open();
             return State.FAILURE;
         }else if (opMode.robot.scoringClaw.isScoreSwitchPressed()){
             return State.SUCCESS;
