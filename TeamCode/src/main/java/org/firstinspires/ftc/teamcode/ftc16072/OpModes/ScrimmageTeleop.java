@@ -32,10 +32,6 @@ public class ScrimmageTeleop extends QQOpMode{
         }else if (gamepad1.b) {
             robot.scoringClaw.close();
             robot.scoreArm.goToPlace();
-        }else if (gamepad1.dpad_right){
-            robot.scoringClaw.wristStart();
-        }else if (gamepad1.dpad_left) {
-            robot.scoringClaw.wristEnd();
         }else if (gamepad1.dpad_up){
             robot.scoreArm.manualPositionChange(MANUAL_CHANGE);
         }else if (gamepad1.dpad_down){
