@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -25,21 +24,18 @@ public class ScoringClaw extends QQMechanism {
     public static final double CLOSED_TIME = 0.25;
     public static double CLAW_CLOSE_POSITION = 0.5;
     public static double CLAW_OPEN_POSITION = 0;
-    public static double WRIST_START_POSITION = 0;
-    public static double WRIST_END_POSITION = 0.67;
+
 
 
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
     Servo clawServo;
-    Servo wristServo;
     ColorRangeSensor colorSensor;
     TouchSensor scoreSwitch;
 
     @Override
     public void init(HardwareMap hwMap) {
         clawServo = hwMap.get(Servo.class, "claw_servo");
-        wristServo = hwMap.get(Servo.class, "wrist_servo");
         colorSensor = hwMap.get(ColorRangeSensor.class, "scoreclaw_color");
         scoreSwitch = hwMap.get(TouchSensor.class,"score_switch");
 
@@ -50,7 +46,6 @@ public class ScoringClaw extends QQMechanism {
     public List<QQTest> getTests() {
         return Arrays.asList(
                 new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo),
-                new TestServo("wrist_movement", WRIST_START_POSITION, WRIST_END_POSITION, wristServo),
                 new TestColorRangeSensor("scoreclaw_color", colorSensor),
                 new TestSwitch("score_switch", scoreSwitch)
         );
@@ -83,13 +78,6 @@ public class ScoringClaw extends QQMechanism {
         return false;
     }
 
-    public void wristStart() {
-        wristServo.setPosition(WRIST_START_POSITION);
-    }
-
-    public void wristEnd() {
-        wristServo.setPosition(WRIST_END_POSITION);
-    }
 
     public void open() {
         clawServo.setPosition(CLAW_OPEN_POSITION);
