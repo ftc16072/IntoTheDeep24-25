@@ -32,14 +32,12 @@ public class ScoringClaw extends QQMechanism {
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
     Servo clawServo;
-    Servo wristServo;
     ColorRangeSensor colorSensor;
     TouchSensor scoreSwitch;
 
     @Override
     public void init(HardwareMap hwMap) {
         clawServo = hwMap.get(Servo.class, "claw_servo");
-        wristServo = hwMap.get(Servo.class, "wrist_servo");
         colorSensor = hwMap.get(ColorRangeSensor.class, "scoreclaw_color");
         scoreSwitch = hwMap.get(TouchSensor.class,"score_switch");
 
@@ -50,7 +48,6 @@ public class ScoringClaw extends QQMechanism {
     public List<QQTest> getTests() {
         return Arrays.asList(
                 new TestServo("claw_movement", CLAW_OPEN_POSITION, CLAW_CLOSE_POSITION, clawServo),
-                new TestServo("wrist_movement", WRIST_START_POSITION, WRIST_END_POSITION, wristServo),
                 new TestColorRangeSensor("scoreclaw_color", colorSensor),
                 new TestSwitch("score_switch", scoreSwitch)
         );
@@ -80,13 +77,6 @@ public class ScoringClaw extends QQMechanism {
         return false;
     }
 
-    public void wristStart() {
-        wristServo.setPosition(WRIST_START_POSITION);
-    }
-
-    public void wristEnd() {
-        wristServo.setPosition(WRIST_END_POSITION);
-    }
 
     public void open() {
         clawServo.setPosition(CLAW_OPEN_POSITION);
