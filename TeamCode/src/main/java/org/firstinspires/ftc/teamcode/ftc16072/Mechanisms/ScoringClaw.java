@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -25,8 +24,7 @@ public class ScoringClaw extends QQMechanism {
     public static final double CLOSED_TIME = 0.25;
     public static double CLAW_CLOSE_POSITION = 0.5;
     public static double CLAW_OPEN_POSITION = 0;
-    public static double WRIST_START_POSITION = 0;
-    public static double WRIST_END_POSITION = 0.67;
+
 
 
     ElapsedTime openTimer = new ElapsedTime();

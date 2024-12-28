@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
 public class PreloadAuto extends QQOpMode{
-    private final int autodelay = 0;
+    private final int AUTO_DELAY_SECS = 0;
 
     ElapsedTime elapsedTime = new ElapsedTime();
     private double step = 0;
@@ -37,7 +37,7 @@ public class PreloadAuto extends QQOpMode{
 
         if(step == 0){
             robot.scoreArm.goToPlace();
-            if(elapsedTime.seconds() > autodelay){
+            if(elapsedTime.seconds() > AUTO_DELAY_SECS){
                 step = 1;
             }
         }else if(step == 1){

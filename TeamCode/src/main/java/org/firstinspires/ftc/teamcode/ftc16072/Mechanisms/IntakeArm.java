@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestTwoServos;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Config
@@ -62,7 +63,7 @@ public class IntakeArm extends QQMechanism {
 
     @Override
     public List<QQTest> getTests() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 new TestTwoServos("arm_pos", ARM_INTAKE_POSITION, ARM_DROP_POSITION, leftArmServo, rightArmServo));
     }
 }
