@@ -18,7 +18,6 @@ public class NavigationPIDTuner extends QQOpMode{
         super.init();
         robot.otos.setOtosPosition(7,-61.5,0);
         robot.scoringClaw.close();
-        robot.intakeClaw.wristFlat();
     }
     public void start(){
         elapsedTime.reset();
