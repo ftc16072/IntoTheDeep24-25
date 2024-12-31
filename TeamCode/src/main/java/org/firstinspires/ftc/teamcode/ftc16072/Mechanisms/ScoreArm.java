@@ -25,7 +25,6 @@ public class ScoreArm extends QQMechanism{
     TouchSensor limitSwitch;
     TouchSensor rightChamberContact;
     TouchSensor leftChamberContact;
-    public static final double SCORE_POWER = -0.8;
     public static double kP = 0.00159;
     public static double kI = 0.0;
     public static double kD = 0;
@@ -127,10 +126,6 @@ public class ScoreArm extends QQMechanism{
     }
     public boolean isTimeToReleaseClaw(int lostContactPosition){
         return (currentPos < lostContactPosition - CLAW_RELEASE_OFFSET);
-    }
-
-    public void setNotScoring(){
-        isScoring = false;
     }
 
     @Override
