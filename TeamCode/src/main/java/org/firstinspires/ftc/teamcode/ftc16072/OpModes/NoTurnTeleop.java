@@ -57,6 +57,7 @@ public class NoTurnTeleop extends QQOpMode {
             if (robot.intakeSlides.isSwitchPressed()) {
                 robot.scoreArm.goToIntake();
                 robot.scoringClaw.open();
+                robot.scoreArm.setNotScoring();
             } else {
                 robot.intakeSlides.startPosition();
             }
@@ -73,6 +74,9 @@ public class NoTurnTeleop extends QQOpMode {
             robot.scoreArm.manualPositionChange(SCORE_ARM_MANUAL_CHANGE);
         } else if (gamepad1.dpad_down) {
             robot.scoreArm.manualPositionChange(-SCORE_ARM_MANUAL_CHANGE);
+        }
+        if (robot.scoringClaw.isScoreSwitchPressed()){
+            robot.scoreArm.setNotScoring();
         }
         if (gamepad1.left_stick_button) {
             robot.controlHub.resetGyro();
@@ -111,13 +115,16 @@ public class NoTurnTeleop extends QQOpMode {
         if (gamepad2.b) {
             robot.scoreArm.goToPlace();
             robot.intakeArm.goToIntake();
+            robot.scoreArm.setNotScoring();
         } else if (gamepad2.x) {
             robot.scoreArm.goToScoring();
             robot.intakeArm.goToIntake();
+            robot.scoreArm.setNotScoring();
         } else if (manipulatorXWasPressed) {
             robot.scoringClaw.open();
         } else if (gamepad2.y) {
             robot.scoreArm.goToMove();
+            robot.scoreArm.setNotScoring();
         }
         if (gamepad2.dpad_up) {
             robot.intakeSlides.extend();
@@ -126,6 +133,7 @@ public class NoTurnTeleop extends QQOpMode {
         }
         if (gamepad2.right_trigger > TRIGGER_THRESHOLD) {
             robot.scoringClaw.open();
+            robot.scoreArm.setNotScoring();
         } else if (gamepad2.right_bumper) {
             robot.scoringClaw.close();
         }
