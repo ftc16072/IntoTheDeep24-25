@@ -8,12 +8,13 @@ public class FieldRelativeDrive extends QQOpMode{
 
     @Override
     public void init(){
-        robot.makeDriveOnly();
         super.init();
     }
 
     @Override
     public void loop() {
+        telemetry.addData("xPosition", robot.otos.getOtosPosition().x);
+        telemetry.addData("yPosition", robot.otos.getOtosPosition().y);
         nav.driveFieldRelative(-gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x);
     }
 }

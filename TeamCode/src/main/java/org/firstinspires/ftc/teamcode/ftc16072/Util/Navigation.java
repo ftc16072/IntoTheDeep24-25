@@ -1,29 +1,30 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Util;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Robot;
-
+@Config
 public class Navigation {
-    public static final double MAX_TRANSLATE = 0.3;
-    public static final double MIN_TRANSLATE = -MAX_TRANSLATE;
+    public static double MAX_TRANSLATE = 1;
+    public static double MIN_TRANSLATE = -MAX_TRANSLATE;
     public static final double MAX_ROTATE = 0.3;
     public static final double MIN_ROTATE = -MAX_ROTATE;
     Robot robot;
 
-    static double TRANSLATIONAL_KP = 0.025;
-    static double TRANSLATIONAL_KI = 0.0;
-    static double TRANSLATIONAL_KD = 0.000;
-    static double TRANSLATIONAL_KF = 0;
-    static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
+    public static double TRANSLATIONAL_KP = 0.03;
+    public static double TRANSLATIONAL_KI = 0.0;
+    public static double TRANSLATIONAL_KD = 0.000;
+    public static double TRANSLATIONAL_KF = 0;
+    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
 
-    static double ROTATIONAL_KP = 0.01;
-    static double ROTATIONAL_KI = 0.000;
-    static double ROTATIONAL_KD = 0.00;
-    static double ROTATIONAL_KF = 0;
-    static double ROTATIONAL_TOLERANCE_THRESHOLD = 3;
+    public static double ROTATIONAL_KP = 0.01;
+    public static double ROTATIONAL_KI = 0.000;
+    public static double ROTATIONAL_KD = 0.00;
+    public static double ROTATIONAL_KF = 0;
+    public static double ROTATIONAL_TOLERANCE_THRESHOLD = 3;
 
     PIDFController PIDx, PIDy, PIDh;
 
@@ -62,6 +63,10 @@ public class Navigation {
         double forwardSpeed;
         double strafeLeftSpeed;
         double rotateCCWSpeed;
+        PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
+        PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
+        PIDy.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
+        PIDy.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
         if((desiredX != lastDesiredX) || (desiredY != lastDesiredY) || (desiredHeading != lastDesiredH)){
             lastDesiredX = desiredX;
             lastDesiredY = desiredY;
@@ -80,7 +85,7 @@ public class Navigation {
         if (notWithinTolerance(desiredHeading, currentPosition.h,ROTATIONAL_TOLERANCE_THRESHOLD)) {
             rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPosition.h);
         }else {rotateCCWSpeed = 0;}
-        /*
+
         telemetry.addData("Current X", currentPosition.x);
         telemetry.addData("Desired X", desiredX);
         telemetry.addData("Desired Y", desiredY);
@@ -91,7 +96,7 @@ public class Navigation {
         telemetry.addData("strafe right speed",-strafeLeftSpeed);
         telemetry.addData("foward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
-         */
+
         driveFieldRelative(forwardSpeed,-strafeLeftSpeed,-rotateCCWSpeed);
         return !(notWithinTolerance(desiredX,currentPosition.x,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredY,currentPosition.y,TRANSLATIONAL_TOLERANCE_THRESHOLD)||

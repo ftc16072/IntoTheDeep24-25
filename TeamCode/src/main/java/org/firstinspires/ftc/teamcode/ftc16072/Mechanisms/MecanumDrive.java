@@ -78,6 +78,9 @@ public class MecanumDrive extends QQMechanism{
         setPowers(frontLeftPower,frontRightPower,backRightPower,backLeftPower);
 
     }
+    public void stop(){
+        move(0,0,0);
+    }
     private void setPowers(double frontLeftPower, double frontRightPower,double backRightPower, double backLeftPower){
         double maxSpeed = 1.0;
 
