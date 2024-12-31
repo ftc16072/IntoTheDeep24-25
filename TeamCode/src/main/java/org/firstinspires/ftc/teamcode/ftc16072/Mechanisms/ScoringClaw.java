@@ -86,6 +86,7 @@ public class ScoringClaw extends QQMechanism {
         clawServo.setPosition(CLAW_CLOSE_POSITION);
         closedTimer.reset();
     }
+    public boolean isScoreSwitchPressed(){ return !scoreSwitch.isPressed();}
 
     @Override
     public void update(Telemetry telemetry) {

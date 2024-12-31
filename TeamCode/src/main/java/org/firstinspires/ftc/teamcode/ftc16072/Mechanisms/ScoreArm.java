@@ -24,6 +24,7 @@ public class ScoreArm extends QQMechanism{
     TouchSensor limitSwitch;
     TouchSensor rightChamberContact;
     TouchSensor leftChamberContact;
+    public static final double SCORE_POWER = -0.8;
     public static double kP = 0.00159;
     public static double kI = 0.0;
     public static double kD = 0;
@@ -35,6 +36,7 @@ public class ScoreArm extends QQMechanism{
     protected int currentPos;
     public int desiredPos;
     public double motorPower;
+    boolean isScoring;
 
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 200;
@@ -82,6 +84,7 @@ public class ScoreArm extends QQMechanism{
             leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            isScoring = false;
             if (desiredPos < 0){
                 desiredPos = 0;
             }
@@ -91,6 +94,9 @@ public class ScoreArm extends QQMechanism{
         this.motorPower = motorPower;
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
+        if (isScoring){
+            motorPower = SCORE_POWER;
+        }
         chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         //pidfController.updateConstants(kP,kI,kD,kF,max,min);
         telemetry.addData("curerent pos",currentPos);
@@ -98,6 +104,9 @@ public class ScoreArm extends QQMechanism{
         telemetry.addData("motor power",motorPower);
 
 
+    }
+    public void setNotScoring(){
+        isScoring = false;
     }
     public boolean isChamberContacted(){
         return chamberContacted;
