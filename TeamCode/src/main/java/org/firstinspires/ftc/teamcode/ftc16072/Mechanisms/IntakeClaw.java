@@ -19,7 +19,7 @@ public class IntakeClaw extends QQMechanism {
     public static double CLAW_CLOSE_POSITION = 1;
     public static double CLAW_OPEN_POSITION = 0.8;
     public static double WRIST_START_POSITION = 0.0;
-    public static double WRIST_TRANSFER_POSITION = 0.65;
+    public static double WRIST_TRANSFER_POSITION = 0.75;
 
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();

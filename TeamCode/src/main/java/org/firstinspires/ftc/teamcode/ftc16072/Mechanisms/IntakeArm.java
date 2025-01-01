@@ -14,9 +14,9 @@ import java.util.List;
 @Config
 public class IntakeArm extends QQMechanism {
     private static final double MAX_SERVO_POS = 1;
-    public static double MANUAL_CHANGE_AMOUNT = 0.01;
-    private final static double ARM_DROP_POSITION = 0.1;
-    private final static double ARM_INTAKE_POSITION = 0.62;
+    public static double MANUAL_CHANGE_AMOUNT = 0.02;
+    public static double ARM_DROP_POSITION = 0.05;
+    public static double ARM_INTAKE_POSITION = 0.595;
     Servo leftArmServo;
     Servo rightArmServo;
 

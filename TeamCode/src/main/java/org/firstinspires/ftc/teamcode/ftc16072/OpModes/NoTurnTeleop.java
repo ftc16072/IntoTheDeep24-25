@@ -24,6 +24,10 @@ public class NoTurnTeleop extends QQOpMode {
 
     }
 
+    public void start(){
+        robot.intakeArm.goToDropPos();
+    }
+
     public void loop() {
         super.loop();
         double forward = -gamepad1.left_stick_y;
