@@ -4,8 +4,14 @@ package org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees;
 
 import com.ftcteams.behaviortrees.Node;
 import com.ftcteams.behaviortrees.Failover;
+import com.ftcteams.behaviortrees.Parallel;
 import com.ftcteams.behaviortrees.Sequence;
+
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToChamber;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.GetReadyToPushSamples;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntake;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForClawOpen;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
@@ -20,7 +26,12 @@ public class PreloadAuto {
                 new Sequence(
                         new DriveToChamber(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
-                        new Park(TIMEOUT_SECONDS)),
+                        new BehindChamber(TIMEOUT_SECONDS),
+                        new GetReadyToPushSamples(TIMEOUT_SECONDS),
+                        PushSamples.root(),
+                        new Parallel(2,
+                                new ArmToIntake(TIMEOUT_SECONDS),
+                                new ReadyToIntake(TIMEOUT_SECONDS))),
                 new Park(TIMEOUT_SECONDS));
     }
 }

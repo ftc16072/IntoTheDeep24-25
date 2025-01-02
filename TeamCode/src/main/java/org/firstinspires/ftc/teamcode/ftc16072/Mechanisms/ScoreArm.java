@@ -87,9 +87,6 @@ public class ScoreArm extends QQMechanism{
             if (desiredPos < 0){
                 desiredPos = 0;
             }
-        }
-        if (limitSwitch.isPressed()){
-            isScoring = false;
         }else if (chamberContacted){
             isScoring = true;
             goToScoring();
@@ -126,6 +123,9 @@ public class ScoreArm extends QQMechanism{
     }
     public boolean isTimeToReleaseClaw(int lostContactPosition){
         return (currentPos < lostContactPosition - CLAW_RELEASE_OFFSET);
+    }
+    public boolean isLimitSwitchPressed(){
+        return limitSwitch.isPressed();
     }
 
     @Override

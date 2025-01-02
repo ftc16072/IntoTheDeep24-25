@@ -9,15 +9,22 @@ public class WaitForClawOpen extends QQTimeoutNode {
     public WaitForClawOpen(double seconds) {
         super(seconds);
     }
+    State lastStatus = State.RUNNING;
 
     @Override
     public State tick(DebugTree debug, QQOpMode opMode) {
-        if (hasTimedOut()){
-            opMode.robot.scoreArm.setNotScoring();
-            return State.FAILURE;
-        }else if (opMode.robot.scoringClaw.isClawOpen()){
-            return State.SUCCESS;
+        if (lastStatus != State.RUNNING) {
+            return lastStatus;
+        }else {
+            if (hasTimedOut()) {
+                opMode.robot.scoreArm.setNotScoring();
+                lastStatus = State.FAILURE;
+                return State.FAILURE;
+            } else if (opMode.robot.scoringClaw.isClawOpen()) {
+                lastStatus = State.SUCCESS;
+                return State.SUCCESS;
+            }
+            return State.RUNNING;
         }
-        return State.RUNNING;
     }
 }

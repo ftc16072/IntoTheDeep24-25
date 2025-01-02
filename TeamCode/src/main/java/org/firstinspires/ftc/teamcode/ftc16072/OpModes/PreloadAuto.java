@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous
+//@Autonomous
 public class PreloadAuto extends QQOpMode{
     private final int AUTO_DELAY_SECS = 0;
 
