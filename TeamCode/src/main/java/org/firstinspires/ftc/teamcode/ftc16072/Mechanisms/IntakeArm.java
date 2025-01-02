@@ -44,6 +44,7 @@ public class IntakeArm extends QQMechanism {
     public void  rotateArmRight(){
         rotateArm(-MANUAL_CHANGE_AMOUNT);
     }
+    public void moveArmUp(){}
 
     private void rotateArm(double manualChangeAmount){
         double leftPos = leftArmServo.getPosition();

@@ -5,8 +5,8 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class ArmToIntake extends QQTimeoutNode {
-    public ArmToIntake(double seconds) {
+public class WaitForClawClose extends QQTimeoutNode {
+    public WaitForClawClose(double seconds) {
         super(seconds);
     }
     State lastStatus = State.RUNNING;
@@ -16,11 +16,11 @@ public class ArmToIntake extends QQTimeoutNode {
         if (lastStatus != State.RUNNING) {
             return lastStatus;
         }else {
-            opMode.robot.scoreArm.goToIntake();
             if (hasTimedOut()) {
+                opMode.robot.scoreArm.setNotScoring();
                 lastStatus = State.FAILURE;
                 return State.FAILURE;
-            } else if (opMode.robot.scoreArm.isLimitSwitchPressed()) {
+            } else if (opMode.robot.scoringClaw.isClawClosed()) {
                 lastStatus = State.SUCCESS;
                 return State.SUCCESS;
             }
