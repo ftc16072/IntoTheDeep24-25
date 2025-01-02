@@ -17,7 +17,7 @@ public class BehindChamber extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-            boolean isDoneDriving = opMode.nav.driveToPositionIN(17,-61.5,0);
+            boolean isDoneDriving = opMode.nav.driveToPositionIN(17,-58,0);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;

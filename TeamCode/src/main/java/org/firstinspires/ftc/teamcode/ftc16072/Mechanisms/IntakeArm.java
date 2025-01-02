@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestTwoServos;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class IntakeArm extends QQMechanism {
     private static final double MAX_SERVO_POS = 1;
     public static double MANUAL_CHANGE_AMOUNT = 0.02;
     public static double ARM_DROP_POSITION = 0.05;
-    public static double ARM_INTAKE_POSITION = 0.595;
+    public static double ARM_INTAKE_POSITION = 0.59;
     Servo leftArmServo;
     Servo rightArmServo;
 
@@ -44,8 +43,12 @@ public class IntakeArm extends QQMechanism {
     public void  rotateArmRight(){
         rotateArm(-MANUAL_CHANGE_AMOUNT);
     }
-    public void moveArmUp(){}
-
+    public void moveArmUp(){
+        leftArmServo.setPosition(leftArmServo.getPosition()+MANUAL_CHANGE_AMOUNT);
+        rightArmServo.setPosition(rightArmServo.getPosition()+MANUAL_CHANGE_AMOUNT);}
+    public void moveArmDown(){
+        leftArmServo.setPosition(leftArmServo.getPosition()-MANUAL_CHANGE_AMOUNT);
+        rightArmServo.setPosition(rightArmServo.getPosition()-MANUAL_CHANGE_AMOUNT);}
     private void rotateArm(double manualChangeAmount){
         double leftPos = leftArmServo.getPosition();
         double rightPos = rightArmServo.getPosition();
