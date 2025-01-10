@@ -28,7 +28,7 @@ public class IntakeSlides extends QQMechanism {
     public static final int SLIDES_EXTENSION_BOUNDARY = FULL_EXTENSION_POSITION+10;
     private static final int HALF_EXTENSION_POSITION = 740;
     private static final int START_POSITION = 0;
-    public static int MANUAL_CHANGE_AMOUNT = 30;
+    public static double MANUAL_CHANGE_AMOUNT = 30;
 
     private DcMotor rightIntakeSlideMotor;
     private DcMotor leftIntakeSlideMotor;
@@ -69,13 +69,13 @@ public class IntakeSlides extends QQMechanism {
     public void setPosition(int desiredPos){
         this.desiredPos = desiredPos;
     }
-    public void extend(){
-        manualPositionChange(MANUAL_CHANGE_AMOUNT);
+    public void extend(double speed){
+        manualPositionChange(MANUAL_CHANGE_AMOUNT * speed);
     }
-    public void retract(){
-        manualPositionChange(-MANUAL_CHANGE_AMOUNT);
+    public void retract(double speed){
+        manualPositionChange(-MANUAL_CHANGE_AMOUNT * speed);
     }
-    private void manualPositionChange(int changeAmount){
+    private void manualPositionChange(double changeAmount){
         desiredPos += changeAmount;
     }
     @Override

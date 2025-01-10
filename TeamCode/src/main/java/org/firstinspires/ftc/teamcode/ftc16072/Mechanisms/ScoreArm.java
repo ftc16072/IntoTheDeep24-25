@@ -38,9 +38,10 @@ public class ScoreArm extends QQMechanism{
     boolean isScoring;
 
     public static int INTAKE_POSITION = 0;
-    public static int SCORING_POSITION = 200;
+    public static int SCORING_POSITION = 350;
     public static int PLACING_POSITION = 750;
     public static int MOVING_POSITION = 600;
+    public static int INIT_POSITION = 260;
 
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
@@ -68,6 +69,7 @@ public class ScoreArm extends QQMechanism{
     }
     public void goToPlace(){desiredPos = PLACING_POSITION;}
     public void goToMove(){desiredPos = MOVING_POSITION;}
+    public void goToInit(){desiredPos = INIT_POSITION;}
 
     public void manualPositionChange(int changeAmount){
         desiredPos += changeAmount;
@@ -87,9 +89,6 @@ public class ScoreArm extends QQMechanism{
             if (desiredPos < 0){
                 desiredPos = 0;
             }
-        }
-        if (limitSwitch.isPressed()){
-            isScoring = false;
         }else if (chamberContacted){
             isScoring = true;
             goToScoring();
@@ -126,6 +125,9 @@ public class ScoreArm extends QQMechanism{
     }
     public boolean isTimeToReleaseClaw(int lostContactPosition){
         return (currentPos < lostContactPosition - CLAW_RELEASE_OFFSET);
+    }
+    public boolean isLimitSwitchPressed(){
+        return limitSwitch.isPressed();
     }
 
     @Override

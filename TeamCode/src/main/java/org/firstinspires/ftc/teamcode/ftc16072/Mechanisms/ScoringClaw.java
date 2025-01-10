@@ -60,11 +60,8 @@ public class ScoringClaw extends QQMechanism {
         return false;
     }
     public boolean isClawClosed() {
-        if ((clawServo.getPosition() == CLAW_CLOSE_POSITION) &&
-                (closedTimer.seconds()> CLOSED_TIME))
-            return true;
-
-        return false;
+        return (clawServo.getPosition() == CLAW_CLOSE_POSITION) &&
+                (closedTimer.seconds() > CLOSED_TIME);
     }
     public boolean isScoreSwitchPressed(){
         return !scoreSwitch.isPressed();

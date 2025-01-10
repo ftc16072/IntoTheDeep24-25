@@ -24,16 +24,22 @@ public class NoTurnTeleop extends QQOpMode {
 
     }
 
+    public void start(){
+        robot.intakeArm.goToDropPos();
+    }
+
     public void loop() {
         super.loop();
         double forward = -gamepad1.left_stick_y;
         double left = gamepad1.left_stick_x;
         double rotate = 0;
         if (gamepad1.right_stick_button) {
-            if (gamepad1.right_stick_y < -0.2) {
-                robot.intakeSlides.extend();
-            } else if (gamepad1.right_stick_y > 0.2) {
-                robot.intakeSlides.retract();
+            if (gamepad1.right_stick_y < -0.1) {
+                double slideSpeed = (gamepad1.right_stick_y) * -5;
+                robot.intakeSlides.extend(slideSpeed);
+            } else if (gamepad1.right_stick_y > 0.1) {
+                double slideSpeed = (gamepad1.right_stick_y) * 5;
+                robot.intakeSlides.retract(slideSpeed);
             }
             if (robot.intakeSlides.isSafeToRotate()) {
                 if (gamepad1.right_stick_x > 0.3) {
@@ -127,9 +133,13 @@ public class NoTurnTeleop extends QQOpMode {
             robot.scoreArm.setNotScoring();
         }
         if (gamepad2.dpad_up) {
-            robot.intakeSlides.extend();
+            robot.intakeSlides.extend(1);
         } else if (gamepad2.dpad_down) {
-            robot.intakeSlides.retract();
+            robot.intakeSlides.retract(1);
+        }if (gamepad2.dpad_left){
+            robot.intakeArm.moveArmDown();
+        }if(gamepad2.dpad_right){
+            robot.intakeArm.moveArmUp();
         }
         if (gamepad2.right_trigger > TRIGGER_THRESHOLD) {
             robot.scoringClaw.open();
@@ -141,6 +151,7 @@ public class NoTurnTeleop extends QQOpMode {
         XWasPressed = gamepad1.x;
         chamberContactWasPressed = robot.scoreArm.isChamberContacted();
         clawWasClosed = robot.scoringClaw.isClawClosed();
+        intakeClawWasClosed = robot.intakeClaw.isClawClosed();
         slidesSwitchWasPressed = robot.intakeSlides.isSwitchPressed();
         manipulatorXWasPressed = gamepad2.x;
 

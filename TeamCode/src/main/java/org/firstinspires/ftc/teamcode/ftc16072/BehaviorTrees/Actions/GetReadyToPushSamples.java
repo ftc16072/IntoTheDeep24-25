@@ -5,25 +5,23 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class Park extends QQTimeoutNode {
-    public Park(double seconds) {
+public class GetReadyToPushSamples extends QQTimeoutNode {
+    public GetReadyToPushSamples(double seconds) {
         super(seconds);
     }
     State lastStatus = State.RUNNING;
 
     @Override
     public State tick(DebugTree debug, QQOpMode opMode) {
-
         opMode.telemetry.addData("location",opMode.robot.otos.getOtosPosition());
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-           boolean isDoneDriving = opMode.nav.driveToPositionIN(12,-90.5,0);
+            boolean isDoneDriving = opMode.nav.driveToPositionIN(17,-83,0);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;
-        }
-        if (hasTimedOut()) {
+        }if (hasTimedOut()) {
             lastStatus = State.FAILURE;
             return State.FAILURE;
         }
