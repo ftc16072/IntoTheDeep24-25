@@ -43,9 +43,6 @@ public class TwoSpecimenAuto extends QQOpMode{
 
     public void loop() {
         super.loop();
-        telemetry.addData("clawClosed",robot.scoringClaw.isClawClosed());
-        telemetry.addData("clawWasClosed",clawWasClosed);
-        telemetry.addData("test",test);
         if (robot.scoringClaw.isClawClosed() && !clawWasClosed) {
             robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
@@ -59,7 +56,6 @@ public class TwoSpecimenAuto extends QQOpMode{
         }
         if(!done){
             Node.State state = root.tick(debugTree, this);
-            //telemetry.addData("BT",debugTree);
             if(state == Node.State.SUCCESS){
                 done = true;
             }

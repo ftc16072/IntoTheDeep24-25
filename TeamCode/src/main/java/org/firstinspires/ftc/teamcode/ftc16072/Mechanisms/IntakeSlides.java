@@ -34,6 +34,8 @@ public class IntakeSlides extends QQMechanism {
     private DcMotor leftIntakeSlideMotor;
     private TouchSensor limitSwitch;
 
+    boolean isWithinTolerence;
+
 
     public int currentPos;
     public int desiredPos;
@@ -89,6 +91,9 @@ public class IntakeSlides extends QQMechanism {
                 desiredPos = 0;
             }
         }
+        if (Math.abs(desiredPos - currentPos) <= 30){
+            isWithinTolerence = true;
+        }
         currentPos = (leftIntakeSlideMotor.getCurrentPosition() + rightIntakeSlideMotor.getCurrentPosition())/2;//average left and right speeds
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         if (desiredPos == 0 && !limitSwitch.isPressed()){
@@ -114,6 +119,10 @@ public class IntakeSlides extends QQMechanism {
         return limitSwitch.isPressed();
     }
     public boolean isSafeToRotate() { return currentPos > HALF_EXTENSION_POSITION;}
+
+    public boolean getIsWithinTolerence(){
+        return isWithinTolerence;
+    }
 
 
 
