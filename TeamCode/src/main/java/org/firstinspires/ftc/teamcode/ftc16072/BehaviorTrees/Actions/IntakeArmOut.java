@@ -5,8 +5,8 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class SlidesOut extends QQTimeoutNode {
-    public SlidesOut(double seconds) {
+public class IntakeArmOut extends QQTimeoutNode {
+    public IntakeArmOut(double seconds) {
         super(seconds);
     }
     State lastStatus = State.RUNNING;
@@ -16,12 +16,9 @@ public class SlidesOut extends QQTimeoutNode {
         if (lastStatus != State.RUNNING) {
             return lastStatus;
         }else {
-            opMode.robot.intakeSlides.halfExtension();
             opMode.robot.intakeArm.goToIntake();
             if (hasTimedOut()) {
-                lastStatus = State.FAILURE;
-                return State.FAILURE;
-            } else if (opMode.robot.intakeSlides.getIsWithinTolerence()) {
+                opMode.robot.scoreArm.setNotScoring();
                 lastStatus = State.SUCCESS;
                 return State.SUCCESS;
             }

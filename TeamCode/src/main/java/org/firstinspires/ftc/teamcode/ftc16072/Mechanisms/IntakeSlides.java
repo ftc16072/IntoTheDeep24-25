@@ -27,6 +27,7 @@ public class IntakeSlides extends QQMechanism {
     private static final int FULL_EXTENSION_POSITION = 1480;
     public static final int SLIDES_EXTENSION_BOUNDARY = FULL_EXTENSION_POSITION+10;
     private static final int HALF_EXTENSION_POSITION = 740;
+    private static final int AUTO_EXTENSION_POSITION = 940;
     private static final int START_POSITION = 0;
     public static double MANUAL_CHANGE_AMOUNT = 30;
 
@@ -141,6 +142,7 @@ public class IntakeSlides extends QQMechanism {
     public void halfExtension(){
         setPosition(HALF_EXTENSION_POSITION);
     }
+    public void setAutoExtensionPosition(){setPosition(AUTO_EXTENSION_POSITION);}
     public void startPosition(){
         setPosition(START_POSITION);
     }

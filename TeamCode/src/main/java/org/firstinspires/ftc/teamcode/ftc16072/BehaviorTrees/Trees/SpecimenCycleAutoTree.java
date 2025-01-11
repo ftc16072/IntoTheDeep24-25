@@ -10,9 +10,12 @@ import com.ftcteams.behaviortrees.Sequence;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToChamber;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeArmOut;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntake;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.SlidesOutToMiddle;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForClawOpen;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Delay;
 
 
 public class SpecimenCycleAutoTree {
@@ -24,15 +27,22 @@ public class SpecimenCycleAutoTree {
                 new Sequence(
                         new DriveToChamber(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
-                        new BehindChamber(TIMEOUT_SECONDS),
-                        new Parallel(2,
+                        new Parallel(1,
+                                new IntakeArmOut(4),
+                                new BehindChamber(TIMEOUT_SECONDS)
+                                ),
+                        new Parallel(3,
+                                new Sequence(
+                                        new Delay(1),
+                                        new SlidesOutToMiddle(TIMEOUT_SECONDS)
+                                        ),
                                 new ArmToIntake(TIMEOUT_SECONDS),
-                                new ReadyToIntake(TIMEOUT_SECONDS)),
-                        Intake.root(),
-                        new BehindChamber(TIMEOUT_SECONDS),
+                                new ReadyToIntakeOne(TIMEOUT_SECONDS)),
+                        DoubleIntake.root())
+                       /* new BehindChamber(TIMEOUT_SECONDS),
                         new DriveToChamber(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
-                        new Parallel(TIMEOUT_SECONDS)),
+                        new Parallel(TIMEOUT_SECONDS))*/,
                 new Park(TIMEOUT_SECONDS));
     }
 }

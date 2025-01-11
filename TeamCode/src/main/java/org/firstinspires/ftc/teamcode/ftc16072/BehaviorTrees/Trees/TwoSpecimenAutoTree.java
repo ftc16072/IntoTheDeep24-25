@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntake;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForClawOpen;
 
 
@@ -27,7 +27,7 @@ public class TwoSpecimenAutoTree {
                         new BehindChamber(TIMEOUT_SECONDS),
                         new Parallel(2,
                                 new ArmToIntake(TIMEOUT_SECONDS),
-                                new ReadyToIntake(TIMEOUT_SECONDS)),
+                                new ReadyToIntakeOne(TIMEOUT_SECONDS)),
                         Intake.root(),
                         new BehindChamber(TIMEOUT_SECONDS),
                         new DriveToChamber(TIMEOUT_SECONDS),
