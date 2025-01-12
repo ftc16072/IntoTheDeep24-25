@@ -27,12 +27,15 @@ public class IntakeSlides extends QQMechanism {
     private static final int FULL_EXTENSION_POSITION = 1480;
     public static final int SLIDES_EXTENSION_BOUNDARY = FULL_EXTENSION_POSITION+10;
     private static final int HALF_EXTENSION_POSITION = 740;
+    private static final int AUTO_EXTENSION_POSITION = 940;
     private static final int START_POSITION = 0;
     public static double MANUAL_CHANGE_AMOUNT = 30;
 
     private DcMotor rightIntakeSlideMotor;
     private DcMotor leftIntakeSlideMotor;
     private TouchSensor limitSwitch;
+
+    boolean isWithinTolerence;
 
 
     public int currentPos;
@@ -89,6 +92,9 @@ public class IntakeSlides extends QQMechanism {
                 desiredPos = 0;
             }
         }
+        if (Math.abs(desiredPos - currentPos) <= 30){
+            isWithinTolerence = true;
+        }
         currentPos = (leftIntakeSlideMotor.getCurrentPosition() + rightIntakeSlideMotor.getCurrentPosition())/2;//average left and right speeds
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         if (desiredPos == 0 && !limitSwitch.isPressed()){
@@ -115,6 +121,10 @@ public class IntakeSlides extends QQMechanism {
     }
     public boolean isSafeToRotate() { return currentPos > HALF_EXTENSION_POSITION;}
 
+    public boolean getIsWithinTolerence(){
+        return isWithinTolerence;
+    }
+
 
 
 
@@ -132,6 +142,7 @@ public class IntakeSlides extends QQMechanism {
     public void halfExtension(){
         setPosition(HALF_EXTENSION_POSITION);
     }
+    public void setAutoExtensionPosition(){setPosition(AUTO_EXTENSION_POSITION);}
     public void startPosition(){
         setPosition(START_POSITION);
     }

@@ -11,9 +11,8 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.GetReadyToPushSamples;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntake;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForClawOpen;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 
 
@@ -31,7 +30,7 @@ public class PreloadAuto {
                         PushSamples.root(),
                         new Parallel(2,
                                 new ArmToIntake(TIMEOUT_SECONDS),
-                                new ReadyToIntake(TIMEOUT_SECONDS))),
+                                new ReadyToIntakeOne(TIMEOUT_SECONDS))),
                 new Park(TIMEOUT_SECONDS));
     }
 }
