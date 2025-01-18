@@ -35,6 +35,8 @@ public class Arm extends QQMechanism{
     public static int GROUND_POSITION = -10;
     static final int WRIST_THRESHOLD = 500;
 
+    boolean isWithinTolerance;
+
     public Telemetry telemetry;
 
 
@@ -80,7 +82,13 @@ public class Arm extends QQMechanism{
         telemetry.addData("Motor Power", motorPower);
         this.motorPower = motorPower;
         armMotor.setPower(motorPower);
+
+        if (Math.abs(desiredPos - currentPos) <= 30){
+            isWithinTolerance = true;
+        }else {isWithinTolerance = false;}
     }
+
+    public boolean getIsWithinTolerance(){return isWithinTolerance;}
 
     @Override
     public List<QQTest> getTests() {

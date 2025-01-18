@@ -43,6 +43,8 @@ public class ScoreArm extends QQMechanism{
     public static int MOVING_POSITION = 600;
     public static int INIT_POSITION = 260;
 
+    public boolean isWithinTolerance;
+
     PIDFController pidfController = new PIDFController(kP,kI,kD,kF,max,min);
 
     @Override
@@ -105,6 +107,11 @@ public class ScoreArm extends QQMechanism{
         if (isScoring){
             motorPower = SCORE_POWER;
         }
+
+        if (Math.abs(desiredPos - currentPos) <= 30){
+            isWithinTolerance = true;
+        }else {isWithinTolerance = false;}
+
         chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         //pidfController.updateConstants(kP,kI,kD,kF,max,min);
         telemetry.addData("curerent pos",currentPos);
@@ -129,6 +136,8 @@ public class ScoreArm extends QQMechanism{
     public boolean isLimitSwitchPressed(){
         return limitSwitch.isPressed();
     }
+
+    public boolean getIsWithinTolerence(){return isWithinTolerance;}
 
     @Override
     public List<QQTest> getTests() {

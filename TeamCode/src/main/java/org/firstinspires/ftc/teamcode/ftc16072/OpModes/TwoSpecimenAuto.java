@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.PreloadAuto;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.TwoSpecimenAutoTree;
 
-@Autonomous
+//@Autonomous
 public class TwoSpecimenAuto extends QQOpMode{
     boolean clawWasClosed;
     boolean test;
