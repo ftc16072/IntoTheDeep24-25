@@ -18,7 +18,7 @@ public class Navigation {
     public static double TRANSLATIONAL_KI = 0.0;
     public static double TRANSLATIONAL_KD = 0.000;
     public static double TRANSLATIONAL_KF = 0;
-    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 0.5;
+    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 1;
 
     public static double ROTATIONAL_KP = 0.01;
     public static double ROTATIONAL_KI = 0.000;

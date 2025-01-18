@@ -24,7 +24,7 @@ public class DriveToChamber extends QQTimeoutNode {
                 return State.FAILURE;
             }
             opMode.robot.mecanumDrive.move(FORWARD_SPEED,0,0);
-            if (opMode.robot.scoreArm.isChamberContacted()){
+            if (opMode.robot.scoringClaw.isClawOpen()){
                 opMode.robot.mecanumDrive.stop();
                 lastStatus = State.SUCCESS;
                 return State.SUCCESS;

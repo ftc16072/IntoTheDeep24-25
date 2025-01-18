@@ -5,15 +5,15 @@ import com.ftcteams.behaviortrees.Node;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.SpecimenCycleAutoTree;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.ThreeSpecimenAutoTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.TwoSpecimenAutoTree;
 
-//@Autonomous
-public class SpecimenCycleAuto extends QQOpMode{
+@Autonomous
+public class ThreeSpecimenAuto extends QQOpMode{
     boolean clawWasClosed;
     boolean test;
     boolean done;
-    Node root = SpecimenCycleAutoTree.root();
+    Node root = ThreeSpecimenAutoTree.root();
     DebugTree debugTree = new DebugTree();
     ElapsedTime moveTimer = new ElapsedTime();
     double INIT_MOVE_TIME_SECONDS = 1;
@@ -24,7 +24,6 @@ public class SpecimenCycleAuto extends QQOpMode{
         moveTimer.reset();
         robot.scoreArm.goToInit();
         robot.scoringClaw.close();
-        robot.intakeArm.goToDropPos();
     }
 
     @Override
@@ -47,10 +46,6 @@ public class SpecimenCycleAuto extends QQOpMode{
         if (robot.scoringClaw.isClawClosed() && !clawWasClosed) {
             robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
-            test = true;
-        }
-        if (robot.scoringClaw.isClawOpen()){
-            test = false;
         }
         if (robot.scoringClaw.isScoreSwitchPressed()){
             robot.scoreArm.setNotScoring();

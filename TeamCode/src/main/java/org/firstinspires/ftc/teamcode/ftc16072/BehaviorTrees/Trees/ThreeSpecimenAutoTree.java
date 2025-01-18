@@ -8,15 +8,21 @@ import com.ftcteams.behaviortrees.Parallel;
 import com.ftcteams.behaviortrees.Sequence;
 
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamber;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamberForSecondScore;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamberForThirdScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToChamber;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToFirstSample;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToSamples;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.GetReadyToPushSamples;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ScoreClawOpen;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForClawOpen;
 
 
-public class TwoSpecimenAutoTree {
+public class ThreeSpecimenAutoTree {
 
     public static final int TIMEOUT_SECONDS = 10;
 
@@ -26,14 +32,29 @@ public class TwoSpecimenAutoTree {
                         new DriveToChamber(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
                         new BehindChamber(TIMEOUT_SECONDS),
+                        new GetReadyToPushSamples(TIMEOUT_SECONDS),
+                        new DriveToSamples(TIMEOUT_SECONDS),
+                        new DriveToFirstSample(TIMEOUT_SECONDS),
                         new Parallel(2,
                                 new ArmToIntake(TIMEOUT_SECONDS),
                                 new ReadyToIntakeOne(TIMEOUT_SECONDS)),
                         Intake.root(),
-                        new BehindChamber(TIMEOUT_SECONDS),
+                        new Parallel(2,
+                                new ReadyToIntakeOne(TIMEOUT_SECONDS),
+                                new ArmToScore(TIMEOUT_SECONDS)),
+                        new BehindChamberForSecondScore(TIMEOUT_SECONDS),
                         new DriveToChamber(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
-                        new Parallel(TIMEOUT_SECONDS)),
+                        new Parallel(2,
+                                new ReadyToIntakeOne(TIMEOUT_SECONDS),
+                                new ArmToIntake(TIMEOUT_SECONDS)),
+                        Intake.root(),
+                        new Parallel(2,
+                                new ReadyToIntakeOne(TIMEOUT_SECONDS),
+                                new ArmToScore(TIMEOUT_SECONDS)),
+                        new BehindChamberForThirdScore(TIMEOUT_SECONDS),
+                        new DriveToChamber(TIMEOUT_SECONDS),
+                        new WaitForClawOpen(TIMEOUT_SECONDS)),
                 new Parallel(3,
                         new Park(TIMEOUT_SECONDS),
                         new ScoreClawOpen(2),
