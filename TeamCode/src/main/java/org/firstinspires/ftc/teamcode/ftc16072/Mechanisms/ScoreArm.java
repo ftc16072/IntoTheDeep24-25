@@ -40,7 +40,7 @@ public class ScoreArm extends QQMechanism{
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 350;
     public static int PLACING_POSITION = 880;
-    public static int MOVING_POSITION = 600;
+    public static int MOVING_POSITION = 450;
     public static int INIT_POSITION = 260;
 
     public boolean isWithinTolerance;
