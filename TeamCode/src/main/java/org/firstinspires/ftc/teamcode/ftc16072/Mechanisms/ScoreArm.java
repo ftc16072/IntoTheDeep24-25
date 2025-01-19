@@ -35,6 +35,7 @@ public class ScoreArm extends QQMechanism{
     protected int currentPos;
     public int desiredPos;
     public double motorPower;
+    public double previousPos;
     boolean isScoring;
 
     public static int INTAKE_POSITION = 0;
@@ -76,6 +77,7 @@ public class ScoreArm extends QQMechanism{
     public void manualPositionChange(int changeAmount){
         desiredPos += changeAmount;
     }
+    public boolean isStalling() {return ((((leftMotor.getPower() + (rightMotor.getPower()))/2) != 0) && previousPos == currentPos);}
 
 
 
@@ -111,7 +113,9 @@ public class ScoreArm extends QQMechanism{
         if (Math.abs(desiredPos - currentPos) <= 30){
             isWithinTolerance = true;
         }else {isWithinTolerance = false;}
-
+        if(previousPos != currentPos){
+            previousPos = currentPos;
+        }
         chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         //pidfController.updateConstants(kP,kI,kD,kF,max,min);
         telemetry.addData("curerent pos",currentPos);

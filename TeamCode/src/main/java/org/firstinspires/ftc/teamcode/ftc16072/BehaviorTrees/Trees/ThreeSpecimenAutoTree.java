@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ScoreClawOpen;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForClawOpen;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WaitForPlace;
 
 
 public class ThreeSpecimenAutoTree {
@@ -30,6 +31,7 @@ public class ThreeSpecimenAutoTree {
         return new Failover(
                 new Sequence(
                         new DriveToChamber(TIMEOUT_SECONDS),
+                        new WaitForPlace(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
                         new BehindChamber(TIMEOUT_SECONDS),
                         new GetReadyToPushSamples(TIMEOUT_SECONDS),
