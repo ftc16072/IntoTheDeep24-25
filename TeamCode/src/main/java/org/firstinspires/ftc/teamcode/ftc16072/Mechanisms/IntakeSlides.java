@@ -24,7 +24,7 @@ public class IntakeSlides extends QQMechanism {
     //HAVE TO CHANGE ALL VALUES LATER
     public static final double TEST_SPEED = 0.55;
     private static final int SlIDES_POSITION_SAFETY_BACK = -50;
-    private static final int FULL_EXTENSION_POSITION = 1480;
+    private static final int FULL_EXTENSION_POSITION = 1400;
     public static final int SLIDES_EXTENSION_BOUNDARY = FULL_EXTENSION_POSITION+10;
     private static final int HALF_EXTENSION_POSITION = 740;
     private static final int AUTO_EXTENSION_POSITION = 940;
