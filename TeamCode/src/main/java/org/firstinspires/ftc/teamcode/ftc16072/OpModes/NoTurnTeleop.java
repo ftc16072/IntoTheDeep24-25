@@ -99,8 +99,15 @@ public class NoTurnTeleop extends QQOpMode {
         if (gamepad1.b) {
             robot.intakeArm.goToDropPos();
         }
+        if (robot.intakeClaw.hasTarget()){
+            gamepad1.rumble(100);
+        }
         if (gamepad1.x && !XWasPressed) {
-            robot.intakeClaw.wristIntake();
+            robot.intakeClaw.open();
+            if(robot.intakeClaw.hasTarget()){
+                robot.intakeClaw.IntakeWithVision();
+            }else {
+            robot.intakeClaw.wristIntake();}
         }
         if (gamepad1.right_bumper) {
             robot.intakeClaw.open();
