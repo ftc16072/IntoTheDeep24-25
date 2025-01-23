@@ -116,7 +116,6 @@ public class NoTurnTeleop extends QQOpMode {
         }
         if (robot.intakeClaw.isClawClosed() && !intakeClawWasClosed) {
             robot.intakeClaw.wristTransfer();
-            robot.intakeSlides.startPosition();
             robot.intakeArm.goToIntake();
         }
 
