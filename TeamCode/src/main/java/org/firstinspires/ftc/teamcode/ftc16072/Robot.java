@@ -26,6 +26,7 @@ public class Robot {
     //public DoubleReverse4Bar doubleReverse4Bar;
    // public Slides slides;
     public IntakeClaw intakeClaw;
+    boolean isRedAlliance;
 
 
   
@@ -72,6 +73,13 @@ public class Robot {
             mechanism.update(telemetry);
         }
     }
+
+    public void setAlliancecolor(){
+        if (scoringClaw.isColorRed()){
+            isRedAlliance = true;
+        }isRedAlliance = false;
+    }
+
 
     public void makeDriveOnly(){
         mechanisms = Arrays.asList(

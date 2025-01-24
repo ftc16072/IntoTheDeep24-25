@@ -77,9 +77,9 @@ public class NoTurnTeleop extends QQOpMode {
             robot.scoreArm.goToMove();
             robot.intakeArm.goToIntake();
             robot.scoreArm.goToPlace();
-        } else if (gamepad1.dpad_up) {
+        } else if (gamepad2.dpad_up) {
             robot.scoreArm.manualPositionChange(SCORE_ARM_MANUAL_CHANGE);
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad2.dpad_down) {
             robot.scoreArm.manualPositionChange(-SCORE_ARM_MANUAL_CHANGE);
         }
         if (robot.scoringClaw.isScoreSwitchPressed()){
@@ -139,13 +139,13 @@ public class NoTurnTeleop extends QQOpMode {
             robot.scoreArm.goToMove();
             robot.scoreArm.setNotScoring();
         }
-        if (gamepad2.dpad_up) {
+        if (gamepad2.dpad_right) {
             robot.intakeSlides.extend(1);
-        } else if (gamepad2.dpad_down) {
+        } else if (gamepad2.dpad_left) {
             robot.intakeSlides.retract(1);
-        }if (gamepad2.dpad_left){
+        }if (gamepad1.dpad_up){
             robot.intakeArm.moveArmDown();
-        }if(gamepad2.dpad_right){
+        }if(gamepad1.dpad_down){
             robot.intakeArm.moveArmUp();
         }
         if (gamepad2.right_trigger > TRIGGER_THRESHOLD) {

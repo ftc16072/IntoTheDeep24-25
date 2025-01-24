@@ -21,6 +21,7 @@ import org.opencv.core.Point;
 import org.opencv.core.RotatedRect;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Config
@@ -30,7 +31,7 @@ public class IntakeClaw extends QQMechanism {
     public static double CLAW_CLOSE_POSITION = 1;
     public static double CLAW_OPEN_POSITION = 0.8;
     public static double WRIST_START_POSITION = 0.0;
-    public static double WRIST_INTAKE_POSITION = 0.7;
+    public static double WRIST_INTAKE_POSITION = 0.75;
 
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
@@ -54,7 +55,11 @@ public class IntakeClaw extends QQMechanism {
 
     Point centerPoint = new Point(CAMERA_HEIGHT / 2.0, CAMERA_WIDTH / 2.0);
 
-    ColorBlobLocatorProcessor colorLocator;
+    ColorBlobLocatorProcessor colorLocatorRed;
+    ColorBlobLocatorProcessor colorLocatorBlue;
+    ColorBlobLocatorProcessor colorLocatorYellow;
+
+    SampleColor targetColor;
 
 
     @Override
@@ -65,8 +70,22 @@ public class IntakeClaw extends QQMechanism {
         webcamName = hwMap.get(WebcamName.class, "Webcam 1");
         leftWristServo.setDirection(Servo.Direction.REVERSE);
 
-        colorLocator = new ColorBlobLocatorProcessor.Builder()
+        colorLocatorRed = new ColorBlobLocatorProcessor.Builder()
                 .setTargetColorRange(ColorRange.RED)         // use a predefined color match
+                .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
+                .setRoi(ImageRegion.asUnityCenterCoordinates(-1, 1, 1, -1))  // search central 1/4 of camera view
+                .setDrawContours(true)                        // Show contours on the Stream Preview
+                .setBlurSize(5)                               // Smooth the transitions between different colors in image
+                .build();
+        colorLocatorBlue = new ColorBlobLocatorProcessor.Builder()
+                .setTargetColorRange(ColorRange.BLUE)         // use a predefined color match
+                .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
+                .setRoi(ImageRegion.asUnityCenterCoordinates(-1, 1, 1, -1))  // search central 1/4 of camera view
+                .setDrawContours(true)                        // Show contours on the Stream Preview
+                .setBlurSize(5)                               // Smooth the transitions between different colors in image
+                .build();
+        colorLocatorYellow = new ColorBlobLocatorProcessor.Builder()
+                .setTargetColorRange(ColorRange.YELLOW)         // use a predefined color match
                 .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
                 .setRoi(ImageRegion.asUnityCenterCoordinates(-1, 1, 1, -1))  // search central 1/4 of camera view
                 .setDrawContours(true)                        // Show contours on the Stream Preview
@@ -74,18 +93,34 @@ public class IntakeClaw extends QQMechanism {
                 .build();
         @SuppressWarnings("unused")
         VisionPortal portal = new VisionPortal.Builder()
-                .addProcessor(colorLocator)
+                .addProcessor(colorLocatorRed)
+                .addProcessor(colorLocatorYellow)
+                .addProcessor(colorLocatorBlue)
                 .setCameraResolution(new Size(CAMERA_WIDTH, CAMERA_HEIGHT))
                 .setCamera(webcamName)
                 .build();
     }
 
+    public enum SampleColor {
+        RED,
+        YELLOW,
+        BLUE
+    }
 
-    public ColorBlobLocatorProcessor.Blob blobClosestToCenter() {
+
+    public ColorBlobLocatorProcessor.Blob blobClosestToCenter(SampleColor color) {
         double closest = 100000000;
         ColorBlobLocatorProcessor.Blob returnBlob = null;
+        List<ColorBlobLocatorProcessor.Blob> blobs = Collections.emptyList();
 
-        List<ColorBlobLocatorProcessor.Blob> blobs = colorLocator.getBlobs();
+        if (color == SampleColor.RED){
+            blobs = colorLocatorRed.getBlobs();
+        }else if (color == SampleColor.BLUE){
+            blobs = colorLocatorBlue.getBlobs();
+        }else if (color == SampleColor.YELLOW){
+            blobs = colorLocatorYellow.getBlobs();
+        }
+
         for (ColorBlobLocatorProcessor.Blob blob : blobs) {
             double distance = getDistanceFromCenter(blob.getBoxFit());
             if ((blob.getContourArea() > 50) && (distance < closest)) {
@@ -95,6 +130,7 @@ public class IntakeClaw extends QQMechanism {
         }
         return returnBlob;
     }
+
 
     private double getDistanceFromCenter(RotatedRect boxFit) {
         return Math.abs(boxFit.center.x - CENTER_X) + Math.abs(boxFit.center.y - CENTER_Y);
@@ -152,7 +188,13 @@ public class IntakeClaw extends QQMechanism {
         rightWristServo.setPosition(rightWristServoPos);
         leftWristServo.setPosition(leftWristServoPos);
         if (visionIsActive){
-            blob = blobClosestToCenter();
+            if(targetColor == SampleColor.YELLOW){
+                blob = blobClosestToCenter(SampleColor.YELLOW);
+            }else if(targetColor == SampleColor.RED){
+                blob = blobClosestToCenter(SampleColor.RED);
+            }else{
+                blob = blobClosestToCenter(SampleColor.BLUE);
+            }
             if(blob != null) {
                 blobAngle = blob.getBoxFit().angle - 90;
                 if (blob.getBoxFit().size.height > blob.getBoxFit().size.width) {
@@ -194,6 +236,10 @@ public class IntakeClaw extends QQMechanism {
             }
         }return false;
     }
+
+    public void setTargetColorBlue(){targetColor = SampleColor.BLUE;}
+    public void setTargetColorRed(){targetColor = SampleColor.RED;}
+    public void setTargetColorYellow(){targetColor = SampleColor.YELLOW;}
 
 }
 
