@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
@@ -30,6 +31,9 @@ public class NoTurnTeleop extends QQOpMode {
     }
 
     public void loop() {
+        telemetry.addData("Control Hub Draw", robot.controlHub.getControlHubCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Control Hub Draw", robot.controlHub.getExpansionHubCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Total Draw", (robot.controlHub.getControlHubCurrent(CurrentUnit.AMPS)+robot.controlHub.getExpansionHubCurrent(CurrentUnit.AMPS)));
         super.loop();
         double forward = -gamepad1.left_stick_y;
         double left = gamepad1.left_stick_x;
