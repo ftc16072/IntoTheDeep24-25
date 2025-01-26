@@ -32,7 +32,7 @@ public class NoTurnTeleop extends QQOpMode {
 
     public void loop() {
         telemetry.addData("Control Hub Draw", robot.controlHub.getControlHubCurrent(CurrentUnit.AMPS));
-        telemetry.addData("Control Hub Draw", robot.controlHub.getExpansionHubCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Expansion Hub Draw", robot.controlHub.getExpansionHubCurrent(CurrentUnit.AMPS));
         telemetry.addData("Total Draw", (robot.controlHub.getControlHubCurrent(CurrentUnit.AMPS)+robot.controlHub.getExpansionHubCurrent(CurrentUnit.AMPS)));
         super.loop();
         double forward = -gamepad1.left_stick_y;
