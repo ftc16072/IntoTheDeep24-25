@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestColorRangeSensor;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestSwitch;
+import org.firstinspires.ftc.vision.opencv.ColorRange;
 
 import java.util.Arrays;
 import java.util.List;
@@ -87,9 +89,18 @@ public class ScoringClaw extends QQMechanism {
         closedTimer.reset();
     }
 
+    public boolean isColorRed(){return colorSensor.red() > colorSensor.blue();}
+
     @Override
     public void update(Telemetry telemetry) {
+        String color = "none";
         telemetry.addData("Distance", colorSensor.getDistance(DistanceUnit.CM));
+        if (isColorRed()) {
+            color = "red";
+        }else{
+            color = "blue";
+        }
+        telemetry.addData("color", color);
         if (isClawOpen() && isBlockGrabbable()) {
             telemetry.addData("Auto Close", true);
             close();
