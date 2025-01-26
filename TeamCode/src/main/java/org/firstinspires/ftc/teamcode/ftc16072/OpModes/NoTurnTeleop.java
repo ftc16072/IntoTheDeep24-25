@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 public class NoTurnTeleop extends QQOpMode {
 
     public static final double TRIGGER_THRESHOLD = 0.5;
-    public static final int SCORE_ARM_MANUAL_CHANGE = 15;
+    public static final int SCORE_ARM_MANUAL_CHANGE = 30;
     public static final double MANUAL_CHANGE_AMOUNT_WRIST = 0.03;
     boolean isPlacing;
     boolean XWasPressed;
@@ -21,6 +21,7 @@ public class NoTurnTeleop extends QQOpMode {
     public void init() {
         isPlacing = false;
         super.init();
+        robot.intakeClaw.setTargetColorBlue();
 
     }
 
