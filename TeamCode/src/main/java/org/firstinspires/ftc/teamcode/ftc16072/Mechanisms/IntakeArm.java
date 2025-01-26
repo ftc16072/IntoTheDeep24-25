@@ -15,7 +15,7 @@ public class IntakeArm extends QQMechanism {
     private static final double MAX_SERVO_POS = 1;
     public static double MANUAL_CHANGE_AMOUNT = 0.02;
     public static double ARM_DROP_POSITION = 0.05;
-    public static double ARM_INTAKE_POSITION = 0.59;
+    public static double ARM_INTAKE_POSITION = 0.58;
     Servo leftArmServo;
     Servo rightArmServo;
 

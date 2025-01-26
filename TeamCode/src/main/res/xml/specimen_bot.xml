@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot type="FirstInspires-FTC">
+    <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
+        <LynxModule name="Expansion Hub 2" port="2">
+            <goBILDA5202SeriesMotor name="right_score_arm_motor" port="0" />
+            <goBILDA5202SeriesMotor name="right_intake_slide_motor" port="1" />
+            <goBILDA5202SeriesMotor name="left_intake_slide_motor" port="2" />
+            <goBILDA5202SeriesMotor name="left_score_arm_motor" port="3" />
+            <Servo name="right_intake_wrist" port="0" />
+            <Servo name="claw_servo" port="2" />
+            <Servo name="intake_claw_servo" port="4" />
+            <RevTouchSensor name="right_chamber_contact_switch" port="1" />
+            <RevTouchSensor name="left_chamber_contact_switch" port="3" />
+            <RevTouchSensor name="score_switch" port="5" />
+            <RevColorSensorV3 name="scoreclaw_color" port="0" bus="0" />
+            <SparkFunOTOS name="sensor_otos" port="0" bus="1" />
+        </LynxModule>
+        <LynxModule name="Control Hub" port="173">
+            <goBILDA5202SeriesMotor name="back_right_motor" port="0" />
+            <goBILDA5202SeriesMotor name="front_right_motor" port="1" />
+            <goBILDA5202SeriesMotor name="back_left_motor" port="2" />
+            <goBILDA5202SeriesMotor name="front_left_motor" port="3" />
+            <Servo name="right_arm_servo" port="0" />
+            <Servo name="left_intake_wrist" port="2" />
+            <Servo name="left_arm_servo" port="4" />
+            <RevTouchSensor name="score_arm_switch" port="1" />
+            <RevTouchSensor name="slides_switch" port="3" />
+            <LynxEmbeddedIMU name="imu" port="0" bus="0" />
+        </LynxModule>
+    </LynxUsbDevice>
+    <Webcam name="Webcam 1" serialNumber="VGA USB Camera" />
+</Robot>
