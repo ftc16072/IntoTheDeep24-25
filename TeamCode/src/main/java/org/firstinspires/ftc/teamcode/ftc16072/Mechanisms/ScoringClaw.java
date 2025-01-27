@@ -26,9 +26,8 @@ public class ScoringClaw extends QQMechanism {
     public static final double CLOSED_TIME = 0.25;
     public static double CLAW_CLOSE_POSITION = 0.5;
     public static double CLAW_OPEN_POSITION = 0;
-
-
-
+    static boolean hasColor = false;
+    static boolean isRed = true;
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
     Servo clawServo;
@@ -89,7 +88,13 @@ public class ScoringClaw extends QQMechanism {
         closedTimer.reset();
     }
 
-    public boolean isColorRed(){return colorSensor.red() > colorSensor.blue();}
+    public boolean isColorRed(){
+        if (!hasColor){
+            isRed = colorSensor.red() > colorSensor.blue();
+            hasColor = true;
+        }
+        return isRed;
+    }
 
     @Override
     public void update(Telemetry telemetry) {
