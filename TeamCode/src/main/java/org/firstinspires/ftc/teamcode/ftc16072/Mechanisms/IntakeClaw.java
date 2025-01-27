@@ -53,7 +53,7 @@ public class IntakeClaw extends QQMechanism {
     int CENTER_Y = CAMERA_HEIGHT / 2;
     boolean visionIsActive = true;
 
-    Point centerPoint = new Point(CAMERA_HEIGHT / 2.0, CAMERA_WIDTH / 2.0);
+    Point centerPoint = new Point(CENTER_X, CENTER_Y);
 
     ColorBlobLocatorProcessor colorLocatorRed;
     ColorBlobLocatorProcessor colorLocatorBlue;
@@ -218,7 +218,7 @@ public class IntakeClaw extends QQMechanism {
         rightWristServoPos = WRIST_INTAKE_POSITION + servoPosAdjustment;
     }
 
-    public void IntakeWithVision(){
+    public void intakeWithVision(){
         intakeDegrees(blobAngle);
     }
 

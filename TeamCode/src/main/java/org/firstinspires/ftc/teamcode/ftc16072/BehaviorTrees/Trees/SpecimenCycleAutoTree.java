@@ -33,7 +33,7 @@ public class SpecimenCycleAutoTree {
                                 ),
                         new Parallel(3,
                                 new Sequence(
-                                        new Delay(1),
+                                        new Delay(0.5),
                                         new SlidesOutToMiddle(TIMEOUT_SECONDS)
                                         ),
                                 new ArmToIntake(TIMEOUT_SECONDS),

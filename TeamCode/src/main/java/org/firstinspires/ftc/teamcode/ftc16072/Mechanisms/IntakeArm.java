@@ -16,6 +16,7 @@ public class IntakeArm extends QQMechanism {
     public static double MANUAL_CHANGE_AMOUNT = 0.02;
     public static double ARM_DROP_POSITION = 0.05;
     public static double ARM_INTAKE_POSITION = 0.58;
+    public static double AUTONOMOUS_GRAB_POSITION = 0.6;
     Servo leftArmServo;
     Servo rightArmServo;
 
@@ -34,6 +35,9 @@ public class IntakeArm extends QQMechanism {
     }
     public void goToIntake(){
         goToPos(ARM_INTAKE_POSITION);
+    }
+    public void goToAutoGrab(){
+        goToPos(AUTONOMOUS_GRAB_POSITION);
     }
 
 
