@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
 public class StrafeToSample extends QQTimeoutNode {
-    public static final double STRAFE_SPEED = 0.1;
+    public static final double STRAFE_SPEED = 0.15;
     State lastStatus = State.RUNNING;
 
     public StrafeToSample(double seconds) {
