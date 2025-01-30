@@ -32,6 +32,7 @@ public class IntakeClaw extends QQMechanism {
     public static double CLAW_OPEN_POSITION = 0.8;
     public static double WRIST_START_POSITION = 0.0;
     public static double WRIST_INTAKE_POSITION = 0.75;
+    public static double WRIST_DROP_POSITION = 0.1;
 
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
@@ -151,6 +152,10 @@ public class IntakeClaw extends QQMechanism {
     public void wristIntake(){
         leftWristServoPos = WRIST_INTAKE_POSITION;
         rightWristServoPos = WRIST_INTAKE_POSITION;
+    }
+    public void wristDrop(){
+        leftWristServoPos = WRIST_DROP_POSITION;
+        rightWristServoPos = WRIST_DROP_POSITION;
     }
     public void open() {
         openTimer.reset();

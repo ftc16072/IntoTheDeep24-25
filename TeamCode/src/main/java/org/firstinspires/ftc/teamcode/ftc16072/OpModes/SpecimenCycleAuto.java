@@ -50,6 +50,9 @@ public class SpecimenCycleAuto extends QQOpMode{
             robot.scoreArm.goToPlace();
             test = true;
         }
+        if(robot.scoreArm.isStalling()){
+            robot.scoringClaw.open();
+        }
         if (robot.scoringClaw.isClawOpen()){
             test = false;
         }

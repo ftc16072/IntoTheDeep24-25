@@ -27,6 +27,7 @@ public class IntakeAttempt extends QQTimeoutNode {
             if (opMode.robot.scoringClaw.isClawClosed()){
                 opMode.robot.mecanumDrive.stop();
                 opMode.robot.intakeClaw.open();
+                opMode.robot.intakeArm.goToAutoDropPos();
                 lastStatus = State.SUCCESS;
                 return State.SUCCESS;
 
