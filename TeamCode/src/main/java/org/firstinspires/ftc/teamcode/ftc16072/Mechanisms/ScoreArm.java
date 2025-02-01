@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestSwitch;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestTwoMotors;
@@ -20,8 +22,9 @@ public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
     public static final int CLAW_RELEASE_OFFSET = 250;
     public static final double SCORE_POWER = -0.8;
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    public static final double STALL_CURRENT = 4.1;
+    DcMotorEx leftMotor;
+    DcMotorEx rightMotor;
     TouchSensor limitSwitch;
     TouchSensor rightChamberContact;
     TouchSensor leftChamberContact;
@@ -39,7 +42,7 @@ public class ScoreArm extends QQMechanism{
 
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 350;
-    public static int PLACING_POSITION = 880;
+    public static int PLACING_POSITION = 830;
     public static int MOVING_POSITION = 450;
     public static int INIT_POSITION = 260;
 
@@ -49,8 +52,8 @@ public class ScoreArm extends QQMechanism{
 
     @Override
     public void init(HardwareMap hwMap) {
-        leftMotor = hwMap.get(DcMotor.class, "left_score_arm_motor");
-        rightMotor = hwMap.get(DcMotor.class, "right_score_arm_motor");
+        leftMotor = hwMap.get(DcMotorEx.class, "left_score_arm_motor");
+        rightMotor = hwMap.get(DcMotorEx.class, "right_score_arm_motor");
         limitSwitch = hwMap.get(TouchSensor.class, "score_arm_switch");
         rightChamberContact = hwMap.get(TouchSensor.class, "right_chamber_contact_switch");
         leftChamberContact = hwMap.get(TouchSensor.class,"left_chamber_contact_switch");
@@ -117,6 +120,9 @@ public class ScoreArm extends QQMechanism{
         telemetry.addData("curerent pos",currentPos);
         telemetry.addData("desired pos",desiredPos);
         telemetry.addData("motor power",motorPower);
+        telemetry.addData("left motor current", leftMotor.getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("right motor current", rightMotor.getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Is stalled", isStalling());
 
 
     }
@@ -138,6 +144,13 @@ public class ScoreArm extends QQMechanism{
     }
 
     public boolean getIsWithinTolerence(){return isWithinTolerance;}
+
+    public boolean isStalling(){
+        if((leftMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT) || (rightMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT)){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public List<QQTest> getTests() {

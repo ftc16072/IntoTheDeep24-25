@@ -22,7 +22,6 @@ public class NoTurnTeleop extends QQOpMode {
     public void init() {
         isPlacing = false;
         super.init();
-        robot.intakeClaw.setTargetColorBlue();
 
     }
 
@@ -110,7 +109,7 @@ public class NoTurnTeleop extends QQOpMode {
         if (gamepad1.x && !XWasPressed) {
             robot.intakeClaw.open();
             if(robot.intakeClaw.hasTarget()){
-                robot.intakeClaw.IntakeWithVision();
+                robot.intakeClaw.intakeWithVision();
             }else {
             robot.intakeClaw.wristIntake();}
         }

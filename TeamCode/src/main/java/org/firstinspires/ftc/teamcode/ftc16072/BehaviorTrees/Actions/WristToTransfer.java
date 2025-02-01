@@ -16,7 +16,7 @@ public class WristToTransfer extends QQTimeoutNode {
         if (lastStatus != State.RUNNING) {
             return lastStatus;
         }else {
-            opMode.robot.intakeClaw.wristTransfer();
+            opMode.robot.intakeClaw.wristDrop();
             if (hasTimedOut()) {
                 opMode.robot.scoreArm.setNotScoring();
                 lastStatus = State.SUCCESS;

@@ -29,9 +29,10 @@ public class IntakeClaw extends QQMechanism {
     public static final double MAX_SERVO_POS = 1;
     public static final int DEGREES_TO_SERVO = 300;
     public static double CLAW_CLOSE_POSITION = 1;
-    public static double CLAW_OPEN_POSITION = 0.8;
+    public static double CLAW_OPEN_POSITION = 0.7;
     public static double WRIST_START_POSITION = 0.0;
     public static double WRIST_INTAKE_POSITION = 0.75;
+    public static double WRIST_DROP_POSITION = 0.1;
 
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
@@ -53,7 +54,7 @@ public class IntakeClaw extends QQMechanism {
     int CENTER_Y = CAMERA_HEIGHT / 2;
     boolean visionIsActive = true;
 
-    Point centerPoint = new Point(CAMERA_HEIGHT / 2.0, CAMERA_WIDTH / 2.0);
+    Point centerPoint = new Point(CENTER_X, CENTER_Y);
 
     ColorBlobLocatorProcessor colorLocatorRed;
     ColorBlobLocatorProcessor colorLocatorBlue;
@@ -152,6 +153,10 @@ public class IntakeClaw extends QQMechanism {
         leftWristServoPos = WRIST_INTAKE_POSITION;
         rightWristServoPos = WRIST_INTAKE_POSITION;
     }
+    public void wristDrop(){
+        leftWristServoPos = WRIST_DROP_POSITION;
+        rightWristServoPos = WRIST_DROP_POSITION;
+    }
     public void open() {
         openTimer.reset();
         clawServo.setPosition(CLAW_OPEN_POSITION);
@@ -218,7 +223,7 @@ public class IntakeClaw extends QQMechanism {
         rightWristServoPos = WRIST_INTAKE_POSITION + servoPosAdjustment;
     }
 
-    public void IntakeWithVision(){
+    public void intakeWithVision(){
         intakeDegrees(blobAngle);
     }
 
