@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeArmIn
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeAttempt;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeClawClose;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeTwo;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.SlidesIn;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.StrafeToSample;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WristToIntake;
@@ -23,21 +24,33 @@ public class DoubleIntake {
     public static Node root(){
         final double INTAKE_TIMEOUT_SECONDS = 1.5;
         final double MOVEMENT_TIMEOUT_SECONDS = 5;
-        return new Sequence(
-                new StrafeToSample(5),
-                new Delay(0.2),
-                new IntakeArmGrab(0.5),
-                new IntakeClawClose(0.5),
-                new Parallel(3,
-                        new WristToTransfer(0.5),
-                        new IntakeArmIn(1),
-                        new SlidesIn(MOVEMENT_TIMEOUT_SECONDS)),
-                new ArmToIntake(1),
-                new Failover(
-                    new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
-                    new Sequence(
-                            new ReadyToIntakeOne(MOVEMENT_TIMEOUT_SECONDS),
-                            new IntakeAttempt(INTAKE_TIMEOUT_SECONDS))));
+        return new Failover(
+            new Sequence(
+                    new StrafeToSample(5),
+                    new Delay(0.2),
+                    new IntakeArmGrab(0.5),
+                    new IntakeClawClose(0.5),
+                    new Parallel(3,
+                            new WristToTransfer(0.5),
+                            new IntakeArmIn(1),
+                            new SlidesIn(MOVEMENT_TIMEOUT_SECONDS)),
+                    new ArmToIntake(1),
+                    new Failover(
+                        new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
+                        new Sequence(
+                                new ReadyToIntakeTwo(MOVEMENT_TIMEOUT_SECONDS),
+                                new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)))),
+                new Sequence(
+                    new Parallel(3,
+                            new WristToTransfer(0.5),
+                            new IntakeArmIn(1),
+                            new SlidesIn(MOVEMENT_TIMEOUT_SECONDS)),
+                    new ArmToIntake(1),
+                    new Failover(
+                            new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
+                            new Sequence(
+                                    new ReadyToIntakeTwo(MOVEMENT_TIMEOUT_SECONDS),
+                                    new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)))));
     }
 }
 
