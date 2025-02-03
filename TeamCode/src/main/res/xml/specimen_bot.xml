@@ -23,8 +23,8 @@
             <Servo name="right_arm_servo" port="0" />
             <Servo name="left_intake_wrist" port="2" />
             <Servo name="left_arm_servo" port="4" />
-            <RevTouchSensor name="score_arm_switch" port="1" />
-            <RevTouchSensor name="slides_switch" port="3" />
+            <RevTouchSensor name="score_arm_switch" port="3" />
+            <RevTouchSensor name="slides_switch" port="1" />
             <LynxEmbeddedIMU name="imu" port="0" bus="0" />
         </LynxModule>
     </LynxUsbDevice>
