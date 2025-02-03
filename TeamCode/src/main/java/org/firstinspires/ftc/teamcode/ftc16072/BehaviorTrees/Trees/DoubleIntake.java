@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeArmIn
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeAttempt;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeClawClose;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeTwo;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.SlidesIn;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.StrafeToSample;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.WristToIntake;
@@ -37,7 +38,7 @@ public class DoubleIntake {
                     new Failover(
                         new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
                         new Sequence(
-                                new ReadyToIntakeOne(MOVEMENT_TIMEOUT_SECONDS),
+                                new ReadyToIntakeTwo(MOVEMENT_TIMEOUT_SECONDS),
                                 new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)))),
                 new Sequence(
                     new Parallel(3,
@@ -48,7 +49,7 @@ public class DoubleIntake {
                     new Failover(
                             new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
                             new Sequence(
-                                    new ReadyToIntakeOne(MOVEMENT_TIMEOUT_SECONDS),
+                                    new ReadyToIntakeTwo(MOVEMENT_TIMEOUT_SECONDS),
                                     new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)))));
     }
 }

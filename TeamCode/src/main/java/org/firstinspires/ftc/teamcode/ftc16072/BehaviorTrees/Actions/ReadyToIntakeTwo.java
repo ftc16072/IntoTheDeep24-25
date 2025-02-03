@@ -18,7 +18,7 @@ public class ReadyToIntakeTwo extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-           boolean isDoneDriving = opMode.nav.driveToPositionIN(17,-92,0);
+           boolean isDoneDriving = opMode.nav.driveToPositionIN(17,-94,0);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;
