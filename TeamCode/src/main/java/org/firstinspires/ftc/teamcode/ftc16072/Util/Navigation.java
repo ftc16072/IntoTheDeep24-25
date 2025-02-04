@@ -6,6 +6,13 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Robot;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+
+
+import java.util.List;
 @Config
 public class Navigation {
     public static double MAX_TRANSLATE = 1;
@@ -30,44 +37,47 @@ public class Navigation {
 
     double lastDesiredX, lastDesiredY, lastDesiredH;
     Telemetry telemetry;
+    private Limelight3A limelight;
 
-    public Navigation(Robot robot, Telemetry telemetry){
+    public Navigation(Robot robot, Telemetry telemetry, HardwareMap hardwareMap) {
         this.robot = robot;
-        PIDx = new PIDFController(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
-        PIDy = new PIDFController(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
-        PIDh = new PIDFController(ROTATIONAL_KP,ROTATIONAL_KI,ROTATIONAL_KD,ROTATIONAL_KF, MAX_ROTATE, MIN_ROTATE);
+        PIDx = new PIDFController(TRANSLATIONAL_KP, TRANSLATIONAL_KI, TRANSLATIONAL_KD, TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
+        PIDy = new PIDFController(TRANSLATIONAL_KP, TRANSLATIONAL_KI, TRANSLATIONAL_KD, TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
+        PIDh = new PIDFController(ROTATIONAL_KP, ROTATIONAL_KI, ROTATIONAL_KD, ROTATIONAL_KF, MAX_ROTATE, MIN_ROTATE);
+        this.limelight = hardwareMap.get(Limelight3A.class, "limelight");
         this.telemetry = telemetry;
     }
-    public void driveFieldRelative(double forwardSpeed, double strafeRightSpeed, double rotateCWSpeed){
+
+    public void driveFieldRelative(double forwardSpeed, double strafeRightSpeed, double rotateCWSpeed) {
         double robotAngle = robot.controlHub.getYaw(AngleUnit.RADIANS);
         //convert to polar
         double theta = Math.atan2(forwardSpeed, strafeRightSpeed);
         double r = Math.hypot(forwardSpeed, strafeRightSpeed);
-        
+
         theta = AngleUnit.normalizeRadians(theta - robotAngle);
-        
+
         //convert to cartesian
         double newForwardSpeed = r * Math.sin(theta);
         double newStrafeRightSpeed = r * Math.cos(theta);
-        
-        robot.mecanumDrive.move(newForwardSpeed,newStrafeRightSpeed,rotateCWSpeed);
+
+        robot.mecanumDrive.move(newForwardSpeed, newStrafeRightSpeed, rotateCWSpeed);
 
     }
 
-    private boolean notWithinTolerance(double desired, double current, double tolerance){
+    private boolean notWithinTolerance(double desired, double current, double tolerance) {
         double error = desired - current;
         return !(Math.abs(error) < tolerance);
     }
 
-    public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading){
+    public boolean driveToPositionIN(double desiredX, double desiredY, double desiredHeading) {
         double forwardSpeed;
         double strafeLeftSpeed;
         double rotateCCWSpeed;
-        PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
-        PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
-        PIDy.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
-        PIDy.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
-        if((desiredX != lastDesiredX) || (desiredY != lastDesiredY) || (desiredHeading != lastDesiredH)){
+        PIDx.updateConstants(TRANSLATIONAL_KP, TRANSLATIONAL_KI, TRANSLATIONAL_KD, TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
+        PIDx.updateConstants(TRANSLATIONAL_KP, TRANSLATIONAL_KI, TRANSLATIONAL_KD, TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
+        PIDy.updateConstants(TRANSLATIONAL_KP, TRANSLATIONAL_KI, TRANSLATIONAL_KD, TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
+        PIDy.updateConstants(TRANSLATIONAL_KP, TRANSLATIONAL_KI, TRANSLATIONAL_KD, TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
+        if ((desiredX != lastDesiredX) || (desiredY != lastDesiredY) || (desiredHeading != lastDesiredH)) {
             lastDesiredX = desiredX;
             lastDesiredY = desiredY;
             lastDesiredH = desiredHeading;
@@ -75,31 +85,50 @@ public class Navigation {
             PIDy.reset();
             PIDh.reset();
         }
-        SparkFunOTOS.Pose2D currentPosition = robot.otos.getOtosPosition();
-        if(notWithinTolerance(desiredX,currentPosition.x,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
-            forwardSpeed = PIDx.calculate(desiredX, currentPosition.x);
-        }else{forwardSpeed = 0;}
-        if(notWithinTolerance(desiredY,currentPosition.y,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
-            strafeLeftSpeed = PIDy.calculate(desiredY, currentPosition.y);
-        }else {strafeLeftSpeed = 0;}
-        if (notWithinTolerance(desiredHeading, currentPosition.h,ROTATIONAL_TOLERANCE_THRESHOLD)) {
-            rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPosition.h);
-        }else {rotateCCWSpeed = 0;}
+        LLResult result = limelight.getLatestResult();
+        if (result == null || !result.isValid()) {
+            telemetry.addData("Limelight", "No valid data");
+            telemetry.update();
+            return false;
+        }
+        Pose3D botPose = result.getBotpose();
+        double currentX = botPose.getPosition().x;  // Field X position
+        double currentY = botPose.getPosition().y;  // Field Y position
+        double currentH = botPose.getPosition().z;  // Heading (Yaw)
 
-        telemetry.addData("Current X", currentPosition.x);
+        if (notWithinTolerance(desiredX, currentX, TRANSLATIONAL_TOLERANCE_THRESHOLD)) {
+            forwardSpeed = PIDx.calculate(desiredX, currentX);
+        } else {
+            forwardSpeed = 0;
+        }
+
+        if (notWithinTolerance(desiredY, currentY, TRANSLATIONAL_TOLERANCE_THRESHOLD)) {
+            strafeLeftSpeed = PIDy.calculate(desiredY, currentY);
+        } else {
+            strafeLeftSpeed = 0;
+        }
+
+        if (notWithinTolerance(desiredHeading, currentH, ROTATIONAL_TOLERANCE_THRESHOLD)) {
+            rotateCCWSpeed = PIDh.calculate(desiredHeading, currentH);
+        } else {
+            rotateCCWSpeed = 0;
+        }
+
+        telemetry.addData("Current X", currentX);
         telemetry.addData("Desired X", desiredX);
         telemetry.addData("Desired Y", desiredY);
-        telemetry.addData("Current Y", currentPosition.y);
+        telemetry.addData("Current Y", currentY);
         telemetry.addData("Desired Heading", desiredHeading);
-        telemetry.addData("Current Heading", currentPosition.h);
-
-        telemetry.addData("strafe right speed",-strafeLeftSpeed);
-        telemetry.addData("foward speed",forwardSpeed);
+        telemetry.addData("Current Heading", currentH);
+        telemetry.addData("strafe right speed", -strafeLeftSpeed);
+        telemetry.addData("forward speed", forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
+        telemetry.update();
 
-        driveFieldRelative(forwardSpeed,-strafeLeftSpeed,-rotateCCWSpeed);
-        return !(notWithinTolerance(desiredX,currentPosition.x,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
-                notWithinTolerance(desiredY,currentPosition.y,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
-                notWithinTolerance(desiredHeading, currentPosition.h,ROTATIONAL_TOLERANCE_THRESHOLD));
+        driveFieldRelative(forwardSpeed, -strafeLeftSpeed, -rotateCCWSpeed);
+        return !(notWithinTolerance(desiredX, currentX, TRANSLATIONAL_TOLERANCE_THRESHOLD) ||
+                notWithinTolerance(desiredY, currentY, TRANSLATIONAL_TOLERANCE_THRESHOLD) ||
+                notWithinTolerance(desiredHeading, currentH, ROTATIONAL_TOLERANCE_THRESHOLD));
     }
 }
+
