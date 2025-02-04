@@ -75,9 +75,9 @@ public class Navigation {
             PIDy.reset();
             PIDh.reset();
         }
-        double currentPositionX = robot.limelight.getrobotPositionX();
-        double currentPositionY = robot.limelight.getrobotPositionY();
-        double currentPositionH = robot.limelight.getrobotPositionH();
+        double currentPositionX = robot.limelight.getRobotPositionX();
+        double currentPositionY = robot.limelight.getRobotPositionY();
+        double currentPositionH = robot.limelight.getRobotPositionH();
         if(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
             forwardSpeed = PIDx.calculate(desiredX, currentPositionX);
         }else{forwardSpeed = 0;}

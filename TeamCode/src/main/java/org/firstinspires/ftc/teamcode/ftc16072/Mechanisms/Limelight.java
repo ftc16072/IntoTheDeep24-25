@@ -18,24 +18,19 @@ import java.util.List;
 
 public class Limelight extends QQMechanism{
     private Limelight3A limelight;
-
+    public LLResult result = limelight.getLatestResult();
+    public Pose3D botPose = result.getBotpose();
     @Override
     public void init(HardwareMap hwMap) {
         limelight = hwMap.get(Limelight3A.class, "limelight");
     }
-    public double getrobotPositionX() {
-        LLResult result = limelight.getLatestResult();
-        Pose3D botPose = result.getBotpose();
+    public double getRobotPositionX() {
         return botPose.getPosition().x;
     }
-    public double getrobotPositionY() {
-        LLResult result = limelight.getLatestResult();
-        Pose3D botPose = result.getBotpose();
+    public double getRobotPositionY() {
         return botPose.getPosition().y;
     }
-    public double getrobotPositionH() {
-        LLResult result = limelight.getLatestResult();
-        Pose3D botPose = result.getBotpose();
+    public double getRobotPositionH() {
         return botPose.getOrientation().getYaw();
     }
 
