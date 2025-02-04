@@ -208,9 +208,22 @@ public class IntakeClaw extends QQMechanism {
                 telemetry.addData("Blob angle", blobAngle);
                 telemetry.addData("Box center", blob.getBoxFit().center);
                 telemetry.addData("has target", hasTarget());
+                if(!hasTarget()){
+                    moveToTarget();
+                }
 
             }
         }
+    }
+
+    void moveToTarget(){
+        // arc of the arm (215.59)^2 = x^2 + y^2
+        // find box center
+        // call blob center
+        // coordinate lines of blob center (x superscript 1, y superscript 1)
+        // sqrt(x^2 - 46612.81) / x superscript 1
+        // if answer is real, find
+        // if answer is not real, find sqrt(x^2 - 46612.81) / y superscript 1
     }
 
     double degreesToServoPos(double degrees){
