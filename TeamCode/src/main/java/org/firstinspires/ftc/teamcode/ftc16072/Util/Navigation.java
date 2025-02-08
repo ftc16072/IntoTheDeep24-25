@@ -5,6 +5,7 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Robot;
 @Config
 public class Navigation {
@@ -75,15 +76,21 @@ public class Navigation {
             PIDy.reset();
             PIDh.reset();
         }
-        double currentPositionX = robot.limelight.getRobotPositionX();
-        double currentPositionY = robot.limelight.getRobotPositionY();
-        double currentPositionH = robot.limelight.getRobotPositionH();
+        if(robot.limelight.isAprilTagSeen()){
+            robot.otos.setOtosPosition(
+                    robot.limelight.getRobotPositionX(DistanceUnit.INCH),
+                    robot.limelight.getRobotPositionY(DistanceUnit.INCH),
+                    robot.controlHub.getYaw(AngleUnit.DEGREES));
+        }
+        double currentPositionX = robot.otos.getOtosPosition().x;
+        double currentPositionY = robot.otos.getOtosPosition().y;
+        double currentPositionH = robot.controlHub.getYaw(AngleUnit.DEGREES);
         if(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
-            forwardSpeed = PIDx.calculate(desiredX, currentPositionX);
-        }else{forwardSpeed = 0;}
+            strafeLeftSpeed = PIDx.calculate(desiredX, currentPositionX);
+        }else{strafeLeftSpeed = 0;}
         if(notWithinTolerance(desiredY,currentPositionY,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
-            strafeLeftSpeed = PIDy.calculate(desiredY, currentPositionY);
-        }else {strafeLeftSpeed = 0;}
+            forwardSpeed = PIDy.calculate(desiredY, currentPositionY);
+        }else {forwardSpeed = 0;}
         if (notWithinTolerance(desiredHeading, currentPositionH,ROTATIONAL_TOLERANCE_THRESHOLD)) {
             rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPositionH);
         }else {rotateCCWSpeed = 0;}

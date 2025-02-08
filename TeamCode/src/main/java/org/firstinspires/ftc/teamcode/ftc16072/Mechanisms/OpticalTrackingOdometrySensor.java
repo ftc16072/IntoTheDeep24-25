@@ -21,7 +21,7 @@ public class OpticalTrackingOdometrySensor extends QQMechanism{
         otos.setAngularUnit(AngleUnit.DEGREES);
         otos.setLinearUnit(DistanceUnit.INCH);
         otos.calibrateImu();
-        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(X_POSITION,0,0);
+        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(0,0,90);
         otos.setOffset(offset);
         otos.resetTracking();
     }
