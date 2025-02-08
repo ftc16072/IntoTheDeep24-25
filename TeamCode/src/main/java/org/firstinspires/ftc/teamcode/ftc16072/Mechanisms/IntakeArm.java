@@ -70,6 +70,10 @@ public class IntakeArm extends QQMechanism {
             rightArmServo.setPosition(rightPos);
         }
     }
+    public void rotateArmByDegrees(double theta){
+        double CHANGE_AMOUNT_PER_DEGREE = 0.1; //TODO:make real
+        rotateArm(theta*CHANGE_AMOUNT_PER_DEGREE);
+    }
 
 
 

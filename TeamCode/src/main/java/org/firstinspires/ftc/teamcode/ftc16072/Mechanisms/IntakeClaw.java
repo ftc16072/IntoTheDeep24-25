@@ -33,6 +33,8 @@ public class IntakeClaw extends QQMechanism {
     public static double WRIST_START_POSITION = 0.0;
     public static double WRIST_INTAKE_POSITION = 0.75;
     public static double WRIST_DROP_POSITION = 0.1;
+    public int desiredPos;
+
 
     ElapsedTime openTimer = new ElapsedTime();
     ElapsedTime closedTimer = new ElapsedTime();
@@ -50,8 +52,8 @@ public class IntakeClaw extends QQMechanism {
 
     public static final int CAMERA_WIDTH = 320;
     public static final int CAMERA_HEIGHT = 240;
-    int CENTER_X = CAMERA_WIDTH / 2;
-    int CENTER_Y = CAMERA_HEIGHT / 2;
+    public int CENTER_X = CAMERA_WIDTH / 2;
+    public int CENTER_Y = CAMERA_HEIGHT / 2;
     boolean visionIsActive = true;
 
     Point centerPoint = new Point(CENTER_X, CENTER_Y);
@@ -208,22 +210,21 @@ public class IntakeClaw extends QQMechanism {
                 telemetry.addData("Blob angle", blobAngle);
                 telemetry.addData("Box center", blob.getBoxFit().center);
                 telemetry.addData("has target", hasTarget());
-                if(!hasTarget()){
-                    moveToTarget();
-                }
 
             }
         }
     }
+    public boolean hasOneNotInTarget(){
+        return (blob != null) && (!hasTarget());
+    }
+    public Point getDeltaToBlock(){
+        Point boxCenter = blob.getBoxFit().center;
+        Point cameraCenter = new Point(CENTER_X, CENTER_Y);
 
-    void moveToTarget(){
-        // arc of the arm (215.59)^2 = x^2 + y^2
-        // find box center
-        // call blob center
-        // coordinate lines of blob center (x superscript 1, y superscript 1)
-        // sqrt(x^2 - 46612.81) / x superscript 1
-        // if answer is real, find
-        // if answer is not real, find sqrt(x^2 - 46612.81) / y superscript 1
+        Point delta = new Point(boxCenter.x - cameraCenter.x,
+                boxCenter.y - cameraCenter.y);
+
+        return delta;
     }
 
     double degreesToServoPos(double degrees){

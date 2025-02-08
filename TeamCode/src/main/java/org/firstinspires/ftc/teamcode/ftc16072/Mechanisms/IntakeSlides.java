@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -24,7 +26,7 @@ public class IntakeSlides extends QQMechanism {
     //HAVE TO CHANGE ALL VALUES LATER
     public static final double TEST_SPEED = 0.55;
     private static final int SlIDES_POSITION_SAFETY_BACK = -50;
-    private static final int FULL_EXTENSION_POSITION = 1400;
+    public static final int FULL_EXTENSION_POSITION = 1400;
     public static final int SLIDES_EXTENSION_BOUNDARY = FULL_EXTENSION_POSITION+10;
     private static final int HALF_EXTENSION_POSITION = 740;
     private static final int AUTO_EXTENSION_POSITION = 1020;
@@ -69,8 +71,7 @@ public class IntakeSlides extends QQMechanism {
 
         limitSwitch = hwMap.get(TouchSensor.class, "slides_switch");
     }
-    public void setPosition(int desiredPos){
-        this.desiredPos = desiredPos;
+    public void setPosition(int desiredPos){this.desiredPos = desiredPos;
     }
     public void extend(double speed){
         manualPositionChange(MANUAL_CHANGE_AMOUNT * speed);
@@ -78,9 +79,15 @@ public class IntakeSlides extends QQMechanism {
     public void retract(double speed){
         manualPositionChange(-MANUAL_CHANGE_AMOUNT * speed);
     }
-    private void manualPositionChange(double changeAmount){
+    public void manualPositionChange(double changeAmount){
         desiredPos += changeAmount;
     }
+    public void movePixels(double numPixels){
+        int ENCODER_TICKS_PER_PIXEL = 100; //TODO: Get real number
+
+        desiredPos += (int)(numPixels * ENCODER_TICKS_PER_PIXEL);
+    }
+
     @Override
     public void update(Telemetry telemetry){
         if(limitSwitch.isPressed()) {
