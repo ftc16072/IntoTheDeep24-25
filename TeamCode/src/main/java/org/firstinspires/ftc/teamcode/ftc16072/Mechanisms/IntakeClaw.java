@@ -167,12 +167,20 @@ public class IntakeClaw extends QQMechanism {
         clawServo.setPosition(CLAW_CLOSE_POSITION);
     }
 
-    public void adjustWrist(double manualChangeAmount){
+    public void adjustWristRotation(double manualChangeAmount){
         if (leftWristServoPos <= MAX_SERVO_POS && rightWristServoPos <= MAX_SERVO_POS){
             leftWristServoPos += manualChangeAmount;
             rightWristServoPos -= manualChangeAmount;
         }
-    }    public boolean isClawOpen() {
+    }
+    public void adjustWristHeight(double manualChangeAmount){
+        if (leftWristServoPos <= MAX_SERVO_POS && rightWristServoPos <= MAX_SERVO_POS){
+            leftWristServoPos += manualChangeAmount;
+            rightWristServoPos += manualChangeAmount;
+        }
+    }
+
+    public boolean isClawOpen() {
         if ((clawServo.getPosition() == CLAW_OPEN_POSITION) &&
                 (openTimer.seconds()> OPEN_TIME))
             return true;
