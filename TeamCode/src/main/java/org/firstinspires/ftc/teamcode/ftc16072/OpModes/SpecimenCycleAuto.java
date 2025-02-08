@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.SpecimenCycleAutoTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.TwoSpecimenAutoTree;
 
-//@Autonomous
+@Autonomous
 public class SpecimenCycleAuto extends QQOpMode{
     boolean clawWasClosed;
     boolean test;
@@ -29,6 +29,7 @@ public class SpecimenCycleAuto extends QQOpMode{
 
     @Override
     public void init_loop() {
+        super.init_loop();
         if (moveTimer.seconds() < INIT_MOVE_TIME_SECONDS){
             robot.mecanumDrive.move(INIT_MOVE_SPEED,0,0);
         }else {
@@ -48,6 +49,9 @@ public class SpecimenCycleAuto extends QQOpMode{
             robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
             test = true;
+        }
+        if(robot.scoreArm.isStalling()){
+            robot.scoringClaw.open();
         }
         if (robot.scoringClaw.isClawOpen()){
             test = false;
