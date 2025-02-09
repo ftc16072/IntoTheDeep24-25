@@ -101,7 +101,14 @@ public class NoTurnTeleop extends QQOpMode {
             robot.intakeSlides.fullExtension();
         }
         if (gamepad1.b) {
-            robot.intakeArm.goToDropPos();
+            robot.scoreArm.goToScoring();
+            if (!robot.intakeArm.isArmIn()){
+                robot.intakeArm.goToDropPos();
+                robot.intakeClaw.wristDrop();
+            }else {
+                robot.intakeArm.goToIntake();
+                robot.intakeClaw.wristTransfer();
+            }
         }
         if (robot.intakeClaw.hasTarget()){
             gamepad1.rumble(100);

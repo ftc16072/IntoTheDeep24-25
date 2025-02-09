@@ -71,6 +71,10 @@ public class IntakeArm extends QQMechanism {
         }
     }
 
+    public boolean isArmIn(){
+        return (leftArmServo.getPosition() == ARM_DROP_POSITION) && (rightArmServo.getPosition() == ARM_DROP_POSITION);
+    }
+
 
 
     @Override
