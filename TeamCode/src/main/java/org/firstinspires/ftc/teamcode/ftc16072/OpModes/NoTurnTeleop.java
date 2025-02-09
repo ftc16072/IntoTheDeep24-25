@@ -18,6 +18,7 @@ public class NoTurnTeleop extends QQOpMode {
     boolean clawWasClosed;
     boolean slidesSwitchWasPressed;
     boolean intakeClawWasClosed;
+    boolean wasBPressed;
 
     public void init() {
         isPlacing = false;
@@ -80,6 +81,7 @@ public class NoTurnTeleop extends QQOpMode {
             robot.intakeClaw.open();
             robot.scoreArm.goToMove();
             robot.intakeArm.goToIntake();
+            robot.intakeClaw.wristTransfer();
             robot.scoreArm.goToPlace();
         } else if (gamepad2.dpad_up) {
             robot.scoreArm.manualPositionChange(SCORE_ARM_MANUAL_CHANGE);
@@ -100,8 +102,15 @@ public class NoTurnTeleop extends QQOpMode {
         if (gamepad1.y) {
             robot.intakeSlides.fullExtension();
         }
-        if (gamepad1.b) {
-            robot.intakeArm.goToDropPos();
+        if (gamepad1.b & !wasBPressed) {
+            robot.scoreArm.goToScoring();
+            if (!robot.intakeArm.isArmIn()){
+                robot.intakeArm.goToDropPos();
+                robot.intakeClaw.wristDrop();
+            }else {
+                robot.intakeArm.goToIntake();
+                robot.intakeClaw.wristTransfer();
+            }
         }
         if (robot.intakeClaw.hasTarget()){
             gamepad1.rumble(100);
@@ -132,10 +141,12 @@ public class NoTurnTeleop extends QQOpMode {
         if (gamepad2.b) {
             robot.scoreArm.goToPlace();
             robot.intakeArm.goToIntake();
+            robot.intakeClaw.wristTransfer();
             robot.scoreArm.setNotScoring();
         } else if (gamepad2.x) {
             robot.scoreArm.goToScoring();
             robot.intakeArm.goToIntake();
+            robot.intakeClaw.wristTransfer();
             robot.scoreArm.setNotScoring();
         } else if (manipulatorXWasPressed) {
             robot.scoringClaw.open();
@@ -165,6 +176,7 @@ public class NoTurnTeleop extends QQOpMode {
         intakeClawWasClosed = robot.intakeClaw.isClawClosed();
         slidesSwitchWasPressed = robot.intakeSlides.isSwitchPressed();
         manipulatorXWasPressed = gamepad2.x;
+        wasBPressed = gamepad1.b;
 
     }
 }
