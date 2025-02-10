@@ -62,7 +62,7 @@ public class Navigation {
 
     public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading){
         double forwardSpeed;
-        double strafeLeftSpeed;
+        double strafeRightSpeed;
         double rotateCCWSpeed;
         PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
         PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
@@ -86,8 +86,8 @@ public class Navigation {
         double currentPositionY = robot.otos.getOtosPosition().y;
         double currentPositionH = robot.controlHub.getYaw(AngleUnit.DEGREES);
         if(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
-            strafeLeftSpeed = PIDx.calculate(desiredX, currentPositionX);
-        }else{strafeLeftSpeed = 0;}
+            strafeRightSpeed = PIDx.calculate(desiredX, currentPositionX);
+        }else{strafeRightSpeed = 0;}
         if(notWithinTolerance(desiredY,currentPositionY,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
             forwardSpeed = PIDy.calculate(desiredY, currentPositionY);
         }else {forwardSpeed = 0;}
@@ -102,11 +102,11 @@ public class Navigation {
         telemetry.addData("Desired Heading", desiredHeading);
         telemetry.addData("Current Heading", currentPositionH);
 
-        telemetry.addData("strafe right speed",-strafeLeftSpeed);
+        telemetry.addData("strafe right speed",strafeRightSpeed);
         telemetry.addData("foward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
 
-        driveFieldRelative(forwardSpeed,-strafeLeftSpeed,-rotateCCWSpeed);
+        driveFieldRelative(forwardSpeed,strafeRightSpeed,-rotateCCWSpeed);
         return !(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredY,currentPositionY,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredHeading,currentPositionH,ROTATIONAL_TOLERANCE_THRESHOLD));

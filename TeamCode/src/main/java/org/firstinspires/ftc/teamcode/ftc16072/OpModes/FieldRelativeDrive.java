@@ -24,5 +24,6 @@ public class FieldRelativeDrive extends QQOpMode{
         telemetry.addData("bot_pose", robot.limelight.getRobotPosition().toString());
         telemetry.addData("limelight_x", robot.limelight.getRobotPositionX(DistanceUnit.INCH));
         telemetry.addData("limelight_y", robot.limelight.getRobotPositionY(DistanceUnit.INCH));
+        telemetry.addData("april tag seen",robot.limelight.isAprilTagSeen());
     }
 }

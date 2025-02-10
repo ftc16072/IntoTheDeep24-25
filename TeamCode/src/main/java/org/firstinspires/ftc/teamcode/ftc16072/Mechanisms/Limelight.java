@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,36 +12,37 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestLimelight;
-import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOTOS;
-import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestWebcam;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Limelight extends QQMechanism{
     private Limelight3A limelight;
-    LLResult result;
+    LLResult llResult;
     private Pose3D lastValidPos = new Pose3D(
             //arbitrary starting pose
             new Position(DistanceUnit.INCH, 0,0,0,0),
             new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0));
     private Pose3D getBotPose() {
-        result = limelight.getLatestResult();
-        if((result != null) && result.isValid()){
-            lastValidPos = result.getBotpose_MT2();
+        llResult = limelight.getLatestResult();
+        if((llResult != null) && llResult.isValid()){
+            lastValidPos = llResult.getBotpose_MT2();
         }
         return lastValidPos;
     }
-                                        @Override
+    @Override
     public void init(HardwareMap hwMap) {
         limelight = hwMap.get(Limelight3A.class, "limelight");
     }
     public boolean isAprilTagSeen(){
-        return ((result != null) && result.isValid());
+        return ((llResult != null) && llResult.isValid());
     }
 
-    public void update(){
+    @Override
+    public void update(Telemetry telemetry){
+        super.update(telemetry);
         getBotPose();
+        telemetry.addData("april tag seen", isAprilTagSeen());
     }
     public void start(){
         limelight.start();
