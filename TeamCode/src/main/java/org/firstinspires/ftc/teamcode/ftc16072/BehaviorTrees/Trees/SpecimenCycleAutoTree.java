@@ -9,11 +9,10 @@ import com.ftcteams.behaviortrees.Sequence;
 
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToScore;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToScored;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamber;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamberForSecondScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.BehindChamberForThirdScore;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToChamber;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.FirstScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeArmOut;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
@@ -30,7 +29,7 @@ public class SpecimenCycleAutoTree {
     public static Node root(){
         return new Failover(
                 new Sequence(
-                        new DriveToChamber(TIMEOUT_SECONDS),
+                        new FirstScore(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
                         new Parallel(1,
                                 new IntakeArmOut(1),
@@ -47,7 +46,7 @@ public class SpecimenCycleAutoTree {
                                 new ReadyToIntakeTwo(TIMEOUT_SECONDS),
                                 new ArmToScore(TIMEOUT_SECONDS)),
                         new BehindChamberForSecondScore(TIMEOUT_SECONDS),
-                        new DriveToChamber(TIMEOUT_SECONDS),
+                        new FirstScore(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
                         new BehindChamber(TIMEOUT_SECONDS),
                         new Parallel(2,
@@ -58,7 +57,7 @@ public class SpecimenCycleAutoTree {
                                 new ReadyToIntakeOne(TIMEOUT_SECONDS),
                                 new ArmToScore(TIMEOUT_SECONDS)),
                         new BehindChamberForThirdScore(TIMEOUT_SECONDS),
-                        new DriveToChamber(TIMEOUT_SECONDS),
+                        new FirstScore(TIMEOUT_SECONDS),
                         new WaitForClawOpen(TIMEOUT_SECONDS),
                         new Park(TIMEOUT_SECONDS)),
 

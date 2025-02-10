@@ -5,11 +5,11 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class DriveToChamber extends QQTimeoutNode {
+public class FirstScore extends QQTimeoutNode {
     public static final double FORWARD_SPEED = 0.3;
     State lastStatus = State.RUNNING;
 
-    public DriveToChamber(double seconds) {
+    public FirstScore(double seconds) {
         super(seconds);
     }
 
