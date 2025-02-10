@@ -29,6 +29,8 @@ public class Navigation {
 
     PIDFController PIDx, PIDy, PIDh;
 
+    boolean isZeroed;
+
     double lastDesiredX, lastDesiredY, lastDesiredH;
     Telemetry telemetry;
 
@@ -68,6 +70,16 @@ public class Navigation {
         PIDx.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
         PIDy.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
         PIDy.updateConstants(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
+        if (!isZeroed){
+            if(robot.limelight.isAprilTagSeen()){
+                isZeroed = true;
+                robot.otos.setOtosPosition(
+                        robot.limelight.getRobotPositionX(DistanceUnit.INCH),
+                        robot.limelight.getRobotPositionY(DistanceUnit.INCH),
+                        robot.controlHub.getYaw(AngleUnit.DEGREES));
+            }
+        }
+
         if((desiredX != lastDesiredX) || (desiredY != lastDesiredY) || (desiredHeading != lastDesiredH)){
             lastDesiredX = desiredX;
             lastDesiredY = desiredY;
@@ -75,12 +87,6 @@ public class Navigation {
             PIDx.reset();
             PIDy.reset();
             PIDh.reset();
-        }
-        if(robot.limelight.isAprilTagSeen()){
-            robot.otos.setOtosPosition(
-                    robot.limelight.getRobotPositionX(DistanceUnit.INCH),
-                    robot.limelight.getRobotPositionY(DistanceUnit.INCH),
-                    robot.controlHub.getYaw(AngleUnit.DEGREES));
         }
         double currentPositionX = robot.otos.getOtosPosition().x;
         double currentPositionY = robot.otos.getOtosPosition().y;
@@ -107,8 +113,11 @@ public class Navigation {
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
 
         driveFieldRelative(forwardSpeed,strafeRightSpeed,-rotateCCWSpeed);
-        return !(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
+        boolean isFinished = !(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredY,currentPositionY,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
                 notWithinTolerance(desiredHeading,currentPositionH,ROTATIONAL_TOLERANCE_THRESHOLD));
+        if(isFinished){
+            isZeroed = false;
+        }return isFinished;
     }
 }
