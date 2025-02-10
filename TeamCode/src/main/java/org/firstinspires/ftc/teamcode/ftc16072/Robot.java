@@ -24,11 +24,7 @@ public class Robot {
     public OpticalTrackingOdometrySensor otos;
     public ScoringClaw scoringClaw;
     public IntakeArm intakeArm;
-    //public DoubleReverse4Bar doubleReverse4Bar;
-   // public Slides slides;
     public IntakeClaw intakeClaw;
-    boolean isRedAlliance;
-
 
   
     public IntakeSlides intakeSlides;
@@ -48,9 +44,6 @@ public class Robot {
         scoringClaw = new ScoringClaw();
         intakeSlides = new IntakeSlides();
         intakeArm = new IntakeArm();
-        //doubleReverse4Bar = new DoubleReverse4Bar();
-        //slides = new Slides();
-
         scoreArm = new ScoreArm();
         intakeClaw = new IntakeClaw();
         limelight = new Limelight();
@@ -78,11 +71,6 @@ public class Robot {
         }
     }
 
-    public void setAlliancecolor(){
-        if (scoringClaw.isColorRed()){
-            isRedAlliance = true;
-        }isRedAlliance = false;
-    }
 
 
     public void makeDriveOnly(){

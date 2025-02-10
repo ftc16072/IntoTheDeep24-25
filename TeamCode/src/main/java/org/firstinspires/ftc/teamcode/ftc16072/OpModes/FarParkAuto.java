@@ -13,6 +13,7 @@ public class FarParkAuto extends QQOpMode{
         robot.otos.setOtosPosition(-31.5,-61.5,0);
     }
     public void start(){
+        super.start();
         elapsedTime.reset();
     }
     public void loop(){

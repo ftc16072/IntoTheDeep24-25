@@ -20,6 +20,7 @@ public class NavigationPIDTuner extends QQOpMode{
         robot.scoringClaw.close();
     }
     public void start(){
+        super.start();
         elapsedTime.reset();
     }
     public void loop(){

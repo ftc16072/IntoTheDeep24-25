@@ -27,6 +27,7 @@ public class NoTurnTeleop extends QQOpMode {
     }
 
     public void start(){
+        super.start();
         robot.intakeArm.goToDropPos();
     }
 

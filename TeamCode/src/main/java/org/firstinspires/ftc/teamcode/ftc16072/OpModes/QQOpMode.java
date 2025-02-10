@@ -18,8 +18,7 @@ public abstract class QQOpMode extends OpMode {
         nav = new Navigation(robot, telemetry);
         robot.init(hardwareMap);
         robot.controlHub.resetGyro();
-        //robot.claw.close();
-        //robot.arm.goToDrive();
+
         isAllianceRed = robot.scoringClaw.isColorRed();
         if(isAllianceRed) {
             telemetry.addData("Alliance", "RED");
@@ -37,6 +36,11 @@ public abstract class QQOpMode extends OpMode {
         else{
             telemetry.addData("Alliance", "BLUE");
         }
+    }
+
+    @Override
+    public void start(){
+        robot.limelight.start();
     }
 
     @Override

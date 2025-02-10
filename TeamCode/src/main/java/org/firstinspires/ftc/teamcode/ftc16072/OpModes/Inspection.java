@@ -31,6 +31,7 @@ public class Inspection extends QQOpMode{
 
     }
     public void start(){
+        super.start();
         robot.otos.setOtosPosition(7,-61.5,0);
     }
 
