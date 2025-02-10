@@ -18,6 +18,7 @@ public class NoTurnTeleop extends QQOpMode {
     boolean clawWasClosed;
     boolean slidesSwitchWasPressed;
     boolean intakeClawWasClosed;
+    boolean wasBPressed;
 
     public void init() {
         isPlacing = false;
@@ -80,6 +81,7 @@ public class NoTurnTeleop extends QQOpMode {
             robot.intakeClaw.open();
             robot.scoreArm.goToMove();
             robot.intakeArm.goToIntake();
+            robot.intakeClaw.wristTransfer();
             robot.scoreArm.goToPlace();
         } else if (gamepad2.dpad_up) {
             robot.scoreArm.manualPositionChange(SCORE_ARM_MANUAL_CHANGE);
@@ -100,8 +102,15 @@ public class NoTurnTeleop extends QQOpMode {
         if (gamepad1.y) {
             robot.intakeSlides.fullExtension();
         }
-        if (gamepad1.b) {
-            robot.intakeArm.goToDropPos();
+        if (gamepad1.b & !wasBPressed) {
+            robot.scoreArm.goToScoring();
+            if (!robot.intakeArm.isArmIn()){
+                robot.intakeArm.goToDropPos();
+                robot.intakeClaw.wristDrop();
+            }else {
+                robot.intakeArm.goToIntake();
+                robot.intakeClaw.wristTransfer();
+            }
         }
         if (robot.intakeClaw.hasTarget()){
             gamepad1.rumble(100);
@@ -124,18 +133,20 @@ public class NoTurnTeleop extends QQOpMode {
         }
 
         if (gamepad1.dpad_right) {
-            robot.intakeClaw.adjustWrist(-MANUAL_CHANGE_AMOUNT_WRIST);
+            robot.intakeClaw.adjustWristRotation(-MANUAL_CHANGE_AMOUNT_WRIST);
         } else if (gamepad1.dpad_left) {
-            robot.intakeClaw.adjustWrist(MANUAL_CHANGE_AMOUNT_WRIST);
+            robot.intakeClaw.adjustWristRotation(MANUAL_CHANGE_AMOUNT_WRIST);
         }
 
         if (gamepad2.b) {
             robot.scoreArm.goToPlace();
             robot.intakeArm.goToIntake();
+            robot.intakeClaw.wristTransfer();
             robot.scoreArm.setNotScoring();
         } else if (gamepad2.x) {
             robot.scoreArm.goToScoring();
             robot.intakeArm.goToIntake();
+            robot.intakeClaw.wristTransfer();
             robot.scoreArm.setNotScoring();
         } else if (manipulatorXWasPressed) {
             robot.scoringClaw.open();
@@ -144,9 +155,9 @@ public class NoTurnTeleop extends QQOpMode {
             robot.scoreArm.setNotScoring();
         }
         if (gamepad2.dpad_right) {
-            robot.intakeSlides.extend(1);
+            robot.intakeClaw.adjustWristHeight(-MANUAL_CHANGE_AMOUNT_WRIST);
         } else if (gamepad2.dpad_left) {
-            robot.intakeSlides.retract(1);
+            robot.intakeClaw.adjustWristHeight(MANUAL_CHANGE_AMOUNT_WRIST);
         }if (gamepad1.dpad_up){
             robot.intakeArm.moveArmDown();
         }if(gamepad1.dpad_down){
@@ -165,6 +176,7 @@ public class NoTurnTeleop extends QQOpMode {
         intakeClawWasClosed = robot.intakeClaw.isClawClosed();
         slidesSwitchWasPressed = robot.intakeSlides.isSwitchPressed();
         manipulatorXWasPressed = gamepad2.x;
+        wasBPressed = gamepad1.b;
 
     }
 }

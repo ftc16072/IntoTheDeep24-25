@@ -39,6 +39,7 @@ public class ScoreArm extends QQMechanism{
     public int desiredPos;
     public double motorPower;
     boolean isScoring;
+    boolean wasChamberContacted;
 
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 350;
@@ -94,7 +95,7 @@ public class ScoreArm extends QQMechanism{
             if (desiredPos < 0){
                 desiredPos = 0;
             }
-        }else if (chamberContacted){
+        }else if (chamberContacted && !wasChamberContacted){
             isScoring = true;
             goToScoring();
         }
@@ -107,9 +108,6 @@ public class ScoreArm extends QQMechanism{
         }
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
-        if (isScoring){
-            motorPower = SCORE_POWER;
-        }
 
         if (Math.abs(desiredPos - currentPos) <= 30){
             isWithinTolerance = true;
@@ -124,7 +122,7 @@ public class ScoreArm extends QQMechanism{
         telemetry.addData("right motor current", rightMotor.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is stalled", isStalling());
 
-
+        wasChamberContacted = chamberContacted;
     }
     public void setNotScoring(){
         isScoring = false;
