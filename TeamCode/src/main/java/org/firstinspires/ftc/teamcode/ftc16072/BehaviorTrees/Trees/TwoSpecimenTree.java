@@ -3,28 +3,37 @@
 
 import com.ftcteams.behaviortrees.Node;
 import com.ftcteams.behaviortrees.Failover;
+import com.ftcteams.behaviortrees.Parallel;
 import com.ftcteams.behaviortrees.Sequence;
+
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.FirstScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToIntakePosition;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Intake;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DrivetoScorePosition;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToScorePosition;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.StandardScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 
 
+
 public class TwoSpecimenTree {
-    public static final int TIMEOUT_SECONDS = 5;
+    public static final int TIMEOUT_SECONDS = 10;
 
     public static Node root(){
         return new Failover(
                 new Sequence(
                         new FirstScore(TIMEOUT_SECONDS),
-                        new DriveToIntakePosition(),
+                        new Parallel(2,
+                                new DriveToIntakePosition(TIMEOUT_SECONDS),
+                                new ArmToIntake(TIMEOUT_SECONDS)),
                         Intake.root(),
-                        new DrivetoScorePosition(),
+                        new DriveToScorePosition(TIMEOUT_SECONDS),
                         new StandardScore(TIMEOUT_SECONDS),
-                        new Park(TIMEOUT_SECONDS)),
-                new Park(TIMEOUT_SECONDS));
+                        new Parallel(2,
+                                new Park(TIMEOUT_SECONDS),
+                                new ArmToIntake(TIMEOUT_SECONDS))),
+                new Parallel(2,
+                        new Park(TIMEOUT_SECONDS),
+                        new ArmToIntake(TIMEOUT_SECONDS)));
     }
 }
 

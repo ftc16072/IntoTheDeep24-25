@@ -95,7 +95,7 @@ public class ScoreArm extends QQMechanism{
             if (desiredPos < 0){
                 desiredPos = 0;
             }
-        }else if (chamberContacted && !wasChamberContacted){
+        }if (chamberContacted){
             isScoring = true;
             goToScoring();
         }
@@ -121,8 +121,6 @@ public class ScoreArm extends QQMechanism{
         telemetry.addData("left motor current", leftMotor.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("right motor current", rightMotor.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is stalled", isStalling());
-
-        wasChamberContacted = chamberContacted;
     }
     public void setNotScoring(){
         isScoring = false;

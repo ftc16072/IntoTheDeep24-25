@@ -5,8 +5,8 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class DriveToIntakePosistion extends QQTimeoutNode {
-    public DriveToIntakePosistion(double seconds) {
+public class DriveToIntakePosition extends QQTimeoutNode {
+    public DriveToIntakePosition(double seconds) {
         super(seconds);
     }
     State lastStatus = State.RUNNING;
