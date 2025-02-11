@@ -11,7 +11,7 @@
             <Servo name="intake_claw_servo" port="4" />
             <RevTouchSensor name="right_chamber_contact_switch" port="1" />
             <RevTouchSensor name="left_chamber_contact_switch" port="3" />
-            <RevTouchSensor name="score_switch" port="5" />
+            <RevTouchSensor name="score_switch" port="4" />
             <RevColorSensorV3 name="scoreclaw_color" port="0" bus="0" />
             <SparkFunOTOS name="sensor_otos" port="0" bus="1" />
         </LynxModule>
