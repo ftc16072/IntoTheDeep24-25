@@ -34,12 +34,10 @@ public class ScoreArm extends QQMechanism{
     public static double kF = 0;
     public static double max =  1.0;
     public static double min = -1.0;
-    boolean chamberContacted;
+    boolean wasChamberContacted;
     protected int currentPos;
     public int desiredPos;
-    public double motorPower;
     boolean isScoring;
-    boolean wasChamberContacted;
 
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 450;
@@ -86,6 +84,7 @@ public class ScoreArm extends QQMechanism{
 
     @Override
     public void update(Telemetry telemetry){
+        boolean newChamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         if(limitSwitch.isPressed()) {
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -95,14 +94,14 @@ public class ScoreArm extends QQMechanism{
             if (desiredPos < 0){
                 desiredPos = 0;
             }
-        }if (chamberContacted){
+        }else if (newChamberContacted && !wasChamberContacted){
             isScoring = true;
             goToScoring();
         }
+        wasChamberContacted = newChamberContacted;
         currentPos = (leftMotor.getCurrentPosition() + rightMotor.getCurrentPosition())/2;//average left and right speeds
 
         double motorPower = pidfController.calculate(desiredPos,currentPos);
-        this.motorPower = motorPower;
         if (isScoring){
             motorPower = SCORE_POWER;
         }
@@ -113,7 +112,6 @@ public class ScoreArm extends QQMechanism{
             isWithinTolerance = true;
         }else {isWithinTolerance = false;}
 
-        chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         //pidfController.updateConstants(kP,kI,kD,kF,max,min);
         telemetry.addData("curerent pos",currentPos);
         telemetry.addData("desired pos",desiredPos);
@@ -126,7 +124,7 @@ public class ScoreArm extends QQMechanism{
         isScoring = false;
     }
     public boolean isChamberContacted(){
-        return chamberContacted;
+        return wasChamberContacted;
     }
 
     public int getCurrentPos() {

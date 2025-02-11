@@ -15,11 +15,11 @@ public class Navigation {
     public static final double MIN_ROTATE = -MAX_ROTATE;
     Robot robot;
 
-    public static double TRANSLATIONAL_KP = 0.03;
+    public static double TRANSLATIONAL_KP = 0.06;
     public static double TRANSLATIONAL_KI = 0.0;
     public static double TRANSLATIONAL_KD = 0.000;
     public static double TRANSLATIONAL_KF = 0;
-    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 1;
+    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 2;
 
     public static double ROTATIONAL_KP = 0.01;
     public static double ROTATIONAL_KI = 0.000;
@@ -62,7 +62,7 @@ public class Navigation {
         return !(Math.abs(error) < tolerance);
     }
 
-    public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading){
+    public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading, double xTolerance, double yTolerance, double headingTolerance){
         double forwardSpeed;
         double strafeRightSpeed;
         double rotateCCWSpeed;
@@ -91,13 +91,13 @@ public class Navigation {
         double currentPositionX = robot.otos.getOtosPosition().x;
         double currentPositionY = robot.otos.getOtosPosition().y;
         double currentPositionH = robot.controlHub.getYaw(AngleUnit.DEGREES);
-        if(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
+        if(notWithinTolerance(desiredX,currentPositionX,xTolerance)){
             strafeRightSpeed = PIDx.calculate(desiredX, currentPositionX);
         }else{strafeRightSpeed = 0;}
-        if(notWithinTolerance(desiredY,currentPositionY,TRANSLATIONAL_TOLERANCE_THRESHOLD)){
+        if(notWithinTolerance(desiredY,currentPositionY,yTolerance)){
             forwardSpeed = PIDy.calculate(desiredY, currentPositionY);
         }else {forwardSpeed = 0;}
-        if (notWithinTolerance(desiredHeading, currentPositionH,ROTATIONAL_TOLERANCE_THRESHOLD)) {
+        if (notWithinTolerance(desiredHeading, currentPositionH,headingTolerance)) {
             rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPositionH);
         }else {rotateCCWSpeed = 0;}
 
@@ -113,11 +113,20 @@ public class Navigation {
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
 
         driveFieldRelative(forwardSpeed,strafeRightSpeed,-rotateCCWSpeed);
-        boolean isFinished = !(notWithinTolerance(desiredX,currentPositionX,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
-                notWithinTolerance(desiredY,currentPositionY,TRANSLATIONAL_TOLERANCE_THRESHOLD)||
-                notWithinTolerance(desiredHeading,currentPositionH,ROTATIONAL_TOLERANCE_THRESHOLD));
+        boolean isFinished = !(notWithinTolerance(desiredX,currentPositionX,xTolerance)||
+                notWithinTolerance(desiredY,currentPositionY,yTolerance)||
+                notWithinTolerance(desiredHeading,currentPositionH,headingTolerance));
         if(isFinished){
             isZeroed = false;
         }return isFinished;
+    }
+    public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading, double translationTolerance, double headingTolerance){
+       return driveToPositionIN(desiredX,desiredY,desiredHeading,translationTolerance,translationTolerance,headingTolerance);
+    }
+    public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading, double translationTolerance){
+        return driveToPositionIN(desiredX,desiredY,desiredHeading,translationTolerance,translationTolerance,ROTATIONAL_TOLERANCE_THRESHOLD);
+    }
+    public boolean driveToPositionIN(double desiredX,double desiredY,double desiredHeading){
+        return driveToPositionIN(desiredX,desiredY,desiredHeading,TRANSLATIONAL_TOLERANCE_THRESHOLD,TRANSLATIONAL_TOLERANCE_THRESHOLD,ROTATIONAL_TOLERANCE_THRESHOLD);
     }
 }
