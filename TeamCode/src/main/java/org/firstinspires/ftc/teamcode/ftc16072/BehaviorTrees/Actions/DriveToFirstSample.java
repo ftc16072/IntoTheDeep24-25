@@ -18,7 +18,7 @@ public class DriveToFirstSample extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-            boolean isDoneDriving = opMode.nav.driveToPositionIN(55,-102,0);
+            boolean isDoneDriving = opMode.nav.driveToPositionIN(37,77,0);
             if (isDoneDriving) {
                 lastStatus = State.SUCCESS;
                 return State.SUCCESS;

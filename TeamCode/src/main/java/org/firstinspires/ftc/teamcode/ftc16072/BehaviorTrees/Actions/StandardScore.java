@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
 public class StandardScore extends QQTimeoutNode {
     public static final double FORWARD_SPEED = 0.3;
-    public static final double RIGHT_SPEED = 0.3;
+    public static final double RIGHT_SPEED = -0.1;
     State lastStatus = State.RUNNING;
 
     public StandardScore(double seconds) {

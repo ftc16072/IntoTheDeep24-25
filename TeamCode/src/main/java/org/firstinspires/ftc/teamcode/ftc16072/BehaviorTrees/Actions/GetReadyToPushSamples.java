@@ -17,7 +17,7 @@ public class GetReadyToPushSamples extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-            boolean isDoneDriving = opMode.nav.driveToPositionIN(17,-91,0);
+            boolean isDoneDriving = opMode.nav.driveToPositionIN(37,50,0);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;

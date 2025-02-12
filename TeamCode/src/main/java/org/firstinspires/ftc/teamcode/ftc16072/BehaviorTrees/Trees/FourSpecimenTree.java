@@ -9,20 +9,18 @@ import com.ftcteams.behaviortrees.Sequence;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.FirstScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToIntakePosition;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToScorePosition;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.StandardScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 
 
 
-public class TwoSpecimenTree {
+public class FourSpecimenTree {
     public static final int TIMEOUT_SECONDS = 10;
 
     public static Node root(){
         return new Failover(
                 new Sequence(
-                        new FirstScore(TIMEOUT_SECONDS)
-                        ,new Parallel(2,
+                        new FirstScore(TIMEOUT_SECONDS),
+                        new Parallel(2,
                                 new DriveToIntakePosition(TIMEOUT_SECONDS),
                                 new ArmToIntake(TIMEOUT_SECONDS)),
                         Cycle.root(),

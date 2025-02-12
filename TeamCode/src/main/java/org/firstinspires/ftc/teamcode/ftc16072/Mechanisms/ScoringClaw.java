@@ -22,7 +22,7 @@ import java.util.List;
 @Config
 public class ScoringClaw extends QQMechanism {
     public static final int GRABBABLE_DISTANCE_CM = 3;
-    public static final double OPEN_TIME = 0.5;
+    public static final double OPEN_TIME = 0.20;
     public static final double CLOSED_TIME = 0.25;
     public static double CLAW_CLOSE_POSITION = 0.5;
     public static double CLAW_OPEN_POSITION = 0;

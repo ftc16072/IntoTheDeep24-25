@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToIntakePosition;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToScorePosition;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.FirstScore;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.MoveForwardForTime;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.StandardScore;
 
@@ -21,6 +22,7 @@ public class Cycle {
     public static Node root(){
         return new Sequence(
                 Intake.root(),
+                new MoveForwardForTime(.1,-1),
                 new Parallel(2,
                         new DriveToScorePosition(TIMEOUT_SECONDS),
                         new ArmToScore(TIMEOUT_SECONDS)),

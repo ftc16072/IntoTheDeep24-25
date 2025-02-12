@@ -18,7 +18,7 @@ public class PushSecondSample extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-           boolean isDoneDriving = opMode.nav.driveToPositionIN(14,-88,90);
+           boolean isDoneDriving = opMode.nav.driveToPositionIN(61.5,82,0);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;

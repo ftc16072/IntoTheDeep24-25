@@ -15,11 +15,12 @@ public class Navigation {
     public static final double MIN_ROTATE = -MAX_ROTATE;
     Robot robot;
 
-    public static double TRANSLATIONAL_KP = 0.06;
+    public static double TRANSLATIONAL_KP = 0.03;
     public static double TRANSLATIONAL_KI = 0.0;
-    public static double TRANSLATIONAL_KD = 0.000;
+    public static double TRANSLATIONAL_KD = 0.0;
     public static double TRANSLATIONAL_KF = 0;
-    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 2;
+    public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 3;
+    public static double TRANSLATE_ABSOLUTE_MIN = 0.0;
 
     public static double ROTATIONAL_KP = 0.01;
     public static double ROTATIONAL_KI = 0.000;
@@ -93,9 +94,15 @@ public class Navigation {
         double currentPositionH = robot.controlHub.getYaw(AngleUnit.DEGREES);
         if(notWithinTolerance(desiredX,currentPositionX,xTolerance)){
             strafeRightSpeed = PIDx.calculate(desiredX, currentPositionX);
+/*            if(Math.abs(strafeRightSpeed) < TRANSLATE_ABSOLUTE_MIN){
+                strafeRightSpeed = TRANSLATE_ABSOLUTE_MIN * Math.signum(strafeRightSpeed);
+            }*/
         }else{strafeRightSpeed = 0;}
         if(notWithinTolerance(desiredY,currentPositionY,yTolerance)){
             forwardSpeed = PIDy.calculate(desiredY, currentPositionY);
+            /*if(Math.abs(forwardSpeed) < TRANSLATE_ABSOLUTE_MIN){
+                forwardSpeed = TRANSLATE_ABSOLUTE_MIN * Math.signum(forwardSpeed);
+            }*/
         }else {forwardSpeed = 0;}
         if (notWithinTolerance(desiredHeading, currentPositionH,headingTolerance)) {
             rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPositionH);
@@ -109,7 +116,7 @@ public class Navigation {
         telemetry.addData("Current Heading", currentPositionH);
 
         telemetry.addData("strafe right speed",strafeRightSpeed);
-        telemetry.addData("foward speed",forwardSpeed);
+        telemetry.addData("forward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
 
         driveFieldRelative(forwardSpeed,strafeRightSpeed,-rotateCCWSpeed);
