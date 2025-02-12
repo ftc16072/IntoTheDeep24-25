@@ -20,7 +20,7 @@ public class Navigation {
     public static double TRANSLATIONAL_KD = 0.0;
     public static double TRANSLATIONAL_KF = 0;
     public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 3;
-    public static double TRANSLATE_ABSOLUTE_MIN = 0.0;
+    public static double TRANSLATE_ABSOLUTE_MIN = 0.2;
 
     public static double ROTATIONAL_KP = 0.01;
     public static double ROTATIONAL_KI = 0.000;
@@ -94,15 +94,11 @@ public class Navigation {
         double currentPositionH = robot.controlHub.getYaw(AngleUnit.DEGREES);
         if(notWithinTolerance(desiredX,currentPositionX,xTolerance)){
             strafeRightSpeed = PIDx.calculate(desiredX, currentPositionX);
-/*            if(Math.abs(strafeRightSpeed) < TRANSLATE_ABSOLUTE_MIN){
-                strafeRightSpeed = TRANSLATE_ABSOLUTE_MIN * Math.signum(strafeRightSpeed);
-            }*/
-        }else{strafeRightSpeed = 0;}
+            strafeRightSpeed = Math.signum(strafeRightSpeed)* Math.max(Math.abs(strafeRightSpeed),TRANSLATE_ABSOLUTE_MIN);
+        }else {strafeRightSpeed = 0;}
         if(notWithinTolerance(desiredY,currentPositionY,yTolerance)){
             forwardSpeed = PIDy.calculate(desiredY, currentPositionY);
-            /*if(Math.abs(forwardSpeed) < TRANSLATE_ABSOLUTE_MIN){
-                forwardSpeed = TRANSLATE_ABSOLUTE_MIN * Math.signum(forwardSpeed);
-            }*/
+            forwardSpeed = Math.signum(forwardSpeed)* Math.max(Math.abs(forwardSpeed),TRANSLATE_ABSOLUTE_MIN);
         }else {forwardSpeed = 0;}
         if (notWithinTolerance(desiredHeading, currentPositionH,headingTolerance)) {
             rotateCCWSpeed = PIDh.calculate(desiredHeading, currentPositionH);
