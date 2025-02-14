@@ -27,6 +27,7 @@ public class Cycle {
                         new DriveToScorePosition(TIMEOUT_SECONDS),
                         new ArmToScore(TIMEOUT_SECONDS)),
                 new StandardScore(TIMEOUT_SECONDS),
+                new MoveForwardForTime(0.25,1),
                 new Parallel(2,
                         new DriveToIntakePosition(TIMEOUT_SECONDS),
                         new ArmToIntake(TIMEOUT_SECONDS)));

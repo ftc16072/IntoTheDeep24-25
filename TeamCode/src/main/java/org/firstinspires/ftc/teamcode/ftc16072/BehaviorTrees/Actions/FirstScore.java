@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
 public class FirstScore extends QQTimeoutNode {
-    public static final double FORWARD_SPEED = 0.5;
+    public static final double FORWARD_SPEED = 0.4;
     State lastStatus = State.RUNNING;
 
     public FirstScore(double seconds) {

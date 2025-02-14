@@ -18,7 +18,7 @@ public class DriveToScorePosition extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-           boolean isDoneDriving = opMode.nav.driveToPositionIN(15,50,0);
+           boolean isDoneDriving = opMode.nav.driveToPositionIN(10,50,0,5);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;

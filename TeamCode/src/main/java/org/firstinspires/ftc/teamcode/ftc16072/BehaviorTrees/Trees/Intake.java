@@ -20,6 +20,15 @@ public class Intake {
                 new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
                 new Sequence(
                         new MoveForwardForTime(0.25,-1),
+                        new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)),
+                new Sequence(
+                        new MoveForwardForTime(0.25,-1),
+                        new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)),
+                new Sequence(
+                        new MoveForwardForTime(0.25,-1),
+                        new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)),
+                new Sequence(
+                        new MoveForwardForTime(0.25,-1),
                         new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)));
     }
 }

@@ -18,7 +18,7 @@ public class DriveToIntakePosition extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-           boolean isDoneDriving = opMode.nav.driveToPositionIN(52,47,0);
+           boolean isDoneDriving = opMode.nav.driveToPositionIN(52,47,0,6);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;

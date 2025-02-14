@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Util;
 
+import android.util.Log;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
@@ -20,13 +22,14 @@ public class Navigation {
     public static double TRANSLATIONAL_KD = 0.0;
     public static double TRANSLATIONAL_KF = 0;
     public static double TRANSLATIONAL_TOLERANCE_THRESHOLD = 3;
-    public static double TRANSLATE_ABSOLUTE_MIN = 0.2;
+    public static double TRANSLATE_ABSOLUTE_MIN = 0.1;
 
     public static double ROTATIONAL_KP = 0.01;
     public static double ROTATIONAL_KI = 0.000;
     public static double ROTATIONAL_KD = 0.00;
     public static double ROTATIONAL_KF = 0;
     public static double ROTATIONAL_TOLERANCE_THRESHOLD = 3;
+    private boolean isRed;
 
     PIDFController PIDx, PIDy, PIDh;
 
@@ -35,8 +38,9 @@ public class Navigation {
     double lastDesiredX, lastDesiredY, lastDesiredH;
     Telemetry telemetry;
 
-    public Navigation(Robot robot, Telemetry telemetry){
+    public Navigation(Robot robot, Telemetry telemetry, boolean isRed){
         this.robot = robot;
+        this.isRed =  isRed;
         PIDx = new PIDFController(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF, MAX_TRANSLATE, MIN_TRANSLATE);
         PIDy = new PIDFController(TRANSLATIONAL_KP,TRANSLATIONAL_KI,TRANSLATIONAL_KD,TRANSLATIONAL_KF,MAX_TRANSLATE,MIN_TRANSLATE);
         PIDh = new PIDFController(ROTATIONAL_KP,ROTATIONAL_KI,ROTATIONAL_KD,ROTATIONAL_KF, MAX_ROTATE, MIN_ROTATE);
@@ -74,13 +78,18 @@ public class Navigation {
         if (!isZeroed){
             if(robot.limelight.isAprilTagSeen()){
                 isZeroed = true;
+                double xPosition = robot.limelight.getRobotPositionX(DistanceUnit.INCH);
+                double yPosition = robot.limelight.getRobotPositionY(DistanceUnit.INCH);
+                if(isRed){
+                    xPosition = -xPosition;
+                    yPosition = -yPosition;
+                }
                 robot.otos.setOtosPosition(
-                        robot.limelight.getRobotPositionX(DistanceUnit.INCH),
-                        robot.limelight.getRobotPositionY(DistanceUnit.INCH),
+                        xPosition,
+                        yPosition,
                         robot.controlHub.getYaw(AngleUnit.DEGREES));
             }
         }
-
         if((desiredX != lastDesiredX) || (desiredY != lastDesiredY) || (desiredHeading != lastDesiredH)){
             lastDesiredX = desiredX;
             lastDesiredY = desiredY;
@@ -114,6 +123,7 @@ public class Navigation {
         telemetry.addData("strafe right speed",strafeRightSpeed);
         telemetry.addData("forward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
+        Log.d("QQ", "X (desired, current, speed):" + desiredX + " " + currentPositionX + " " + strafeRightSpeed);
 
         driveFieldRelative(forwardSpeed,strafeRightSpeed,-rotateCCWSpeed);
         boolean isFinished = !(notWithinTolerance(desiredX,currentPositionX,xTolerance)||

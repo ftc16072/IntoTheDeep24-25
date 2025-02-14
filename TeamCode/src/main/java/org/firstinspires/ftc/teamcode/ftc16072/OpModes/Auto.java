@@ -5,14 +5,14 @@ import com.ftcteams.behaviortrees.Node;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.FourSpecimenTree;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.SpecimenTree;
 
 @Autonomous
 public class Auto extends QQOpMode{
     boolean clawWasClosed;
     boolean test;
     boolean done;
-    Node root = FourSpecimenTree.root();
+    Node root = SpecimenTree.root();
     DebugTree debugTree = new DebugTree();
     ElapsedTime moveTimer = new ElapsedTime();
     double INIT_MOVE_TIME_SECONDS = 1;

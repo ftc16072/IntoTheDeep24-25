@@ -37,14 +37,14 @@ public class SpecimenTree {
                         new PushSamplesIn(TIMEOUT_SECONDS),
                         new PushFirstSample(TIMEOUT_SECONDS),
                         new PushSecondSample(TIMEOUT_SECONDS),
-                        new PushSamplesIn(TIMEOUT_SECONDS),
-                        new PushThirdSample(TIMEOUT_SECONDS),
+                        new MoveForwardForTime(0.5,1),
+                       /* new PushSecondSample(TIMEOUT_SECONDS),
                         new MoveRightForTime(.2,1), //square on wall
-                        new PushSamplesIn(TIMEOUT_SECONDS),
+                        new PushSamplesIn(TIMEOUT_SECONDS),*/
                         Cycle.root(),
                         Cycle.root(),
                         Cycle.root(),
-                        Cycle.root(),
+                        //Cycle.root(),
                         new Parallel(2,
                                 new Park(TIMEOUT_SECONDS),
                                 new ArmToIntake(TIMEOUT_SECONDS))

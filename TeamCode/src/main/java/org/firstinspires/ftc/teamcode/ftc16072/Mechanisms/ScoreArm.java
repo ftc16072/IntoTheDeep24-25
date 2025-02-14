@@ -23,6 +23,7 @@ public class ScoreArm extends QQMechanism{
     public static final int CLAW_RELEASE_OFFSET = 250;
     public static final double SCORE_POWER = -0.8;
     public static final double STALL_CURRENT = 4.1;
+    public static final int TOLERANCE_THRESHOLD = 100;
     DcMotorEx leftMotor;
     DcMotorEx rightMotor;
     TouchSensor limitSwitch;
@@ -108,7 +109,7 @@ public class ScoreArm extends QQMechanism{
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
 
-        if (Math.abs(desiredPos - currentPos) <= 30){
+        if (Math.abs(desiredPos - currentPos) <= TOLERANCE_THRESHOLD){
             isWithinTolerance = true;
         }else {isWithinTolerance = false;}
 
