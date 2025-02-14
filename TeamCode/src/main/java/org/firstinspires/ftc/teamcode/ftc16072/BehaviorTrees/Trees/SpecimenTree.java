@@ -28,6 +28,7 @@ public class SpecimenTree {
         return new Failover(
                 new Sequence(
                         new FirstScore(TIMEOUT_SECONDS),
+                        new MoveForwardForTime(0.25,1),
                         new Parallel(2,
                             new ArmToIntake(TIMEOUT_SECONDS),
                             new GetReadyToPushSamples(TIMEOUT_SECONDS)
@@ -41,9 +42,9 @@ public class SpecimenTree {
                        /* new PushSecondSample(TIMEOUT_SECONDS),
                         new MoveRightForTime(.2,1), //square on wall
                         new PushSamplesIn(TIMEOUT_SECONDS),*/
-                        Cycle.root(),
-                        Cycle.root(),
-                        Cycle.root(),
+                        Cycle.root(4),
+                        Cycle.root(12),
+                        Cycle.root(12),
                         //Cycle.root(),
                         new Parallel(2,
                                 new Park(TIMEOUT_SECONDS),

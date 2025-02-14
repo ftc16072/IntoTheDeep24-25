@@ -19,6 +19,7 @@ public class Auto extends QQOpMode{
     double INIT_MOVE_SPEED = -0.2;
     @Override
     public void init(){
+        robot.scoringClaw.resetHasColor();
         super.init();
         moveTimer.reset();
         robot.scoreArm.goToInit();

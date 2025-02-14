@@ -19,12 +19,14 @@ import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.StandardSco
 public class Cycle {
     public static final int TIMEOUT_SECONDS = 10;
 
-    public static Node root(){
+
+
+    public static Node root(double xScorePosition){
         return new Sequence(
                 Intake.root(),
                 new MoveForwardForTime(.1,-1),
                 new Parallel(2,
-                        new DriveToScorePosition(TIMEOUT_SECONDS),
+                        new DriveToScorePosition(TIMEOUT_SECONDS, xScorePosition),
                         new ArmToScore(TIMEOUT_SECONDS)),
                 new StandardScore(TIMEOUT_SECONDS),
                 new MoveForwardForTime(0.25,1),
