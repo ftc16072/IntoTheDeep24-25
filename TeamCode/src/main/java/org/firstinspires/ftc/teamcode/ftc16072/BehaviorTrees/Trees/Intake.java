@@ -5,11 +5,8 @@ import com.ftcteams.behaviortrees.Failover;
 import com.ftcteams.behaviortrees.Node;
 import com.ftcteams.behaviortrees.Sequence;
 
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToIntakePosition;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.IntakeAttempt;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.MoveForwardForTime;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeOne;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ReadyToIntakeTwo;
 
 
 public class Intake {
@@ -19,16 +16,16 @@ public class Intake {
         return new Failover(
                 new IntakeAttempt(INTAKE_TIMEOUT_SECONDS),
                 new Sequence(
-                        new MoveForwardForTime(0.25,-1),
+                        new MoveForwardForTime(0.25,-.5),
                         new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)),
                 new Sequence(
-                        new MoveForwardForTime(0.25,-1),
+                        new MoveForwardForTime(0.25,-.5),
                         new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)),
                 new Sequence(
-                        new MoveForwardForTime(0.25,-1),
+                        new MoveForwardForTime(0.25,-.5),
                         new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)),
                 new Sequence(
-                        new MoveForwardForTime(0.25,-1),
+                        new MoveForwardForTime(0.25,-.5),
                         new IntakeAttempt(INTAKE_TIMEOUT_SECONDS)));
     }
 }

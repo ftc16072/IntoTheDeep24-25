@@ -8,17 +8,13 @@ import com.ftcteams.behaviortrees.Sequence;
 
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.ArmToIntake;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToFirstSample;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.DriveToIntakePosition;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.FirstScore;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.GetReadyToPushSamples;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.MoveForwardForTime;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.MoveRightForTime;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.Park;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.PushFirstSample;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.PushSamplesIn;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.PushSecondSample;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Actions.PushThirdSample;
-import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestTwoMotors;
 
 
 public class SpecimenTree {
@@ -42,9 +38,9 @@ public class SpecimenTree {
                        /* new PushSecondSample(TIMEOUT_SECONDS),
                         new MoveRightForTime(.2,1), //square on wall
                         new PushSamplesIn(TIMEOUT_SECONDS),*/
-                        Cycle.root(0),
-                        Cycle.root(4),
-                        Cycle.root(6),
+                        Cycle.root(2),
+                        Cycle.root(5),
+                        Cycle.root(7),
                         //Cycle.root(),
                         new Parallel(2,
                                 new Park(TIMEOUT_SECONDS),
