@@ -17,6 +17,7 @@ public class Auto extends QQOpMode{
     ElapsedTime moveTimer = new ElapsedTime();
     double INIT_MOVE_TIME_SECONDS = 1;
     double INIT_MOVE_SPEED = -0.2;
+    boolean switchWasPressed;
     @Override
     public void init(){
         robot.scoringClaw.resetHasColor();
@@ -59,6 +60,9 @@ public class Auto extends QQOpMode{
         if (robot.scoringClaw.isScoreSwitchPressed()){
             robot.scoreArm.setNotScoring();
         }
+        if (robot.scoreArm.isLimitSwitchPressed() && !switchWasPressed){
+            robot.scoringClaw.open();
+        }
         if(!done){
             Node.State state = root.tick(debugTree, this);
             if(state == Node.State.SUCCESS){
@@ -66,6 +70,7 @@ public class Auto extends QQOpMode{
             }
         }
         clawWasClosed = robot.scoringClaw.isClawClosed();
+        switchWasPressed = robot.scoreArm.isLimitSwitchPressed();
     }
 }
 
