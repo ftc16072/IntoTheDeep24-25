@@ -26,8 +26,8 @@ public class Limelight extends QQMechanism{
     private Pose3D getBotPose() {
         llResult = limelight.getLatestResult();
         if((llResult != null) && llResult.isValid()){
-            //lastValidPos = llResult.getBotpose_MT2();
-            lastValidPos = llResult.getBotpose();
+            lastValidPos = llResult.getBotpose_MT2();
+            //lastValidPos = llResult.getBotpose();
         }
         return lastValidPos;
     }

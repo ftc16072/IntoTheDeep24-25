@@ -23,7 +23,7 @@ import java.util.List;
 public class ScoringClaw extends QQMechanism {
     public static final int GRABBABLE_DISTANCE_CM = 3;
     public static final double OPEN_TIME = 0.2;
-    public static final double CLOSED_TIME = 0.25;
+    public static final double CLOSED_TIME = 0.3;
     public static double CLAW_CLOSE_POSITION = 0.5;
     public static double CLAW_OPEN_POSITION = 0;
     static boolean hasColor = false;

@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
+import android.util.Log;
+
 import com.ftcteams.behaviortrees.DebugTree;
 import com.ftcteams.behaviortrees.Node;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.SpecimenTree;
 
 @Autonomous
@@ -46,6 +49,11 @@ public class Auto extends QQOpMode{
 
     public void loop() {
         super.loop();
+        double degreesYaw = robot.controlHub.getYaw(AngleUnit.DEGREES);
+        if (isAllianceRed){
+            degreesYaw = AngleUnit.normalizeDegrees(degreesYaw + 180);
+        }
+        robot.limelight.setYaw(AngleUnit.DEGREES, degreesYaw);
         if (robot.scoringClaw.isClawClosed() && !clawWasClosed) {
             robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
@@ -64,10 +72,12 @@ public class Auto extends QQOpMode{
             robot.scoringClaw.open();
         }
         if(!done){
+ //           debugTree.reset();
             Node.State state = root.tick(debugTree, this);
             if(state == Node.State.SUCCESS){
                 done = true;
             }
+//            Log.d("QQ", "DT:" + debugTree.toString());
         }
         clawWasClosed = robot.scoringClaw.isClawClosed();
         switchWasPressed = robot.scoreArm.isLimitSwitchPressed();

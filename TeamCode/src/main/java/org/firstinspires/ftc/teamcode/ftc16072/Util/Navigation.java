@@ -124,6 +124,8 @@ public class Navigation {
         telemetry.addData("forward speed",forwardSpeed);
         telemetry.addData("rotate CW Speed", -rotateCCWSpeed);
         Log.d("QQ", "X (desired, current, speed):" + desiredX + " " + currentPositionX + " " + strafeRightSpeed);
+        Log.d("QQ", "Y (desired, current, speed):" + desiredY + " " + currentPositionY + " " + forwardSpeed);
+
 
         driveFieldRelative(forwardSpeed,strafeRightSpeed,-rotateCCWSpeed);
         boolean isFinished = !(notWithinTolerance(desiredX,currentPositionX,xTolerance)||

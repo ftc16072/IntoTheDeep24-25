@@ -22,7 +22,7 @@ public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
     public static final int CLAW_RELEASE_OFFSET = 250;
     public static final double SCORE_POWER = -0.8;
-    public static final double STALL_CURRENT = 4.1;
+    public static final double STALL_CURRENT = 8;
     public static final int TOLERANCE_THRESHOLD = 100;
     DcMotorEx leftMotor;
     DcMotorEx rightMotor;
@@ -39,6 +39,9 @@ public class ScoreArm extends QQMechanism{
     protected int currentPos;
     public int desiredPos;
     boolean isScoring;
+    double lastEncoderPos;
+
+    boolean encoderStalled;
 
     public static int INTAKE_POSITION = 0;
     public static int SCORING_POSITION = 450;
@@ -104,7 +107,14 @@ public class ScoreArm extends QQMechanism{
 
         double motorPower = pidfController.calculate(desiredPos,currentPos);
         if (isScoring){
+            if (lastEncoderPos == currentPos){
+                encoderStalled = true;
+            }
+            lastEncoderPos = currentPos;
             motorPower = SCORE_POWER;
+        }else {
+            lastEncoderPos = 0;
+            encoderStalled = false;
         }
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
@@ -140,11 +150,9 @@ public class ScoreArm extends QQMechanism{
 
     public boolean getIsWithinTolerence(){return isWithinTolerance;}
 
+
     public boolean isStalling(){
-        if((leftMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT) || (rightMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT)){
-            return true;
-        }
-        return false;
+        return (((leftMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT) || (rightMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT))||encoderStalled);
     }
 
     @Override

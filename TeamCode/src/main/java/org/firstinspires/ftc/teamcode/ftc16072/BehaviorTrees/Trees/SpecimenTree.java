@@ -42,9 +42,9 @@ public class SpecimenTree {
                        /* new PushSecondSample(TIMEOUT_SECONDS),
                         new MoveRightForTime(.2,1), //square on wall
                         new PushSamplesIn(TIMEOUT_SECONDS),*/
+                        Cycle.root(0),
                         Cycle.root(4),
-                        Cycle.root(12),
-                        Cycle.root(12),
+                        Cycle.root(6),
                         //Cycle.root(),
                         new Parallel(2,
                                 new Park(TIMEOUT_SECONDS),
