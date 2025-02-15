@@ -18,7 +18,7 @@ public class Park extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-           boolean isDoneDriving = opMode.nav.driveToPositionIN(12,-90.5,0);
+           boolean isDoneDriving = opMode.nav.driveToPositionIN(45,37,0);
         if (isDoneDriving) {
             lastStatus = State.SUCCESS;
             return State.SUCCESS;

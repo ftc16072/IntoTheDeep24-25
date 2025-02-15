@@ -27,6 +27,7 @@ public class NoTurnTeleop extends QQOpMode {
     }
 
     public void start(){
+        super.start();
         robot.intakeArm.goToDropPos();
     }
 
@@ -106,7 +107,7 @@ public class NoTurnTeleop extends QQOpMode {
             robot.scoreArm.goToScoring();
             if (!robot.intakeArm.isArmIn()){
                 robot.intakeArm.goToDropPos();
-                robot.intakeClaw.wristDrop();
+                robot.intakeClaw.wristTransfer();
             }else {
                 robot.intakeArm.goToIntake();
                 robot.intakeClaw.wristTransfer();

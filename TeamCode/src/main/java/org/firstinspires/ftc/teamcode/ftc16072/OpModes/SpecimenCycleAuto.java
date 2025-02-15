@@ -6,9 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.SpecimenCycleAutoTree;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.TwoSpecimenAutoTree;
 
-@Autonomous
+//@Autonomous
 public class SpecimenCycleAuto extends QQOpMode{
     boolean clawWasClosed;
     boolean test;
@@ -40,6 +39,7 @@ public class SpecimenCycleAuto extends QQOpMode{
 
     }
     public void start(){
+        super.start();
         robot.otos.setOtosPosition(7,-61.5,0);
     }
 

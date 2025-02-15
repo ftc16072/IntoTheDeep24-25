@@ -2,18 +2,16 @@ package org.firstinspires.ftc.teamcode.ftc16072.OpModes;
 
 import com.ftcteams.behaviortrees.DebugTree;
 import com.ftcteams.behaviortrees.Node;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.PreloadAuto;
-import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.TwoSpecimenAutoTree;
+import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.Trees.FourSpecimenTree;
 
 //@Autonomous
-public class TwoSpecimenAuto extends QQOpMode{
+public class OldAuto extends QQOpMode{
     boolean clawWasClosed;
     boolean test;
     boolean done;
-    Node root = TwoSpecimenAutoTree.root();
+    Node root = FourSpecimenTree.root();
     DebugTree debugTree = new DebugTree();
     ElapsedTime moveTimer = new ElapsedTime();
     double INIT_MOVE_TIME_SECONDS = 1;
@@ -24,6 +22,7 @@ public class TwoSpecimenAuto extends QQOpMode{
         moveTimer.reset();
         robot.scoreArm.goToInit();
         robot.scoringClaw.close();
+        robot.intakeArm.goToDropPos();
     }
 
     @Override
@@ -38,7 +37,8 @@ public class TwoSpecimenAuto extends QQOpMode{
 
     }
     public void start(){
-        robot.otos.setOtosPosition(7,-61.5,0);
+        super.start();
+        robot.otos.setOtosPosition(10,32,0);
     }
 
     public void loop() {
@@ -47,6 +47,9 @@ public class TwoSpecimenAuto extends QQOpMode{
             robot.intakeClaw.open();
             robot.scoreArm.goToPlace();
             test = true;
+        }
+        if(robot.scoreArm.isStalling()){
+            robot.scoringClaw.open();
         }
         if (robot.scoringClaw.isClawOpen()){
             test = false;

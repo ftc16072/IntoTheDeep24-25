@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @TeleOp
 public class NavigationPIDTuner extends QQOpMode{
     private final int autodelay = 0;
@@ -16,22 +18,23 @@ public class NavigationPIDTuner extends QQOpMode{
     boolean clawWasClosed;
     public void init(){
         super.init();
-        robot.otos.setOtosPosition(7,-61.5,0);
+        robot.otos.setOtosPosition(robot.limelight.getRobotPositionX(DistanceUnit.INCH),robot.limelight.getRobotPositionY(DistanceUnit.INCH),0);
         robot.scoringClaw.close();
     }
     public void start(){
+        super.start();
         elapsedTime.reset();
     }
     public void loop(){
         super.loop();
 
         if(step == 0){
-            boolean isDoneDriving = nav.driveToPositionIN(7.5, -37.5,0);
+            boolean isDoneDriving = nav.driveToPositionIN(52,47,0);
             if (isDoneDriving){
                 step = 1;
             }
         }else if(step == 1){
-            boolean isDoneDriving = nav.driveToPositionIN(7.5,-85.5,0);
+            boolean isDoneDriving = nav.driveToPositionIN(15,50,0);
             if (isDoneDriving){
                 step = 0;
             }

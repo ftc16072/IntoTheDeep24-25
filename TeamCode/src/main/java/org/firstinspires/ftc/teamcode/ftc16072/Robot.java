@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Limelight;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ScoringClaw;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.IntakeArm;
@@ -23,16 +24,13 @@ public class Robot {
     public OpticalTrackingOdometrySensor otos;
     public ScoringClaw scoringClaw;
     public IntakeArm intakeArm;
-    //public DoubleReverse4Bar doubleReverse4Bar;
-   // public Slides slides;
     public IntakeClaw intakeClaw;
-    boolean isRedAlliance;
-
 
   
     public IntakeSlides intakeSlides;
 
     public ScoreArm scoreArm;
+    public Limelight limelight;
 
     boolean driveOnly;
 
@@ -46,11 +44,9 @@ public class Robot {
         scoringClaw = new ScoringClaw();
         intakeSlides = new IntakeSlides();
         intakeArm = new IntakeArm();
-        //doubleReverse4Bar = new DoubleReverse4Bar();
-        //slides = new Slides();
-
         scoreArm = new ScoreArm();
         intakeClaw = new IntakeClaw();
+        limelight = new Limelight();
 
         mechanisms = Arrays.asList(
                 controlHub,
@@ -60,6 +56,7 @@ public class Robot {
                 intakeArm,
                 intakeSlides,
                 scoreArm,
+                limelight,
                 intakeClaw);
 
     }
@@ -74,11 +71,6 @@ public class Robot {
         }
     }
 
-    public void setAlliancecolor(){
-        if (scoringClaw.isColorRed()){
-            isRedAlliance = true;
-        }isRedAlliance = false;
-    }
 
 
     public void makeDriveOnly(){

@@ -22,7 +22,8 @@ public class ScoreArm extends QQMechanism{
     public static final double TEST_SPEED = 0.55;
     public static final int CLAW_RELEASE_OFFSET = 250;
     public static final double SCORE_POWER = -0.8;
-    public static final double STALL_CURRENT = 4.1;
+    public static final double STALL_CURRENT = 8;
+    public static final int TOLERANCE_THRESHOLD = 100;
     DcMotorEx leftMotor;
     DcMotorEx rightMotor;
     TouchSensor limitSwitch;
@@ -34,15 +35,16 @@ public class ScoreArm extends QQMechanism{
     public static double kF = 0;
     public static double max =  1.0;
     public static double min = -1.0;
-    boolean chamberContacted;
+    boolean wasChamberContacted;
     protected int currentPos;
     public int desiredPos;
-    public double motorPower;
     boolean isScoring;
-    boolean wasChamberContacted;
+    double lastEncoderPos;
+
+    boolean encoderStalled;
 
     public static int INTAKE_POSITION = 0;
-    public static int SCORING_POSITION = 350;
+    public static int SCORING_POSITION = 450;
     public static int PLACING_POSITION = 830;
     public static int MOVING_POSITION = 450;
     public static int INIT_POSITION = 240;
@@ -86,6 +88,7 @@ public class ScoreArm extends QQMechanism{
 
     @Override
     public void update(Telemetry telemetry){
+        boolean newChamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         if(limitSwitch.isPressed()) {
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -95,25 +98,31 @@ public class ScoreArm extends QQMechanism{
             if (desiredPos < 0){
                 desiredPos = 0;
             }
-        }else if (chamberContacted && !wasChamberContacted){
+        }else if (newChamberContacted && !wasChamberContacted){
             isScoring = true;
             goToScoring();
         }
+        wasChamberContacted = newChamberContacted;
         currentPos = (leftMotor.getCurrentPosition() + rightMotor.getCurrentPosition())/2;//average left and right speeds
 
         double motorPower = pidfController.calculate(desiredPos,currentPos);
-        this.motorPower = motorPower;
         if (isScoring){
+            if (lastEncoderPos == currentPos){
+                encoderStalled = true;
+            }
+            lastEncoderPos = currentPos;
             motorPower = SCORE_POWER;
+        }else {
+            lastEncoderPos = 0;
+            encoderStalled = false;
         }
         leftMotor.setPower(motorPower);
         rightMotor.setPower(motorPower);
 
-        if (Math.abs(desiredPos - currentPos) <= 30){
+        if (Math.abs(desiredPos - currentPos) <= TOLERANCE_THRESHOLD){
             isWithinTolerance = true;
         }else {isWithinTolerance = false;}
 
-        chamberContacted = rightChamberContact.isPressed() || leftChamberContact.isPressed();
         //pidfController.updateConstants(kP,kI,kD,kF,max,min);
         telemetry.addData("curerent pos",currentPos);
         telemetry.addData("desired pos",desiredPos);
@@ -121,14 +130,12 @@ public class ScoreArm extends QQMechanism{
         telemetry.addData("left motor current", leftMotor.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("right motor current", rightMotor.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is stalled", isStalling());
-
-        wasChamberContacted = chamberContacted;
     }
     public void setNotScoring(){
         isScoring = false;
     }
     public boolean isChamberContacted(){
-        return chamberContacted;
+        return wasChamberContacted;
     }
 
     public int getCurrentPos() {
@@ -143,11 +150,9 @@ public class ScoreArm extends QQMechanism{
 
     public boolean getIsWithinTolerence(){return isWithinTolerance;}
 
+
     public boolean isStalling(){
-        if((leftMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT) || (rightMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT)){
-            return true;
-        }
-        return false;
+        return (((leftMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT) || (rightMotor.getCurrent(CurrentUnit.AMPS) > STALL_CURRENT))||encoderStalled);
     }
 
     @Override

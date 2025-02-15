@@ -5,34 +5,27 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class IntakeAttempt extends QQTimeoutNode {
-    public static final double INTAKE_SPEED = -0.3;
+public class MoveRightForTime extends QQTimeoutNode {
+    double speed;
     State lastStatus = State.RUNNING;
-
-    public IntakeAttempt(double seconds) {
+    public MoveRightForTime(double seconds, double speed) {
         super(seconds);
+        this.speed = speed;
     }
 
     @Override
     public State tick(DebugTree debug, QQOpMode opMode) {
         if (lastStatus != State.RUNNING){
-            return lastStatus;
-        }else{
-            if(hasTimedOut()){
+            return lastStatus;}
+        else {
+            opMode.robot.mecanumDrive.move(0,speed,0);
+            if (hasTimedOut()){
                 opMode.robot.mecanumDrive.stop();
-                lastStatus = State.FAILURE;
-                return State.FAILURE;
-            }
-            opMode.robot.mecanumDrive.move(INTAKE_SPEED,0,0);
-            if (opMode.robot.scoringClaw.isClawClosed()){
-                opMode.robot.mecanumDrive.stop();
-                opMode.robot.intakeClaw.open();;
                 lastStatus = State.SUCCESS;
                 return State.SUCCESS;
 
             }
             return State.RUNNING;
-        }
+            }
     }
 }
-

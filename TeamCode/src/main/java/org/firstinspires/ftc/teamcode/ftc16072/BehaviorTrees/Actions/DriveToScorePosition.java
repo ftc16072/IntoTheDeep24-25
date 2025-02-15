@@ -5,9 +5,11 @@ import com.ftcteams.behaviortrees.DebugTree;
 import org.firstinspires.ftc.teamcode.ftc16072.BehaviorTrees.QQTimeoutNode;
 import org.firstinspires.ftc.teamcode.ftc16072.OpModes.QQOpMode;
 
-public class DriveToFirstSample extends QQTimeoutNode {
-    public DriveToFirstSample(double seconds) {
+public class DriveToScorePosition extends QQTimeoutNode {
+    double xPosition;
+    public DriveToScorePosition(double seconds, double xPosition) {
         super(seconds);
+        this.xPosition = xPosition;
     }
     State lastStatus = State.RUNNING;
 
@@ -18,17 +20,16 @@ public class DriveToFirstSample extends QQTimeoutNode {
         if (lastStatus != State.RUNNING){
             return lastStatus;
         }else{
-            boolean isDoneDriving = opMode.nav.driveToPositionIN(37,80,0);
-            if (isDoneDriving) {
-                lastStatus = State.SUCCESS;
-                return State.SUCCESS;
-            }
-            if (hasTimedOut()) {
-                lastStatus = State.FAILURE;
-                return State.FAILURE;
-            }
-            return State.RUNNING;
+           boolean isDoneDriving = opMode.nav.driveToPositionIN(xPosition,50,0,4);
+        if (isDoneDriving) {
+            lastStatus = State.SUCCESS;
+            return State.SUCCESS;
+        }
+        if (hasTimedOut()) {
+            lastStatus = State.FAILURE;
+            return State.FAILURE;
+        }
+        return State.RUNNING;
         }
     }
 }
-

@@ -15,12 +15,10 @@ public abstract class QQOpMode extends OpMode {
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        nav = new Navigation(robot, telemetry);
         robot.init(hardwareMap);
         robot.controlHub.resetGyro();
-        //robot.claw.close();
-        //robot.arm.goToDrive();
         isAllianceRed = robot.scoringClaw.isColorRed();
+        nav = new Navigation(robot, telemetry, isAllianceRed);
         if(isAllianceRed) {
             telemetry.addData("Alliance", "RED");
             robot.intakeClaw.setTargetColorRed();
@@ -37,6 +35,11 @@ public abstract class QQOpMode extends OpMode {
         else{
             telemetry.addData("Alliance", "BLUE");
         }
+    }
+
+    @Override
+    public void start(){
+        robot.limelight.start();
     }
 
     @Override
